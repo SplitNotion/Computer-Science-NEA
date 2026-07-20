@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 class Program
 {
-    static string connectionString = "Server=(localdb)\\ProjectModels;Initial Catalog = dbTest1; Integrated Security = True; Connect Timeout = 30;";
+    static string connectionString = "Server=(localdb)\\ProjectModels;Initial Catalog = dbTypingImprovement; Integrated Security = True; Connect Timeout = 30;";
 
     static void Main(string[] args)
     {

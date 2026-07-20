@@ -16,7 +16,7 @@ namespace TypingImprovementProgram
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             //ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+           // Application.Run(new Form1());
 
 
             DatabaseManager database = new DatabaseManager();
@@ -29,7 +29,7 @@ namespace TypingImprovementProgram
 
             foreach (Word word in analysedWords)
             {
-                Debug.WriteLine(word.ToString()); 
+                //Debug.WriteLine(word.ToString()); 
                 database.InsertIntoTables(word);
                 
             }

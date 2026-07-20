@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace TypingImprovementProgram.Models
 {
+    public enum Hand
+    {
+        Left,
+        Right
+    }
+
     public enum Finger
     {
         LeftPinky,
