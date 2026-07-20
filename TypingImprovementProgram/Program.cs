@@ -1,3 +1,8 @@
+using System.Diagnostics;
+using TypingImprovementProgram.Algorithms.WordAnalysis;
+using TypingImprovementProgram.Database;
+using TypingImprovementProgram.Models;
+using System.Runtime.InteropServices;
 namespace TypingImprovementProgram
 {
     internal static class Program
@@ -10,8 +15,24 @@ namespace TypingImprovementProgram
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
+            //ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
+
+            DatabaseManager database = new DatabaseManager();
+            database.CreateTables();
+
+            WordAnalyser analyser = new WordAnalyser();
+            analyser.AnalyseFile("words.txt");
+
+            List<Word> analysedWords = analyser.AnalyseFile("words.txt");
+
+            foreach (Word word in analysedWords)
+            {
+                Debug.WriteLine(word.ToString()); 
+                database.InsertIntoTables(word);
+                
+            }
         }
     }
 }
