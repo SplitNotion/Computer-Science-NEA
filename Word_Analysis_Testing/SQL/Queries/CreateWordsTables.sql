@@ -1,0 +1,16 @@
+﻿CREATE TABLE Words
+(
+    WordID INT PRIMARY KEY IDENTITY(1,1),
+    Word VARCHAR(50) NOT NULL,
+    WordLength INT NOT NULL
+);
+
+CREATE TABLE WordLetters
+(
+    WordLetterID INT PRIMARY KEY IDENTITY(1,1),
+    WordID INT NOT NULL,
+    Letter CHAR(1) NOT NULL,
+    Frequency INT NOT NULL
+
+    FOREIGN KEY (WordID) REFERENCES Words(WordID)
+);

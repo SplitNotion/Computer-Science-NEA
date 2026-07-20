@@ -1,0 +1,9 @@
+﻿CREATE TABLE TRANSACTIONS
+(
+    TransactionID INT PRIMARY KEY IDENTITY(1,1),
+    Amount FLOAT NOT NULL,
+    CustomerID INT,
+    FOREIGN KEY (CustomerID) REFERENCES CUSTOMERS(CustomerID),
+    Notes VARCHAR(250),
+    [DateTime] DATETIME NOT NULL,
+);
