@@ -47,11 +47,10 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                 {
                     word.Difficulty.SameFingerScore += 2;
                 }
-                else if (firstChar == secondChar) // same letter (harder, as not expected)
+                if (firstChar == secondChar) // same letter (harder, as not expected)
                 {
                     word.Difficulty.SameCharScore += 3;
                 }
-
 
                 if (hand1 == hand2) // if hands are same (easier)
                 {
@@ -66,9 +65,9 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                     word.Difficulty.RareCharScore += FingerMapping.rareCharacters[firstChar];
                 }
             }
-            if (word.Length >= 5)
+            if (word.Length >= 4)
             {
-                word.Difficulty.LengthScore += Math.Min(word.Length * 2, 25);
+                word.Difficulty.LengthScore += Math.Min(word.Length * 3, 50);
             }
             else
             {

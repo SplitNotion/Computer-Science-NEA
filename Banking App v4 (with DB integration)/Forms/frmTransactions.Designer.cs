@@ -52,10 +52,11 @@ namespace BankingApp
             // 
             // btnDeposit
             // 
-            btnDeposit.Location = new Point(876, 278);
-            btnDeposit.Margin = new Padding(4, 5, 4, 5);
+            btnDeposit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDeposit.Location = new Point(701, 222);
+            btnDeposit.Margin = new Padding(3, 4, 3, 4);
             btnDeposit.Name = "btnDeposit";
-            btnDeposit.Size = new Size(143, 38);
+            btnDeposit.Size = new Size(114, 30);
             btnDeposit.TabIndex = 0;
             btnDeposit.Text = "Deposit";
             btnDeposit.UseVisualStyleBackColor = true;
@@ -63,10 +64,11 @@ namespace BankingApp
             // 
             // btnWithdraw
             // 
-            btnWithdraw.Location = new Point(876, 345);
-            btnWithdraw.Margin = new Padding(4, 5, 4, 5);
+            btnWithdraw.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnWithdraw.Location = new Point(701, 276);
+            btnWithdraw.Margin = new Padding(3, 4, 3, 4);
             btnWithdraw.Name = "btnWithdraw";
-            btnWithdraw.Size = new Size(143, 38);
+            btnWithdraw.Size = new Size(114, 30);
             btnWithdraw.TabIndex = 1;
             btnWithdraw.Text = "Withdraw";
             btnWithdraw.UseVisualStyleBackColor = true;
@@ -75,76 +77,74 @@ namespace BankingApp
             // lstTransactions
             // 
             lstTransactions.FormattingEnabled = true;
-            lstTransactions.ItemHeight = 25;
-            lstTransactions.Location = new Point(34, 125);
-            lstTransactions.Margin = new Padding(4, 5, 4, 5);
+            lstTransactions.Location = new Point(27, 100);
+            lstTransactions.Margin = new Padding(3, 4, 3, 4);
             lstTransactions.Name = "lstTransactions";
-            lstTransactions.Size = new Size(660, 479);
+            lstTransactions.Size = new Size(529, 384);
             lstTransactions.TabIndex = 2;
             // 
             // lblTransactions
             // 
             lblTransactions.AutoSize = true;
-            lblTransactions.Location = new Point(34, 40);
-            lblTransactions.Margin = new Padding(4, 0, 4, 0);
+            lblTransactions.Location = new Point(27, 32);
             lblTransactions.Name = "lblTransactions";
-            lblTransactions.Size = new Size(108, 25);
+            lblTransactions.Size = new Size(90, 20);
             lblTransactions.TabIndex = 3;
             lblTransactions.Text = "Transactions";
             // 
             // lblBalance
             // 
             lblBalance.AutoSize = true;
-            lblBalance.Location = new Point(670, 635);
-            lblBalance.Margin = new Padding(4, 0, 4, 0);
+            lblBalance.Location = new Point(536, 508);
             lblBalance.Name = "lblBalance";
-            lblBalance.Size = new Size(22, 25);
+            lblBalance.Size = new Size(17, 20);
             lblBalance.TabIndex = 4;
             lblBalance.Text = "0";
             // 
             // lblBalanceLabel
             // 
             lblBalanceLabel.AutoSize = true;
-            lblBalanceLabel.Location = new Point(551, 635);
-            lblBalanceLabel.Margin = new Padding(4, 0, 4, 0);
+            lblBalanceLabel.Location = new Point(441, 508);
             lblBalanceLabel.Name = "lblBalanceLabel";
-            lblBalanceLabel.Size = new Size(75, 25);
+            lblBalanceLabel.Size = new Size(64, 20);
             lblBalanceLabel.TabIndex = 5;
             lblBalanceLabel.Text = "Balance:";
             // 
             // txtAmount
             // 
-            txtAmount.Location = new Point(876, 80);
-            txtAmount.Margin = new Padding(4, 5, 4, 5);
+            txtAmount.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtAmount.Location = new Point(701, 64);
+            txtAmount.Margin = new Padding(3, 4, 3, 4);
             txtAmount.Name = "txtAmount";
-            txtAmount.Size = new Size(285, 31);
+            txtAmount.Size = new Size(229, 27);
             txtAmount.TabIndex = 6;
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(876, 175);
-            txtDescription.Margin = new Padding(4, 5, 4, 5);
+            txtDescription.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtDescription.Location = new Point(701, 140);
+            txtDescription.Margin = new Padding(3, 4, 3, 4);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(285, 31);
+            txtDescription.Size = new Size(229, 27);
             txtDescription.TabIndex = 7;
             // 
             // lblAmount
             // 
+            lblAmount.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblAmount.AutoSize = true;
-            lblAmount.Location = new Point(726, 85);
-            lblAmount.Margin = new Padding(4, 0, 4, 0);
+            lblAmount.Location = new Point(581, 68);
             lblAmount.Name = "lblAmount";
-            lblAmount.Size = new Size(81, 25);
+            lblAmount.Size = new Size(65, 20);
             lblAmount.TabIndex = 8;
             lblAmount.Text = "Amount:";
             // 
             // lblDescription
             // 
+            lblDescription.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(726, 180);
-            lblDescription.Margin = new Padding(4, 0, 4, 0);
+            lblDescription.Location = new Point(581, 144);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(106, 25);
+            lblDescription.Size = new Size(88, 20);
             lblDescription.TabIndex = 9;
             lblDescription.Text = "Description:";
             // 
@@ -152,49 +152,44 @@ namespace BankingApp
             // 
             lblError.AutoSize = true;
             lblError.ForeColor = Color.Red;
-            lblError.Location = new Point(726, 417);
-            lblError.Margin = new Padding(4, 0, 4, 0);
+            lblError.Location = new Point(581, 334);
             lblError.Name = "lblError";
-            lblError.Size = new Size(0, 25);
+            lblError.Size = new Size(0, 20);
             lblError.TabIndex = 10;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(34, 85);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(27, 68);
             label2.Name = "label2";
-            label2.Size = new Size(49, 25);
+            label2.Size = new Size(41, 20);
             label2.TabIndex = 11;
             label2.Text = "Date";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(197, 85);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(158, 68);
             label3.Name = "label3";
-            label3.Size = new Size(77, 25);
+            label3.Size = new Size(62, 20);
             label3.TabIndex = 12;
             label3.Text = "Amount";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(279, 85);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(223, 68);
             label4.Name = "label4";
-            label4.Size = new Size(71, 25);
+            label4.Size = new Size(61, 20);
             label4.TabIndex = 13;
             label4.Text = "Balance";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(356, 85);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Location = new Point(285, 68);
             label5.Name = "label5";
-            label5.Size = new Size(102, 25);
+            label5.Size = new Size(85, 20);
             label5.TabIndex = 14;
             label5.Text = "Description";
             // 
@@ -204,31 +199,31 @@ namespace BankingApp
             menuStrip1.Items.AddRange(new ToolStripItem[] { aboutToolStripMenuItem, customerDetailsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(9, 3, 0, 3);
+            menuStrip1.Padding = new Padding(7, 2, 0, 2);
             menuStrip1.RightToLeft = RightToLeft.Yes;
-            menuStrip1.Size = new Size(1214, 35);
+            menuStrip1.Size = new Size(971, 28);
             menuStrip1.TabIndex = 15;
             menuStrip1.Text = "menuStrip1";
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(78, 29);
+            aboutToolStripMenuItem.Size = new Size(64, 24);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // customerDetailsToolStripMenuItem
             // 
             customerDetailsToolStripMenuItem.Name = "customerDetailsToolStripMenuItem";
-            customerDetailsToolStripMenuItem.Size = new Size(163, 29);
+            customerDetailsToolStripMenuItem.Size = new Size(136, 24);
             customerDetailsToolStripMenuItem.Text = "Customer Details";
             customerDetailsToolStripMenuItem.Click += customerDetailsToolStripMenuItem_Click;
             // 
             // frmTransactions
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1214, 750);
+            ClientSize = new Size(971, 600);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -246,7 +241,7 @@ namespace BankingApp
             Controls.Add(btnDeposit);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Margin = new Padding(4, 5, 4, 5);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "frmTransactions";
             RightToLeft = RightToLeft.No;
             Text = "Banking App";
