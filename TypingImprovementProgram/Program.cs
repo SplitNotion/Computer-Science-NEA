@@ -31,7 +31,7 @@ namespace TypingImprovementProgram
             foreach (Word word in analysedWords)
             {
                 //Debug.WriteLine(word.ToString()); 
-                database.InsertIntoTables(word);
+                // database.InsertIntoTables(word);
                 
             }
         }

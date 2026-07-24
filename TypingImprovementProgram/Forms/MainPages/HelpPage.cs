@@ -8,21 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TypingImprovementProgram.Forms
+namespace TypingImprovementProgram.Forms.MainPages
 {
-    public partial class MainPage : Form
+    public partial class HelpPage : UserControl
     {
-        public MainPage()
+        public HelpPage()
         {
             InitializeComponent();
         }
 
-        private void btnSidebarDashboard_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSidebarPractice_Click(object sender, EventArgs e)
+        private void HelpPage_Load(object sender, EventArgs e)
         {
 
         }

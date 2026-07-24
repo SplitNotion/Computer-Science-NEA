@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Database\SQL\" />
+    <Folder Include="Forms\LoginPages\" />
   </ItemGroup>
 
   <ItemGroup>
