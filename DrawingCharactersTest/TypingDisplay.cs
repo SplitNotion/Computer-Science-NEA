@@ -32,6 +32,25 @@ namespace DrawingCharactersTest
             {
                 Brush brush = Brushes.Gray; // assume each char is initially grey
 
+                if ((character.State == CharacterState.Current) && (character.Character != ' '))  // caret jumps after each character
+                {
+                    e.Graphics.FillRectangle(
+                        Brushes.Black,
+                        x + 5,
+                        y,
+                        2,
+                        FontHeight);
+                }
+
+                else if ((character.State == CharacterState.Current) && (character.Character == ' '))   // caret stays before space
+                {
+                    e.Graphics.FillRectangle(
+                        Brushes.Black,
+                        x - 12,
+                        y,
+                        2,
+                        FontHeight);
+                }
 
                 switch (character.State)
                 {

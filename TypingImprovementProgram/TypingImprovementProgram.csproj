@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Database\SQL\" />
+    <Folder Include="Database\SQL Commands\" />
     <Folder Include="Forms\LoginPages\" />
   </ItemGroup>
 

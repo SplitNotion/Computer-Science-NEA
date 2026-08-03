@@ -50,23 +50,35 @@ namespace DrawingCharactersTest
         {
 
             if (currentIndex >= display.Characters.Count)
+                return; // stops method
+
+
+            if (e.KeyChar == (char)Keys.Back)                     // allows for backspace, disallowing over space between words
+            {
+                if (currentIndex > 0)
+                {
+                    if (display.Characters[currentIndex - 1].Character != ' ')
+                    {
+                        display.Characters[currentIndex].State = CharacterState.Untyped;
+                        display.Characters[currentIndex - 1].State = CharacterState.Current;
+                        currentIndex--;
+                    }
+                }
+                display.Invalidate();
                 return;
+            }
+
 
 
             if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
             {
                 display.Characters[currentIndex].State = CharacterState.Correct;          // make correct
             }
-            else if (e.KeyChar == (char)Keys.Back)
-            {
-                display.Characters[currentIndex].State = CharacterState.Untyped;
-                display.Characters[currentIndex - 1].State = CharacterState.Current;
-                currentIndex--;
-            }
             else
             {
                 display.Characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
             }
+
 
 
             currentIndex++;
@@ -75,13 +87,6 @@ namespace DrawingCharactersTest
             if (currentIndex < display.Characters.Count)
             {
                 display.Characters[currentIndex].State = CharacterState.Current;
-            }
-
-
-            if (e.KeyChar == (char)Keys.Back)
-            {
-                display.Characters[currentIndex].State = CharacterState.Untyped;
-                currentIndex--;
             }
 
             display.Invalidate();
