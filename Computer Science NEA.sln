@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		words SHORTENED.txt = words SHORTENED.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawingCharactersTest", "DrawingCharactersTest\DrawingCharactersTest.csproj", "{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{910E9EBB-792C-4186-A46B-5924722CB7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{910E9EBB-792C-4186-A46B-5924722CB7D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{910E9EBB-792C-4186-A46B-5924722CB7D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
