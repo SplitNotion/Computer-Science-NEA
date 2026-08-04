@@ -34,9 +34,9 @@
             // 
             // btnIntroductionAccept
             // 
-            btnIntroductionAccept.Location = new Point(468, 352);
+            btnIntroductionAccept.Location = new Point(606, 469);
             btnIntroductionAccept.Name = "btnIntroductionAccept";
-            btnIntroductionAccept.Size = new Size(283, 82);
+            btnIntroductionAccept.Size = new Size(389, 116);
             btnIntroductionAccept.TabIndex = 0;
             btnIntroductionAccept.Text = "Accept";
             btnIntroductionAccept.UseVisualStyleBackColor = true;
@@ -46,7 +46,7 @@
             // 
             lblIntroductionText.AutoSize = true;
             lblIntroductionText.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblIntroductionText.Location = new Point(253, 266);
+            lblIntroductionText.Location = new Point(460, 386);
             lblIntroductionText.Name = "lblIntroductionText";
             lblIntroductionText.Size = new Size(752, 54);
             lblIntroductionText.TabIndex = 1;
@@ -60,7 +60,7 @@
             Controls.Add(lblIntroductionText);
             Controls.Add(btnIntroductionAccept);
             Name = "IntroductionPage";
-            Size = new Size(1269, 670);
+            Size = new Size(1796, 970);
             ResumeLayout(false);
             PerformLayout();
         }

@@ -48,7 +48,7 @@
             BackColor = SystemColors.ControlDarkDark;
             Controls.Add(label1);
             Name = "BaselineTestPage";
-            Size = new Size(1269, 670);
+            Size = new Size(1610, 812);
             ResumeLayout(false);
             PerformLayout();
         }
