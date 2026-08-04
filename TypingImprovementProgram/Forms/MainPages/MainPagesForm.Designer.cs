@@ -1,6 +1,6 @@
 ﻿namespace TypingImprovementProgram.Forms
 {
-    partial class MainPage
+    partial class MainPagesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -224,7 +224,7 @@
             lblPageName.TabIndex = 0;
             lblPageName.Text = "Dashboard";
             // 
-            // MainPage
+            // MainPagesForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -233,7 +233,7 @@
             Controls.Add(panelContent);
             Controls.Add(panelSidebar);
             MinimumSize = new Size(1280, 720);
-            Name = "MainPage";
+            Name = "MainPagesForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainPages";
             panelSidebar.ResumeLayout(false);

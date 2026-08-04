@@ -11,9 +11,9 @@ using TypingImprovementProgram.Forms.MainPages;
 
 namespace TypingImprovementProgram.Forms
 {
-    public partial class MainPage : Form
+    public partial class MainPagesForm : Form
     {
-        public MainPage()
+        public MainPagesForm()
         {
             InitializeComponent();
         }

@@ -19,7 +19,6 @@ namespace DrawingCharactersTest
             BackColor = Color.White; // sets colour of background
         }
 
-
         protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
         {
             base.OnPaint(e);
@@ -46,7 +45,7 @@ namespace DrawingCharactersTest
                 {
                     e.Graphics.FillRectangle(
                         Brushes.Black,
-                        x - 12,
+                        x + 2,
                         y,
                         2,
                         FontHeight);
@@ -76,11 +75,17 @@ namespace DrawingCharactersTest
                     y
                 );
 
+                // SizeF is a class which measures the width and height of a character. MeasureString measures these values from a character of a specified font + size.
 
-                x += TextRenderer.MeasureText(          // measures the length of the char being drawn, adds that from the previous x coordinate
-                    character.Character.ToString(),
-                    Font
-                ).Width;
+                SizeF size = e.Graphics.MeasureString(character.Character.ToString(), Font);
+                if (character.Character == ' ')
+                {
+                    x += size.Width + 10; // increases gap for space
+                }
+                else
+                {
+                    x += size.Width - 10; // decreases gap between letters
+                }
             }
         }
     }
