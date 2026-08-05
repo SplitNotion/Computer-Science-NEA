@@ -1,1 +1,2 @@
-REMOVE DIFFICULTY SCORE IN WORDS SQL TABLE!
+1. Remove difficulty score in Words SQL Table
+2. Remove ToString() function in program.cs
