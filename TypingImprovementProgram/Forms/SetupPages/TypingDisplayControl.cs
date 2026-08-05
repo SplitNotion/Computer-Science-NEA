@@ -7,18 +7,19 @@ using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.SetupPages
 {
-    public class TypingDisplay : Control
+    public class TypingDisplayControl : Control
     {
         public List<DisplayCharacter> Characters { get; set; } = new List<DisplayCharacter>(); // stores each character being displayed as a list
-        public TypingDisplay()
+        public TypingDisplayControl()
         {
             DoubleBuffered = true; // stops flickering, draws everything onto the screen at once
 
+            TabStop = false;
             Font = new Font("Consolas", 24); // sets font
+
 
             BackColor = Color.White; // sets colour of background to white
         }
-
 
         protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
         {
@@ -43,11 +44,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 else if ((character.State == CharacterState.Current) && (character.Character == ' '))   // caret stays before space
                 {
                     e.Graphics.FillRectangle(
-                        Brushes.Black,
-                        x + 2,
-                        y,
-                        2,
-                        FontHeight);
+                        Brushes.Black,  // colour
+                        x + 2,          // x
+                        y,              // y
+                        2,              // width
+                        FontHeight);    // height
                 }
 
                 switch (character.State)

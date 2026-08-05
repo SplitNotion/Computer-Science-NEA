@@ -41,6 +41,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             panelScreen.Controls.Clear();
             screen.Dock = DockStyle.Fill;
             panelScreen.Controls.Add(screen);
+            screen.Focus();
         }
 
         private void IntroductionAcceptClicked(object sender, EventArgs e)
