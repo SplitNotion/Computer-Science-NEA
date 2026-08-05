@@ -9,11 +9,11 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 {
     internal class WordBigrams
     {
-        public Dictionary<string, int> AllBigrams { get; set; }
+        public Dictionary<string, int> PossibleBigramsDictionary { get; set; }
 
         public WordBigrams()
         {
-            AllBigrams = new Dictionary<string, int>();
+            PossibleBigramsDictionary = new Dictionary<string, int>();
             
         }
 
@@ -23,13 +23,13 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
             {
                 string bigram = word.Text.Substring(i, 2);
 
-                if (AllBigrams.ContainsKey(bigram))
+                if (PossibleBigramsDictionary.ContainsKey(bigram))
                 {
-                    AllBigrams[bigram]++;
+                    PossibleBigramsDictionary[bigram]++;
                 }
                 else
                 {
-                    AllBigrams.Add(bigram, 1);
+                    PossibleBigramsDictionary.Add(bigram, 1);
                 }
             }
 

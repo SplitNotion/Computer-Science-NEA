@@ -86,7 +86,8 @@ namespace TypingImprovementProgram.Database
                             CREATE TABLE PossibleBigrams
                             (
                                 BigramID INT PRIMARY KEY IDENTITY(1,1),
-                                Bigram CHAR(2) NOT NULL
+                                Bigram CHAR(2) UNIQUE NOT NULL,
+                                BigramFrequency INT NOT NULL
                             );
                         END;
 
@@ -172,17 +173,18 @@ namespace TypingImprovementProgram.Database
             }
         }
 
-        public void InsertIntoPossibleBigrams(string bigram)
+        public void InsertIntoPossibleBigrams(string bigram, int bigramFrequency)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
                 {
-                    string sql = @"INSERT INTO PossibleBigrams (Bigram) VALUES (@Bigram)";
+                    string sql = @"INSERT INTO PossibleBigrams (Bigram, BigramFrequency) VALUES (@Bigram, @BigramFrequency)";
 
                     using (var command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Bigram", bigram);
+                        command.Parameters.AddWithValue("@BigramFrequency", bigramFrequency);
 
                         command.ExecuteNonQuery();
                     }

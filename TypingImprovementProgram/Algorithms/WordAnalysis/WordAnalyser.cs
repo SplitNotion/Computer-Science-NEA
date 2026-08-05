@@ -29,9 +29,9 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                 analysedWords.Add(word);
             }
 
-            foreach (var bigram in Bigrams.AllBigrams)
+            foreach (var bigram in Bigrams.PossibleBigramsDictionary)    // each bigram that is contained in the bigram dictionary is inserted into the PossibleBigrams database table
             {
-                database.InsertIntoPossibleBigrams(bigram.Key);
+                database.InsertIntoPossibleBigrams(bigram.Key, bigram.Value);
             }
 
             return analysedWords;
@@ -46,7 +46,6 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
             word.Length = text.Length;
 
             word.LetterFrequency = new Dictionary<char, int>();
-
 
 
             foreach (char c in text) // calculates frequency of each letter in the word
