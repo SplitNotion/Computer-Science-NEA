@@ -13,6 +13,7 @@ namespace TypingImprovementProgram.Models
         public int Length { get; set; }
         public Dictionary<char, int> LetterFrequency { get; set; }
         public WordDifficulty Difficulty { get; set; }
+        
 
 
         public override string ToString()

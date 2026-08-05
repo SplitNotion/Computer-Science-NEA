@@ -17,7 +17,7 @@ namespace TypingImprovementProgram.Database
         }
 
 
-        public void CreateTables()
+        public void CreateTables()                                 // creates all necessary SQL tables required for the program. Checks whether they already exist.
         {
             using (var connection = GetConnection())
             {
@@ -76,6 +76,20 @@ namespace TypingImprovementProgram.Database
                                 FOREIGN KEY (WordID) REFERENCES Words(WordID)
                             );
                         END;
+
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'PossibleBigrams'
+                        )
+                        BEGIN
+                            CREATE TABLE PossibleBigrams
+                            (
+                                BigramID INT PRIMARY KEY IDENTITY(1,1),
+                                Bigram CHAR(2) NOT NULL
+                            );
+                        END;
+
 
                         ";
 
@@ -154,6 +168,24 @@ namespace TypingImprovementProgram.Database
                     command.Parameters.AddWithValue("@TotalScore", difficulty.TotalScore);
 
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void InsertIntoPossibleBigrams(string bigram)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                {
+                    string sql = @"INSERT INTO PossibleBigrams (Bigram) VALUES (@Bigram)";
+
+                    using (var command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Bigram", bigram);
+
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
         }
