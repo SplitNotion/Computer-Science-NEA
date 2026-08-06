@@ -1,5 +1,5 @@
 ﻿DROP TABLE WordLetters
 DROP TABLE WordDifficulty
-DROP TABLE Words
+DROP TABLE WordBigrams
 DROP TABLE PossibleBigrams
-
+DROP TABLE Words

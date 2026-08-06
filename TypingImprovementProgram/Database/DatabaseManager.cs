@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Algorithms.WordAnalysis;
@@ -16,6 +17,12 @@ namespace TypingImprovementProgram.Database
             return new SqlConnection(DatabaseConnection.connectionString);
         }
 
+        public Dictionary<string, int> BigramIDs { get; set; }
+
+        public DatabaseManager()
+        {
+            BigramIDs = new Dictionary<string, int>();
+        }
 
         public void CreateTables()                                 // creates all necessary SQL tables required for the program. Checks whether they already exist.
         {
@@ -99,8 +106,8 @@ namespace TypingImprovementProgram.Database
                         BEGIN
                             CREATE TABLE WordBigrams
                             (
-                                WordID INT NOT NULL
-                                BigramID INT NOT NULL,
+                                WordID INT,
+                                BigramID INT,
                                 
                                 PRIMARY KEY (WordID, BigramID),
                                 FOREIGN KEY (WordID) REFERENCES Words(WordID),
@@ -136,7 +143,7 @@ namespace TypingImprovementProgram.Database
             }
             InsertIntoWordLetters(wordID, word);
             InsertIntoWordDifficulty(wordID, word.Difficulty);
-            InsertIntoWordBigrams(wordID, word);
+            InsertIntoWordBigrams(wordID, word, BigramIDs);
         }
 
 
@@ -189,39 +196,53 @@ namespace TypingImprovementProgram.Database
             }
         }
 
-        public void InsertIntoWordBigrams(int wordID, Word word)
+        public void InsertIntoWordBigrams(int wordID, Word word, Dictionary<string, int> bigramIDs)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
                 string sql = @"INSERT INTO WordBigrams (WordID, BigramID) VALUES (@WordID, @BigramID)";
+                HashSet<string> insertedBigrams = new HashSet<string>();   // a list that doesn't store unique values
 
-                using (var command = new SqlCommand(sql, connection))
+                for (int i = 0; i < word.Length - 1; i++)
                 {
-                    command.Parameters.AddWithValue("@WordID", );
-                    command.Parameters.AddWithValue("@BigramID", );
+                    string bigram = word.Text.Substring(i, 2);
 
-                    command.ExecuteNonQuery( );
+
+                    if (insertedBigrams.Contains(bigram))
+                    {
+                        continue;
+                    }
+
+                    insertedBigrams.Add(bigram);
+                    int bigramID = bigramIDs[bigram];
+
+
+                    using (var command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@WordID", wordID);
+                        command.Parameters.AddWithValue("@BigramID", bigramID);
+
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
 
         }
 
-
-
-        public void InsertIntoPossibleBigrams(string bigram, int bigramFrequency)
+        public int InsertIntoPossibleBigrams(string bigram, int bigramFrequency)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string sql = @"INSERT INTO PossibleBigrams (Bigram, BigramFrequency) VALUES (@Bigram, @BigramFrequency)";
+                string sql = @"INSERT INTO PossibleBigrams (Bigram, BigramFrequency) OUTPUT INSERTED.BigramID VALUES (@Bigram, @BigramFrequency)";
 
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Bigram", bigram);
                     command.Parameters.AddWithValue("@BigramFrequency", bigramFrequency);
 
-                    command.ExecuteNonQuery();
+                    return (int)command.ExecuteScalar();
                 }
             }
         }

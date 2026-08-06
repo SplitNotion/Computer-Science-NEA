@@ -14,6 +14,10 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
         public WordBigramsSorter Bigrams { get; set; }
         DatabaseManager database = new DatabaseManager();
 
+        //public WordAnalyser(DatabaseManager database)
+        //{
+        //    this.database = database;
+        //}
 
         public List<Word> AnalyseFile(string filePath)  // takes each word in file, puts each word into an array, then sends each word to get analysed (AnalyseWord)
         {
@@ -31,11 +35,27 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 
             foreach (var bigram in Bigrams.PossibleBigramsDictionary)    // each bigram that is contained in the bigram dictionary is inserted into the PossibleBigrams database table
             {
-                database.InsertIntoPossibleBigrams(bigram.Key, bigram.Value);
+                int id = database.InsertIntoPossibleBigrams(bigram.Key, bigram.Value);
+
+                database.BigramIDs.Add(bigram.Key, id);
+            }
+
+
+            foreach (Word word in analysedWords)
+            {
+                database.InsertIntoTables(word);
             }
 
             return analysedWords;
         }
+
+
+
+
+
+
+
+
 
         private static Word AnalyseWord(string text) // for each word in file (one at a time given by words array), it calculates the text, length and frequency of letters as part of word object
         {
