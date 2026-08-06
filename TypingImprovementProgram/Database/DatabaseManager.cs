@@ -91,6 +91,22 @@ namespace TypingImprovementProgram.Database
                             );
                         END;
 
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'WordBigrams'
+                        )
+                        BEGIN
+                            CREATE TABLE WordBigrams
+                            (
+                                WordID INT NOT NULL
+                                BigramID INT NOT NULL,
+                                
+                                PRIMARY KEY (WordID, BigramID),
+                                FOREIGN KEY (WordID) REFERENCES Words(WordID),
+                                FOREIGN KEY (BigramID) REFERENCES PossibleBigrams(BigramID)
+                            );
+                        END;
 
                         ";
 
@@ -120,6 +136,7 @@ namespace TypingImprovementProgram.Database
             }
             InsertIntoWordLetters(wordID, word);
             InsertIntoWordDifficulty(wordID, word.Difficulty);
+            InsertIntoWordBigrams(wordID, word);
         }
 
 
@@ -145,7 +162,6 @@ namespace TypingImprovementProgram.Database
                 }
             }
         }
-
 
         private void InsertIntoWordDifficulty(int wordID, WordDifficulty difficulty)
         {
@@ -173,21 +189,39 @@ namespace TypingImprovementProgram.Database
             }
         }
 
+        public void InsertIntoWordBigrams(int wordID, Word word)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"INSERT INTO WordBigrams (WordID, BigramID) VALUES (@WordID, @BigramID)";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@WordID", );
+                    command.Parameters.AddWithValue("@BigramID", );
+
+                    command.ExecuteNonQuery( );
+                }
+            }
+
+        }
+
+
+
         public void InsertIntoPossibleBigrams(string bigram, int bigramFrequency)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
+                string sql = @"INSERT INTO PossibleBigrams (Bigram, BigramFrequency) VALUES (@Bigram, @BigramFrequency)";
+
+                using (var command = new SqlCommand(sql, connection))
                 {
-                    string sql = @"INSERT INTO PossibleBigrams (Bigram, BigramFrequency) VALUES (@Bigram, @BigramFrequency)";
+                    command.Parameters.AddWithValue("@Bigram", bigram);
+                    command.Parameters.AddWithValue("@BigramFrequency", bigramFrequency);
 
-                    using (var command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@Bigram", bigram);
-                        command.Parameters.AddWithValue("@BigramFrequency", bigramFrequency);
-
-                        command.ExecuteNonQuery();
-                    }
+                    command.ExecuteNonQuery();
                 }
             }
         }

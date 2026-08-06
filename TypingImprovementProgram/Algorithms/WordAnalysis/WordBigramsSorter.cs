@@ -7,11 +7,11 @@ using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Algorithms.WordAnalysis
 {
-    internal class WordBigrams
+    internal class WordBigramsSorter
     {
         public Dictionary<string, int> PossibleBigramsDictionary { get; set; }
 
-        public WordBigrams()
+        public WordBigramsSorter()
         {
             PossibleBigramsDictionary = new Dictionary<string, int>();
             

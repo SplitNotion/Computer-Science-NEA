@@ -11,14 +11,14 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 {
     internal class WordAnalyser
     {
-        public WordBigrams Bigrams { get; set; }
+        public WordBigramsSorter Bigrams { get; set; }
         DatabaseManager database = new DatabaseManager();
 
 
         public List<Word> AnalyseFile(string filePath)  // takes each word in file, puts each word into an array, then sends each word to get analysed (AnalyseWord)
         {
             string[] words = File.ReadAllLines(filePath);
-            Bigrams = new WordBigrams();
+            Bigrams = new WordBigramsSorter();
 
             List<Word> analysedWords = new List<Word>();
 
