@@ -35,9 +35,9 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 
             foreach (var bigram in Bigrams.PossibleBigramsDictionary)    // each bigram that is contained in the bigram dictionary is inserted into the PossibleBigrams database table
             {
-                int id = database.InsertIntoPossibleBigrams(bigram.Key, bigram.Value);
+                int id = database.InsertIntoPossibleBigrams(bigram.Key, bigram.Value);   // Each Bigram and its frequency is inserted into the PossibleBigrams table in the database. It also returns the BigramID for each bigram.
 
-                database.BigramIDs.Add(bigram.Key, id);
+                database.BigramIDs.Add(bigram.Key, id);  // Adds the Bigram and its respective ID into a dictionary in the DatabaseManager class.
             }
 
 

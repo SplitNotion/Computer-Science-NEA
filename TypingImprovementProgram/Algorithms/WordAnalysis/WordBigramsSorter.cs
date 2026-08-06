@@ -14,7 +14,6 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
         public WordBigramsSorter()
         {
             PossibleBigramsDictionary = new Dictionary<string, int>();
-            
         }
 
         public void AddWordBigrams(Word word)
@@ -32,9 +31,6 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                     PossibleBigramsDictionary.Add(bigram, 1);
                 }
             }
-
-            
-
         }
     }
 }

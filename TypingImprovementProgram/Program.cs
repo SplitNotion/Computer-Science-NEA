@@ -29,12 +29,12 @@ namespace TypingImprovementProgram
 
             List<Word> analysedWords = analyser.AnalyseFile("words.txt");
 
-            foreach (Word word in analysedWords)
-            {
-                Debug.WriteLine(word.ToString()); 
-                database.InsertIntoTables(word);
+            //foreach (Word word in analysedWords)                  redundant???
+            //{
+            //    Debug.WriteLine(word.ToString()); 
+            //    database.InsertIntoTables(word);
                 
-            }
+            //}
         }
     }
 }
