@@ -21,15 +21,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             InitializeComponent();
 
-            display.Location = new Point(100, 300);               // 100, 80
-
+            display.Location = new Point(100, 300);      
             display.Size = new Size(1320, 200);
-
             TabStop = true;
 
             Controls.Add(display);
 
-            string text = "The quick brown fox jumps over the lazy dog"; // string to draw/write
 
             List<string> lines = new List<string>
             { 

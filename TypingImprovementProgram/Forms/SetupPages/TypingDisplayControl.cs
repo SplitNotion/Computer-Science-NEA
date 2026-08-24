@@ -31,7 +31,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             float x = 20; // moves text left/right on control
             float y = 20; // moves text up/down on control
 
-            int displayedLine = 0;
             bool secondLineStarted = false;
             bool thirdLineStarted = false;
 
