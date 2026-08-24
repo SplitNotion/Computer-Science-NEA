@@ -1,3 +1,2 @@
 1. Remove difficulty score in Words SQL Table
-2. Remove ToString() function in Word class
-3. Change how WordAnalysis gets called, so analysis is not performed upon each program load
+2. Remove ToString() function in program.cs

@@ -52,6 +52,11 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 
 
 
+
+
+
+
+
         private static Word AnalyseWord(string text) // for each word in file (one at a time given by words array), it calculates the text, length and frequency of letters as part of word object
         {
             Word word = new Word();

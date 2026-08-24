@@ -242,7 +242,7 @@ namespace TypingImprovementProgram.Database
                     command.Parameters.AddWithValue("@Bigram", bigram);
                     command.Parameters.AddWithValue("@BigramFrequency", bigramFrequency);
 
-                    return (int)command.ExecuteScalar();           // stops data being duplicated (creates error), fix needed
+                    return (int)command.ExecuteScalar();
                 }
             }
         }

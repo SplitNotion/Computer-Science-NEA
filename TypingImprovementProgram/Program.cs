@@ -25,9 +25,16 @@ namespace TypingImprovementProgram
             database.CreateTables();
 
             WordAnalyser analyser = new WordAnalyser();
+            analyser.AnalyseFile("words.txt");
 
-            List<Word> analysedWords = analyser.AnalyseFile("words.txt");  // performs analysis of words, including inserting analysis data into tables
+            List<Word> analysedWords = analyser.AnalyseFile("words.txt");
 
+            //foreach (Word word in analysedWords)                  redundant???
+            //{
+            //    Debug.WriteLine(word.ToString()); 
+            //    database.InsertIntoTables(word);
+                
+            //}
         }
     }
 }

@@ -32,7 +32,7 @@ namespace TypingImprovementProgram.Models
             }
 
             return output;
-        } // REMOVE IN FUTURE
+        }
 
     }
 }
