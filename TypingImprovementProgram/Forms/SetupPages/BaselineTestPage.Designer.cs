@@ -35,11 +35,12 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(419, 238);
+            label1.Location = new Point(664, 601);
             label1.Name = "label1";
             label1.Size = new Size(345, 54);
             label1.TabIndex = 0;
             label1.Text = "Baseline Test Page";
+            label1.Click += label1_Click;
             // 
             // BaselineTestPage
             // 
@@ -48,7 +49,7 @@
             BackColor = SystemColors.ControlDarkDark;
             Controls.Add(label1);
             Name = "BaselineTestPage";
-            Size = new Size(1610, 812);
+            Size = new Size(1750, 1160);
             ResumeLayout(false);
             PerformLayout();
         }

@@ -16,14 +16,15 @@ namespace TypingImprovementProgram.Forms.SetupPages
         TypingDisplayControl display = new TypingDisplayControl();
 
         int currentIndex = 0;
+        int currentLine = 0;
 
-        public BaselineTestPage()
+        public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position
         {
             InitializeComponent();
 
-            display.Location = new Point(20, 20);
+            display.Location = new Point(305, 80);
 
-            display.Size = new Size(1000, 100);
+            display.Size = new Size(870, 180);
 
             TabStop = true;
 
@@ -31,10 +32,20 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             string text = "The quick brown fox jumps over the lazy dog"; // string to draw/write
 
+            List<string> lines = new List<string>
+            { 
+                "The quick brown fox jumps over the lazy dog ",  
+                "through the forest towards the mountain ",
+                "past the river and into the cave"
+            };
 
-            foreach (char c in text)
+            
+            for (int i = 0; i < lines.Count; i++)
             {
-                display.Characters.Add(new DisplayCharacter { Character = c }); // adds a new char object to the list
+                foreach (char c in lines[i])
+                {
+                    display.Characters.Add(new DisplayCharacter { Character = c, Line = i}); // adds a new char object to the list
+                }
             }
 
 
@@ -91,5 +102,9 @@ namespace TypingImprovementProgram.Forms.SetupPages
             display.Invalidate();
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

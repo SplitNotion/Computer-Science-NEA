@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Models;
@@ -10,6 +12,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
     public class TypingDisplayControl : Control
     {
         public List<DisplayCharacter> Characters { get; set; } = new List<DisplayCharacter>(); // stores each character being displayed as a list
+        public int CurrentLine { get; set; }
+
         public TypingDisplayControl()
         {
             DoubleBuffered = true; // stops flickering, draws everything onto the screen at once
@@ -24,11 +28,28 @@ namespace TypingImprovementProgram.Forms.SetupPages
         protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
         {
             base.OnPaint(e);
-            float x = 20;
-            float y = 20;
+            float x = 20; // moves text left/right on control
+            float y = 20; // moves text up/down on control
+
+            int displayedLine = 0;
+            bool secondLineStarted = false;
 
             foreach (DisplayCharacter character in Characters)
             {
+
+                if (character.Line < CurrentLine || character.Line > CurrentLine + 1)
+                {
+                    continue;
+                }
+
+                if (character.Line == CurrentLine + 1 && !secondLineStarted)
+                {
+                    x = 20;
+                    y = 60;
+
+                    secondLineStarted = true;
+                }
+
                 Brush brush = Brushes.Gray;
 
                 if ((character.State == CharacterState.Current) && (character.Character != ' '))  // caret jumps after each character

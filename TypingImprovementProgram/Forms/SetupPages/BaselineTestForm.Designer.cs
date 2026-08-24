@@ -39,23 +39,23 @@
             panelScreen.Dock = DockStyle.Fill;
             panelScreen.Location = new Point(0, 0);
             panelScreen.Name = "panelScreen";
-            panelScreen.Size = new Size(1682, 1053);
+            panelScreen.Size = new Size(1732, 1113);
             panelScreen.TabIndex = 0;
             panelScreen.Paint += panel1_Paint;
             // 
             // introductionPage1
             // 
             introductionPage1.BackColor = Color.Coral;
-            introductionPage1.Location = new Point(-7, 3);
+            introductionPage1.Location = new Point(-7, 0);
             introductionPage1.Name = "introductionPage1";
-            introductionPage1.Size = new Size(1700, 1100);
+            introductionPage1.Size = new Size(1739, 1153);
             introductionPage1.TabIndex = 0;
             // 
             // BaselineTestForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1682, 1053);
+            ClientSize = new Size(1732, 1113);
             Controls.Add(panelScreen);
             MinimumSize = new Size(1700, 1100);
             Name = "BaselineTestForm";

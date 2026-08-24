@@ -11,6 +11,9 @@ namespace TypingImprovementProgram.Models
         public char Character { get; set; } // stores the actual char or space for each char object
 
         public CharacterState State { get; set; } = CharacterState.Untyped; // gives each char object a state (untyped)
+
+        public int Line { get; set; }
+
     }
 
     public enum CharacterState // different states a char object can have
