@@ -16,15 +16,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
         TypingDisplayControl display = new TypingDisplayControl();
 
         int currentIndex = 0;
-        int currentLine = 0;
 
         public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position
         {
             InitializeComponent();
 
-            display.Location = new Point(305, 80);
+            display.Location = new Point(100, 300);               // 100, 80
 
-            display.Size = new Size(870, 180);
+            display.Size = new Size(1320, 200);
 
             TabStop = true;
 
@@ -34,9 +33,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             List<string> lines = new List<string>
             { 
-                "The quick brown fox jumps over the lazy dog ",  
-                "through the forest towards the mountain ",
-                "past the river and into the cave"
+                "The quick brown fox jumps over the lazy dog not to be seen ",  
+                "through the forest towards the mountain covered with snow ",
+                "past the river and into the cave where the fox saw ",
+                "something he soon wished he had never ever seen"
             };
 
             
@@ -97,6 +97,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
             if (currentIndex < display.Characters.Count)
             {
                 display.Characters[currentIndex].State = CharacterState.Current;
+
+                if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     // shifts all text lines up when second row is completed
+                {
+                    display.CurrentLine++;
+                }
             }
 
             display.Invalidate();

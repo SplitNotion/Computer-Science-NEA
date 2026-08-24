@@ -19,7 +19,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             DoubleBuffered = true; // stops flickering, draws everything onto the screen at once
 
             TabStop = false;
-            Font = new Font("Consolas", 24); // sets font
+            Font = new Font("Consolas", 30); // sets font
 
 
             BackColor = Color.White; // sets colour of background to white
@@ -33,11 +33,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             int displayedLine = 0;
             bool secondLineStarted = false;
+            bool thirdLineStarted = false;
 
             foreach (DisplayCharacter character in Characters)
             {
 
-                if (character.Line < CurrentLine || character.Line > CurrentLine + 1)
+                if (character.Line < CurrentLine || character.Line > CurrentLine + 2)
                 {
                     continue;
                 }
@@ -45,18 +46,26 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 if (character.Line == CurrentLine + 1 && !secondLineStarted)
                 {
                     x = 20;
-                    y = 60;
+                    y = 74;
 
                     secondLineStarted = true;
                 }
 
-                Brush brush = Brushes.Gray;
+                else if (character.Line == CurrentLine + 2 && !thirdLineStarted)
+                {
+                    x = 20;
+                    y = 128;
+
+                    thirdLineStarted = true;
+                }
+
+                    Brush brush = Brushes.Gray;
 
                 if ((character.State == CharacterState.Current) && (character.Character != ' '))  // caret jumps after each character
                 {
                     e.Graphics.FillRectangle(
                         Brushes.Black,
-                        x + 5,
+                        x + 7,
                         y,
                         2,
                         FontHeight);
@@ -66,7 +75,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 {
                     e.Graphics.FillRectangle(
                         Brushes.Black,  // colour
-                        x + 2,          // x
+                        x + 4,          // x
                         y,              // y
                         2,              // width
                         FontHeight);    // height
@@ -101,11 +110,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 SizeF size = e.Graphics.MeasureString(character.Character.ToString(), Font);
                 if (character.Character == ' ')
                 {
-                    x += size.Width + 10;                  // increases gap for space
+                    x += size.Width + 8;                  // increases gap for space
                 }
                 else
                 {
-                    x += size.Width - 10;                  // decreases gap between letters
+                    x += size.Width - 14;                  // decreases gap between letters
                 }
             }
 
