@@ -14,11 +14,6 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
         public WordBigramsSorter Bigrams { get; set; }
         DatabaseManager database = new DatabaseManager();
 
-        //public WordAnalyser(DatabaseManager database)
-        //{
-        //    this.database = database;
-        //}
-
         public List<Word> AnalyseFile(string filePath)  // takes each word in file, puts each word into an array, then sends each word to get analysed (AnalyseWord)
         {
             string[] words = File.ReadAllLines(filePath);
@@ -41,8 +36,19 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
             }
 
 
+            List<double> distances = new List<double>();
+
             foreach (Word word in analysedWords)
             {
+                distances.Add(word.Difficulty.AverageDistance);
+            }
+
+            double minDistance = distances.Min();
+            double maxDistance = distances.Max();
+
+            foreach (Word word in analysedWords)
+            {
+                word.Difficulty.CalculateDistanceScore(minDistance, maxDistance);
                 database.InsertIntoTables(word);
             }
 

@@ -79,6 +79,7 @@ namespace TypingImprovementProgram.Database
                                 RareCharScore INT NOT NULL,
                                 SameFingerScore INT NOT NULL,
                                 SameHandScore INT NOT NULL,
+                                DistanceScore FLOAT NOT NULL,
                                 TotalScore INT NOT NULL,
                                 FOREIGN KEY (WordID) REFERENCES Words(WordID)
                             );
@@ -176,8 +177,8 @@ namespace TypingImprovementProgram.Database
             {
                 connection.Open();
 
-                string sql = @"INSERT INTO WordDifficulty (WordID, LengthScore, AlternatingScore, SameCharScore, RareCharScore, SameFingerScore, SameHandScore, TotalScore) 
-                   VALUES (@WordID, @LengthScore, @AlternatingScore, @SameCharScore, @RareCharScore, @SameFingerScore, @SameHandScore, @TotalScore)";
+                string sql = @"INSERT INTO WordDifficulty (WordID, LengthScore, AlternatingScore, SameCharScore, RareCharScore, SameFingerScore, SameHandScore, DistanceScore, TotalScore) 
+                   VALUES (@WordID, @LengthScore, @AlternatingScore, @SameCharScore, @RareCharScore, @SameFingerScore, @SameHandScore, @DistanceScore, @TotalScore)";
 
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -189,6 +190,7 @@ namespace TypingImprovementProgram.Database
                     command.Parameters.AddWithValue("@RareCharScore", difficulty.RareCharScore);
                     command.Parameters.AddWithValue("@SameFingerScore", difficulty.SameFingerScore);
                     command.Parameters.AddWithValue("@SameHandScore", difficulty.SameHandScore);
+                    command.Parameters.AddWithValue("@DistanceScore", difficulty.DistanceScore);
                     command.Parameters.AddWithValue("@TotalScore", difficulty.TotalScore);
 
                     command.ExecuteNonQuery();

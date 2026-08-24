@@ -14,25 +14,5 @@ namespace TypingImprovementProgram.Models
         public Dictionary<char, int> LetterFrequency { get; set; }
         public WordDifficulty Difficulty { get; set; }
         
-
-
-        public override string ToString()
-        {
-            string output = "";
-
-            output += $"Word: {Text}\n";
-            output += $"Length: {Length}\n";
-
-            output += $"Word Score: {(int)Difficulty.TotalScore}\n";
-            output += "Letter Frequency:\n";
-
-            foreach (var letter in LetterFrequency)
-            {
-                output += $"{letter.Key}: {letter.Value}\n";
-            }
-
-            return output;
-        }
-
     }
 }
