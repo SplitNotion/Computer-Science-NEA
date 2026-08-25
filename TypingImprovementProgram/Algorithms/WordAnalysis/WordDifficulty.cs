@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,16 +26,22 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 
         public double TotalScore =>
             LengthScore +
-            (0.35 * AlternatingScore) +
+            AlternatingScore +
             SameCharScore +
             SameFingerScore +
             RareCharScore +
+            SameHandScore +
             DistanceScore;
 
 
         public void WordDifficultyCalculator(Word word)
         {
             double totalDistance = 0.0;
+            int sameFingerCount = 0;
+            int sameCharCount = 0;
+            int sameHandCount = 0;
+            int rareCharCount = 0;
+            double reliability = 0;
 
             for (int i = 0; i < word.Length - 1; i++)
             {
@@ -47,21 +54,23 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                 Hand hand1 = FingerMapping.GetHand(finger1);
                 Hand hand2 = FingerMapping.GetHand(finger2);
 
+
                 totalDistance += CalculateCharDistance(firstChar, secondChar);
                 AverageDistance = totalDistance / (word.Length - 1);
 
+                reliability = Math.Min((double)(word.Length - 1) / 5, 1.0);
+
                 if (finger1 == finger2) // if fingers are the same (often difficult)
                 {
-                    word.Difficulty.SameFingerScore += 2;
+                    sameFingerCount++;
                 }
                 if (firstChar == secondChar) // same letter (harder, as not expected)
                 {
-                    word.Difficulty.SameCharScore += 3;
+                    sameCharCount++;
                 }
-
                 if (hand1 == hand2) // if hands are same (easier)
                 {
-                    word.Difficulty.SameHandScore -= 1;
+                    sameHandCount++;
                 }
                 if (hand1 != hand2) // if hand is different each letter (alternating hands)
                 {
@@ -70,19 +79,37 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                 if (FingerMapping.rareCharacters.ContainsKey(firstChar))
                 {
                     word.Difficulty.RareCharScore += FingerMapping.rareCharacters[firstChar];
+                    rareCharCount++;
                 }
             }
-            if (word.Length >= 4)
+
+
+            float alternatingRatio = word.Difficulty.AlternatingHands / (word.Length - 1);
+            word.Difficulty.AlternatingScore = (int)Math.Round((1 - alternatingRatio) * 20 * reliability); // score 1-20
+
+            float sameFingerRatio = (float)sameFingerCount / (word.Length - 1);
+            word.Difficulty.SameFingerScore = (int)Math.Round(sameFingerRatio * 40 * reliability);  // score 1-40
+           
+            float sameCharRatio = (float)sameCharCount / (word.Length - 1);
+            word.Difficulty.SameCharScore = (int)Math.Round(sameCharRatio * 20 * reliability); // score 1-20
+
+           // float sameHandRatio = (float)sameHandCount / (word.Length - 1);
+           // word.Difficulty.SameHandScore = (int)Math.Round(sameHandRatio * 20 * reliability); // score 1-20
+
+            if (rareCharCount != 0)
             {
-                word.Difficulty.LengthScore += Math.Min(word.Length * 3, 50);
+                float rareCharRatio = (float)word.Difficulty.RareCharScore / rareCharCount;
+                word.Difficulty.RareCharScore = (int)Math.Round((rareCharRatio / 10) * 20 * reliability); // score 1-20
             }
             else
             {
-                word.Difficulty.LengthScore += 2;
+                word.Difficulty.RareCharScore = 0;
             }
 
-            float alternatingRatio = word.Difficulty.AlternatingHands / (word.Length - 1);
-            word.Difficulty.AlternatingScore = (1 - alternatingRatio) * 15; // max score of +15
+            int rawLength = Math.Min(word.Length, 10);  
+            word.Difficulty.LengthScore = (int)Math.Round((rawLength / 10.0) * 40); // score 1-15
+
+
 
         }
 
@@ -98,11 +125,11 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
             return Math.Sqrt((xCoordDistance * xCoordDistance) + (yCoordDistance * yCoordDistance));
         }
 
-        public void CalculateDistanceScore(double minDistance, double maxDistance)
+        public void CalculateDistanceScore(double minDistance, double maxDistance)     // calculates the Distance Score
         {
             double normalised = (AverageDistance - minDistance) / (maxDistance - minDistance);
 
-            DistanceScore = (int)Math.Round(normalised * 15);      // Distance score 1-15
+            DistanceScore = (int)Math.Round(normalised * 60);      // Distance score 1-60
         }
 
     }

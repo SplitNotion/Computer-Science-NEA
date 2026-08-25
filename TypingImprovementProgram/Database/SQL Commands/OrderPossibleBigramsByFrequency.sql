@@ -1,4 +1,3 @@
 ﻿SELECT *
-FROM PossibleBigrams
-ORDER BY BigramFrequency DESC;
-
+FROM WordDifficulty
+ORDER BY TotalScore DESC;

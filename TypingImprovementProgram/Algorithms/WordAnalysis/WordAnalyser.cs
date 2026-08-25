@@ -37,14 +37,20 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 
 
             List<double> distances = new List<double>();
+            List<double> totalScores = new List<double>();
 
             foreach (Word word in analysedWords)
             {
                 distances.Add(word.Difficulty.AverageDistance);
+                totalScores.Add(word.Difficulty.TotalScore);
             }
 
             double minDistance = distances.Min();
             double maxDistance = distances.Max();
+
+            double minScore = totalScores.Min();
+            double maxScore = totalScores.Max();
+            double avergeScore = totalScores.Average();
 
             foreach (Word word in analysedWords)
             {
