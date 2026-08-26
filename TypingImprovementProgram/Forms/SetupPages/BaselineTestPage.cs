@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Algorithms.TestGeneration;
 using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.SetupPages
@@ -21,20 +23,25 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             InitializeComponent();
 
-            display.Location = new Point(100, 300);      
-            display.Size = new Size(1320, 200);
+            GenerateBaselineTest generator = new GenerateBaselineTest();
+
+            List<string> lines = generator.GenerateBaselineText();
+
+
+            display.Location = new Point(30, 300);      
+            display.Size = new Size(1450, 200);
             TabStop = true;
 
             Controls.Add(display);
 
 
-            List<string> lines = new List<string>
-            { 
-                "The quick brown fox jumps over the lazy dog not to be seen ",  
-                "through the forest towards the mountain covered with snow ",
-                "past the river and into the cave where the fox saw ",
-                "something he soon wished he had never ever seen"
-            };
+            //List<string> lines = new List<string>
+            //{ 
+            //    "The quick brown fox jumps over the lazy dog not to be seen ",  
+            //    "through the forest towards the mountain covered with snow ",
+            //    "past the river and into the cave where the fox saw ",
+            //    "something he soon wished he had never ever seen"
+            //};
 
             
             for (int i = 0; i < lines.Count; i++)

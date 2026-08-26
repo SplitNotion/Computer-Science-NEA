@@ -4,10 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using TypingImprovementProgram.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
-namespace TypingImprovementProgram.Algorithms.WordAnalysis
+namespace TypingImprovementProgram.Models
 {
     internal class FingerMapping
     {

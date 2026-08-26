@@ -13,9 +13,8 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
     {
         public float AlternatingHands { get; set; }
         public double AverageDistance { get; set; }
+
         public int DistanceScore { get; set; }
-
-
         public int LengthScore { get; set; }
         public float AlternatingScore { get; set; }
         public int SameCharScore { get; set; }
@@ -58,7 +57,7 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
                 totalDistance += CalculateCharDistance(firstChar, secondChar);
                 AverageDistance = totalDistance / (word.Length - 1);
 
-                reliability = Math.Min((double)(word.Length - 1) / 5, 1.0);
+                reliability = Math.Min((double)(word.Length - 1) / 5, 1.0);   // reduces effect small words have on individual scores
 
                 if (finger1 == finger2) // if fingers are the same (often difficult)
                 {
@@ -107,10 +106,7 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
             }
 
             int rawLength = Math.Min(word.Length, 10);  
-            word.Difficulty.LengthScore = (int)Math.Round((rawLength / 10.0) * 40); // score 1-15
-
-
-
+            word.Difficulty.LengthScore = (int)Math.Round((rawLength / 10.0) * 40); // score 1-40
         }
 
 

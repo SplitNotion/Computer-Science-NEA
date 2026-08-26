@@ -25,6 +25,63 @@ namespace TypingImprovementProgram.Forms.SetupPages
             BackColor = Color.White; // sets colour of background to white
         }
 
+        #region OverflowPreventionFunctions
+        private void CheckLineWidth(Graphics graphics, int lineNumber, float maxWidth)
+        {
+            List<DisplayCharacter> lineCharacters = Characters.Where(c => c.Line == lineNumber).ToList();
+
+
+            while (CalculateLineWidth(graphics, lineCharacters) > maxWidth)
+            {
+                RemoveLastWord(lineCharacters);
+            }
+
+            foreach (DisplayCharacter character in Characters.Where(c => c.Line == lineNumber).ToList())
+            {
+                if (!lineCharacters.Contains(character))
+                {
+                    Characters.Remove(character);
+                }
+            };
+
+        }
+
+        private float CalculateLineWidth(Graphics graphics, List<DisplayCharacter> characters)
+        {
+            float width = 0;
+
+            foreach (DisplayCharacter character in characters)
+            {
+                SizeF size = graphics.MeasureString(character.Character.ToString(), Font);
+
+                if (character.Character == ' ')
+                {
+                    width += size.Width + 8;
+                }
+                else
+                {
+                    width += size.Width - 14;
+                }
+            }
+            return width;
+        }
+
+        private void RemoveLastWord(List<DisplayCharacter> characters)
+        {
+            if (characters.Last().Character == ' ')
+            {
+                characters.RemoveAt(characters.Count - 1);
+            }
+
+            while ((characters.Count > 0) && characters.Last().Character != ' ')
+            {
+                characters.RemoveAt(characters.Count - 1);
+            }
+
+        }
+        #endregion
+
+
         protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
         {
             base.OnPaint(e);
@@ -33,6 +90,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             bool secondLineStarted = false;
             bool thirdLineStarted = false;
+
+            float maxWidth = 1430;
+
+            CheckLineWidth(e.Graphics, CurrentLine, maxWidth);
+            CheckLineWidth(e.Graphics, CurrentLine + 1, maxWidth);
+            CheckLineWidth(e.Graphics, CurrentLine + 2, maxWidth);
 
             foreach (DisplayCharacter character in Characters)
             {

@@ -102,7 +102,6 @@ book
 company
 read
 group
-sex
 need
 many
 user
@@ -1142,7 +1141,6 @@ pretty
 southern
 yourself
 winter
-rape
 battery
 youth
 pressure
@@ -1166,7 +1164,6 @@ virtual
 device
 established
 rent
-las
 remote
 dark
 external
@@ -2221,7 +2218,7 @@ historic
 attached
 husband
 disabled
-authorized
+authorised
 crazy
 upcoming
 concert
@@ -2643,7 +2640,7 @@ recruitment
 sin
 berlin
 cute
-organized
+organised
 para
 adoption
 improving
@@ -3093,7 +3090,7 @@ tall
 somewhere
 vacuum
 dancing
-recognize
+recognise
 brass
 plaza
 survival
@@ -3127,7 +3124,7 @@ stupid
 harbor
 traveler
 segment
-realize
+realise
 regardless
 lan
 enemy
@@ -3678,7 +3675,7 @@ logical
 sauce
 fame
 extract
-specialized
+specialised
 diagnostic
 panama
 payable
@@ -4571,7 +4568,7 @@ fork
 troy
 roller
 batch
-organize
+organise
 alter
 skilled
 fitted
@@ -4776,7 +4773,7 @@ twist
 stomach
 partially
 buried
-minimize
+minimise
 wilderness
 debut
 deny
@@ -5101,7 +5098,7 @@ theology
 evident
 whats
 epic
-organizer
+organiser
 nut
 allergy
 sake
@@ -5305,7 +5302,7 @@ conscious
 accent
 eleven
 ambient
-utilize
+utilise
 mileage
 prostate
 adaptor
@@ -5373,7 +5370,7 @@ suspected
 stationery
 idle
 mustang
-unauthorized
+unauthorised
 antibody
 competent
 momentum
@@ -5620,7 +5617,7 @@ ladder
 unnecessary
 dramatically
 cork
-maximize
+maximise
 workout
 mali
 bleeding
@@ -5631,7 +5628,7 @@ purse
 contamination
 compromise
 masturbation
-optimize
+optimise
 dome
 caroline
 leu

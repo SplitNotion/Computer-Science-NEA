@@ -24,6 +24,8 @@ namespace TypingImprovementProgram.Database
             BigramIDs = new Dictionary<string, int>();
         }
 
+        #region InitalTableGenerationInsertion
+
         public void CreateTables()                                 // creates all necessary SQL tables required for the program. Checks whether they already exist.
         {
             using (var connection = GetConnection())
@@ -248,5 +250,7 @@ namespace TypingImprovementProgram.Database
                 }
             }
         }
+
+        #endregion
     }
 }
