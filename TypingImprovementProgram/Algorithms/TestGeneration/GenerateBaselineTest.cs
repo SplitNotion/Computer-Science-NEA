@@ -12,17 +12,20 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
         private readonly List<string> baselineWords = new List<string>
         {
-            "the", "each", "would", "about", "which", "set", "from", "post", "order", "group", "bug", "next",
-            "bulk", "read", "eight", "tube", "pour", "myth", "ugly", "bingo", "pink", "ray", "mime", "cult",
-            "aware", "higher", "gone", "void", "guilty", "wage", "nights", "folk", "lift", "sandy", "brick", "bull",
+            "fresh", "each", "would", "about", "which", "set", "from", "post", "order",
+            "group", "bug", "next", "bulk", "read", "eight", "tube", "pour", "myth",
+            "ugly", "bingo", "pink", "ray", "mime", "cult", "aware", "higher", "gone",
+            "void", "guilty", "wage", "start", "folk", "lift", "sandy", "brick", "bull",
 
-            "semester", "people", "because", "pressure", "certain", "prayed", "example", "clause", "operate", "plasma", "spoken", "stretch",
-            "toxic", "friends", "enable", "claim", "campus", "peace", "change", "flower", "urban", "leading", "assets", "jazz",
-            "mostly", "preview", "viking", "grade", "swift", "medal", "destiny", "object", "survey", "achieve", "supreme", "rabbit",
+            "semester", "people", "because", "pressure", "certain", "prayed", "example", "clause", "operate",
+            "plasma", "spoken", "stretch", "toxic", "friends", "enable", "claim", "campus", "peace",
+            "change", "flower", "urban", "leading", "assets", "jazz", "mostly", "preview", "viking",
+            "grade", "swift", "medal", "destiny", "object", "survey", "achieve", "supreme", "rabbit",
 
-            "amateur", "disassociate", "yesterday", "forgiven", "commission", "machinery", "subsitute", "arthritis", "designing", "backslide", "forbidden", "boulder",
-            "asylum", "continent", "meeting", "infringement", "miniature", "algorithm", "technology", "absorbed", "chemical", "complicated", "village", "wellington",
-            "pharmacy", "utilise", "unauthorised", "subjective", "experience", "keyboard", "language", "detailed", "disclaimer", "fundamental", "malpractice", "cellular"
+            "amateur", "disassociate", "yesterday", "forgiven", "commission", "machinery", "subsitute", "arthritis", "designing",
+            "backslide", "forbidden", "boulder", "asylum", "continent", "meeting", "infringement", "miniature", "algorithm",
+            "technology", "absorbed", "chemical", "complicated", "village", "wellington", "pharmacy", "utilise", "unauthorised",
+            "subjective", "experience", "keyboard", "language", "detailed", "disclaimer", "fundamental", "malpractice", "cellular"
         };
 
         public List<string> GenerateBaselineText()
@@ -34,7 +37,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             List<string> linesTest = new List<string>();
 
 
-            for (int line = 0; line < 3; line++)
+            for (int line = 0; line < 4; line++)
             {
                 List<string> tempWordList = new List<string>();
 
