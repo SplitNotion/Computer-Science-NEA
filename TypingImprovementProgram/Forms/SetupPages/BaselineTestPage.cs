@@ -26,25 +26,25 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             btnContinueBaselineTest.Visible = false;
 
-            GenerateBaselineTest generator = new GenerateBaselineTest();
-
-            List<string> lines = generator.GenerateBaselineText();
-
-
             display.Location = new Point(30, 300);
             display.Size = new Size(1450, 200);
             TabStop = true;
 
             Controls.Add(display);
+            LoadTest();
+
+            KeyPress += BaselineTestPage_KeyPress; // calls key press method
 
 
-            //List<string> lines = new List<string>
-            //{ 
-            //    "The quick brown fox jumps over the lazy dog not to be seen ",  
-            //    "through the forest towards the mountain covered with snow ",
-            //    "past the river and into the cave where the fox saw ",
-            //    "something he soon wished he had never ever seen"
-            //};
+        }
+
+        private void LoadTest()
+        {
+            display.Characters.Clear();
+
+            GenerateBaselineTest generator = new GenerateBaselineTest();
+
+            List<string> lines = generator.GenerateBaselineText();
 
 
             for (int i = 0; i < lines.Count; i++)
@@ -55,17 +55,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 }
             }
 
-
             display.Characters[0].State = CharacterState.Current; // colours the first character blue
 
-
             display.Invalidate(); // calls to redraw (e.g. OnPaint method)
-
-
-            KeyPress += BaselineTestPage_KeyPress; // calls key press method
-
+            this.Focus();
 
         }
+
 
         private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
@@ -126,7 +122,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void btnContinueBaselineTest_Click(object sender, EventArgs e)
         {
+            display.Characters.Clear();
+            currentIndex = 0; 
+            testFinished = false; 
+            display.CurrentLine = 0; 
+            btnContinueBaselineTest.Visible = false; 
+            LoadTest(); 
             
+            Invalidate();
         }
 
     }
