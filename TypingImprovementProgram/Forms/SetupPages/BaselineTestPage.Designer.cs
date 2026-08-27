@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             label1 = new Label();
+            btnContinueBaselineTest = new Button();
             SuspendLayout();
             // 
             // label1
@@ -42,14 +43,26 @@
             label1.Text = "Baseline Test Page";
             label1.Click += label1_Click;
             // 
+            // btnContinueBaselineTest
+            // 
+            btnContinueBaselineTest.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnContinueBaselineTest.Location = new Point(1390, 971);
+            btnContinueBaselineTest.Name = "btnContinueBaselineTest";
+            btnContinueBaselineTest.Size = new Size(318, 117);
+            btnContinueBaselineTest.TabIndex = 1;
+            btnContinueBaselineTest.Text = "Next Test ➔";
+            btnContinueBaselineTest.UseVisualStyleBackColor = true;
+            btnContinueBaselineTest.Click += btnContinueBaselineTest_Click;
+            // 
             // BaselineTestPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
+            Controls.Add(btnContinueBaselineTest);
             Controls.Add(label1);
             Name = "BaselineTestPage";
-            Size = new Size(1750, 1160);
+            Size = new Size(1736, 1106);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -57,5 +70,6 @@
         #endregion
 
         private Label label1;
+        private Button btnContinueBaselineTest;
     }
 }

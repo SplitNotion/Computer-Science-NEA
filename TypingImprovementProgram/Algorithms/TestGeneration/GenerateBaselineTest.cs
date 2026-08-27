@@ -18,7 +18,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             "void", "guilty", "wage", "start", "folk", "lift", "sandy", "brick", "bull",
 
             "semester", "people", "because", "pressure", "certain", "prayed", "example", "clause", "operate",
-            "plasma", "spoken", "stretch", "toxic", "friends", "enable", "claim", "campus", "peace",
+            "plasma", "spoken", "stretch", "toxic", "friends", "enable", "drain", "campus", "peace",
             "change", "flower", "urban", "leading", "assets", "jazz", "mostly", "preview", "viking",
             "grade", "swift", "medal", "destiny", "object", "survey", "achieve", "supreme", "rabbit",
 
@@ -47,7 +47,11 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
                 }
 
                 string tempSentence = string.Join(" ", tempWordList);
-                tempSentence += " ";
+
+                if (line != 3)
+                {
+                    tempSentence += " ";
+                }
 
                 linesTest.Add(tempSentence);
             }
