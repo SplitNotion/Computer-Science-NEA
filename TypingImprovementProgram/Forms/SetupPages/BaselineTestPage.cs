@@ -16,6 +16,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
     public partial class BaselineTestPage : UserControl
     {
         TypingDisplayControl display = new TypingDisplayControl();
+        GenerateBaselineTest generator = new GenerateBaselineTest();
         bool testFinished = false;
 
         int currentIndex = 0;
@@ -41,8 +42,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
         private void LoadTest()
         {
             display.Characters.Clear();
-
-            GenerateBaselineTest generator = new GenerateBaselineTest();
 
             List<string> lines = generator.GenerateBaselineText();
 

@@ -9,6 +9,14 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 {
     internal class GenerateBaselineTest
     {
+        private int testNumber = 0;
+        Random random = new Random();
+        private List<string> shuffledBaselineWords;
+
+        public GenerateBaselineTest()
+        {
+            shuffledBaselineWords = baselineWords.OrderBy(x => random.Next()).ToList();
+        }            
 
         private readonly List<string> baselineWords = new List<string>
         {
@@ -30,12 +38,10 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
         public List<string> GenerateBaselineText()
         {
-            Random random = new Random();
-
-            List<string> shuffledBaselineWords = baselineWords.OrderBy(x => random.Next()).ToList();
 
             List<string> linesTest = new List<string>();
 
+            int startIndex = testNumber * 36;
 
             for (int line = 0; line < 4; line++)
             {
@@ -43,7 +49,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
                 for (int i = 0; i < 9; i++)
                 {
-                    tempWordList.Add(shuffledBaselineWords[line * 9 + i]);
+                    tempWordList.Add(shuffledBaselineWords[startIndex + line * 9 + i]);
                 }
 
                 string tempSentence = string.Join(" ", tempWordList);
@@ -56,7 +62,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
                 linesTest.Add(tempSentence);
             }
 
-            shuffledBaselineWords.RemoveRange(0, 27);
+            testNumber++;
 
             return linesTest;
 
