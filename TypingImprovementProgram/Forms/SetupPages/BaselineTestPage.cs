@@ -35,8 +35,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             LoadTest();
 
             KeyPress += BaselineTestPage_KeyPress; // calls key press method
-
-
         }
 
         private void LoadTest()
@@ -122,13 +120,19 @@ namespace TypingImprovementProgram.Forms.SetupPages
         private void btnContinueBaselineTest_Click(object sender, EventArgs e)
         {
             display.Characters.Clear();
-            currentIndex = 0; 
-            testFinished = false; 
-            display.CurrentLine = 0; 
-            btnContinueBaselineTest.Visible = false; 
-            LoadTest(); 
-            
-            Invalidate();
+            currentIndex = 0;
+            btnContinueBaselineTest.Visible = false;
+            display.CurrentLine = 0;
+
+            if (generator.testNumber != 3)
+            {
+                testFinished = false;
+                LoadTest();
+            }
+            else
+            {
+                Controls.Remove(display);
+            }
         }
 
     }

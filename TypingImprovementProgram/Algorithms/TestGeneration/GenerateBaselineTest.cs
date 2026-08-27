@@ -9,7 +9,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 {
     internal class GenerateBaselineTest
     {
-        private int testNumber = 0;
+        public int testNumber = 0;
         Random random = new Random();
         private List<string> shuffledBaselineWords;
 
