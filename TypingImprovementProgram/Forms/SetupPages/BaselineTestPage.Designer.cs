@@ -31,15 +31,17 @@
             label1 = new Label();
             btnContinueBaselineTest = new Button();
             panel1 = new Panel();
+            keyboardVisualiserControl1 = new KeyboardVisualiserControl();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Trebuchet MS", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Trebuchet MS", 42F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(451, 76);
+            label1.Size = new Size(527, 89);
             label1.TabIndex = 0;
             label1.Text = "BASELINE TEST";
             label1.Click += label1_Click;
@@ -58,10 +60,21 @@
             // panel1
             // 
             panel1.BackColor = Color.CadetBlue;
-            panel1.Location = new Point(249, 706);
+            panel1.Controls.Add(keyboardVisualiserControl1);
+            panel1.Location = new Point(247, 654);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1220, 300);
+            panel1.Size = new Size(1220, 400);
             panel1.TabIndex = 2;
+            // 
+            // keyboardVisualiserControl1
+            // 
+            keyboardVisualiserControl1.Dock = DockStyle.Fill;
+            keyboardVisualiserControl1.Font = new Font("Arial", 24F);
+            keyboardVisualiserControl1.Location = new Point(0, 0);
+            keyboardVisualiserControl1.Name = "keyboardVisualiserControl1";
+            keyboardVisualiserControl1.Size = new Size(1220, 400);
+            keyboardVisualiserControl1.TabIndex = 0;
+            keyboardVisualiserControl1.TabStop = false;
             // 
             // BaselineTestPage
             // 
@@ -73,6 +86,7 @@
             Controls.Add(label1);
             Name = "BaselineTestPage";
             Size = new Size(1736, 1106);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -82,5 +96,6 @@
         private Label label1;
         private Button btnContinueBaselineTest;
         private Panel panel1;
+        private KeyboardVisualiserControl keyboardVisualiserControl1;
     }
 }

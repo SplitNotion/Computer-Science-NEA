@@ -35,7 +35,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Name = "KeyboardVisualiserControl";
-            Size = new Size(1220, 300);
+            Size = new Size(1220, 400);
             ResumeLayout(false);
         }
 

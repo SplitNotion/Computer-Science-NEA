@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Forms\LoginPages\" />
+    <Folder Include="Forms\UniversalForms\" />
   </ItemGroup>
 
   <ItemGroup>

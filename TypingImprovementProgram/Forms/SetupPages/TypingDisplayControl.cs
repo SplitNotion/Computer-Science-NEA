@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using TypingImprovementProgram.Models;
 
@@ -85,6 +86,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
         protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
         {
             base.OnPaint(e);
+
+            using (Pen pen = new Pen(Color.Black, 3))
+            {
+                e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
+            }
+
             float x = 20; // moves text left/right on control
             float y = 20; // moves text up/down on control
 
