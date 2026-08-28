@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.SetupPages
@@ -20,7 +21,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             TabStop = false;
             Font = new Font("Consolas", 30); // sets font
-
 
             BackColor = Color.White; // sets colour of background to white
         }

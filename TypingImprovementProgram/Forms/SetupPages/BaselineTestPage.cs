@@ -24,10 +24,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position
         {
             InitializeComponent();
+            // this.BackColor = Color.FromArgb(20, 32, 45);
 
             btnContinueBaselineTest.Visible = false;
 
-            display.Location = new Point(30, 300);
+            display.Location = new Point(30, 250);
             display.Size = new Size(1450, 200);
             TabStop = true;
 

@@ -30,23 +30,24 @@
         {
             label1 = new Label();
             btnContinueBaselineTest = new Button();
+            panel1 = new Panel();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(679, 706);
+            label1.Font = new Font("Trebuchet MS", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(345, 54);
+            label1.Size = new Size(451, 76);
             label1.TabIndex = 0;
-            label1.Text = "Baseline Test Page";
+            label1.Text = "BASELINE TEST";
             label1.Click += label1_Click;
             // 
             // btnContinueBaselineTest
             // 
-            btnContinueBaselineTest.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnContinueBaselineTest.Location = new Point(1390, 971);
+            btnContinueBaselineTest.Font = new Font("Trebuchet MS", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnContinueBaselineTest.Location = new Point(1401, 18);
             btnContinueBaselineTest.Name = "btnContinueBaselineTest";
             btnContinueBaselineTest.Size = new Size(318, 117);
             btnContinueBaselineTest.TabIndex = 1;
@@ -54,11 +55,20 @@
             btnContinueBaselineTest.UseVisualStyleBackColor = true;
             btnContinueBaselineTest.Click += btnContinueBaselineTest_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.CadetBlue;
+            panel1.Location = new Point(249, 706);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1220, 300);
+            panel1.TabIndex = 2;
+            // 
             // BaselineTestPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
+            Controls.Add(panel1);
             Controls.Add(btnContinueBaselineTest);
             Controls.Add(label1);
             Name = "BaselineTestPage";
@@ -71,5 +81,6 @@
 
         private Label label1;
         private Button btnContinueBaselineTest;
+        private Panel panel1;
     }
 }
