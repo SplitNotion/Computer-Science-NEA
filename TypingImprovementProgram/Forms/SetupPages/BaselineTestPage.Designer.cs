@@ -30,9 +30,9 @@
         {
             label1 = new Label();
             btnContinueBaselineTest = new Button();
-            panel1 = new Panel();
+            keyboardPanel = new Panel();
             keyboardVisualiserControl1 = new KeyboardVisualiserControl();
-            panel1.SuspendLayout();
+            keyboardPanel.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -57,14 +57,14 @@
             btnContinueBaselineTest.UseVisualStyleBackColor = true;
             btnContinueBaselineTest.Click += btnContinueBaselineTest_Click;
             // 
-            // panel1
+            // keyboardPanel
             // 
-            panel1.BackColor = Color.CadetBlue;
-            panel1.Controls.Add(keyboardVisualiserControl1);
-            panel1.Location = new Point(247, 654);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1220, 400);
-            panel1.TabIndex = 2;
+            keyboardPanel.BackColor = Color.CadetBlue;
+            keyboardPanel.Controls.Add(keyboardVisualiserControl1);
+            keyboardPanel.Location = new Point(247, 654);
+            keyboardPanel.Name = "keyboardPanel";
+            keyboardPanel.Size = new Size(1220, 400);
+            keyboardPanel.TabIndex = 2;
             // 
             // keyboardVisualiserControl1
             // 
@@ -81,12 +81,12 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
-            Controls.Add(panel1);
+            Controls.Add(keyboardPanel);
             Controls.Add(btnContinueBaselineTest);
             Controls.Add(label1);
             Name = "BaselineTestPage";
             Size = new Size(1736, 1106);
-            panel1.ResumeLayout(false);
+            keyboardPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -95,7 +95,7 @@
 
         private Label label1;
         private Button btnContinueBaselineTest;
-        private Panel panel1;
+        private Panel keyboardPanel;
         private KeyboardVisualiserControl keyboardVisualiserControl1;
     }
 }

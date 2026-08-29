@@ -21,6 +21,22 @@ namespace TypingImprovementProgram.Forms.SetupPages
             CreateKeyboard();
         }
 
+        public class KeyboardKey
+        {
+            public string Text { get; set; }
+            public Rectangle Bounds { get; set; }
+            public bool IsCurrent {  get; set; }
+            public bool WasIncorrect { get; set; }
+
+            public KeyboardKey(string text, Rectangle bounds)
+            {
+                Text = text;
+                Bounds = bounds;
+                IsCurrent = false;
+                WasIncorrect = false;
+            }
+        }
+
         private void CreateKeyboard()
         {
             keys.Clear();   // deletes keys to be redrawn if resized
@@ -38,7 +54,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             { 
               "QWERTYUIOP",
               "ASDFGHJKL",
-              "ZXCVBNM,."
+              "ZXCVBNM,.",
             };
 
             for (int row = 0; row < rows.Length; row++)  // loops through rows
@@ -81,9 +97,22 @@ namespace TypingImprovementProgram.Forms.SetupPages
             //    e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
             //}
 
+
+
             foreach (KeyboardKey key in keys)
             {
-                using (Brush brush = new SolidBrush(Color.LightGray))
+                Color keyColour = Color.LightGray;
+
+                if (key.WasIncorrect)
+                {
+                    keyColour = Color.Red;
+                }
+                else if (key.IsCurrent)
+                {
+                    keyColour = Color.Teal;
+                }
+
+                using (Brush brush = new SolidBrush(keyColour))
                 {
                     g.FillRectangle(brush, key.Bounds);
                 }
@@ -107,21 +136,31 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
         }
 
-
-
-    }
-
-    public class KeyboardKey
-    {
-        public string Text { get; set; }
-        public Rectangle Bounds { get; set; }
-
-        public KeyboardKey(string text, Rectangle bounds)
+        public void SetKeyColour(char currentCharacter, char? incorrectCharacter)
         {
-            Text = text;
-            Bounds = bounds;
+            foreach (KeyboardKey key in keys)
+            {
+                bool newIsCurrent = key.Text.Equals(currentCharacter.ToString(), StringComparison.OrdinalIgnoreCase);
+
+                bool newIsIncorrect = incorrectCharacter.HasValue && key.Text.Equals(incorrectCharacter.Value.ToString(), StringComparison.OrdinalIgnoreCase);
+
+                if ((key.IsCurrent != newIsCurrent) || (key.WasIncorrect !=  newIsIncorrect))
+                {
+                    key.IsCurrent = newIsCurrent;
+                    key.WasIncorrect = newIsIncorrect;
+                    Invalidate(key.Bounds);
+                }
+            }
         }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+
+        }
+
     }
 
 
+
+    
 }

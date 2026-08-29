@@ -30,7 +30,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             "change", "flower", "urban", "leading", "assets", "jazz", "mostly", "preview", "viking",
             "grade", "swift", "medal", "destiny", "object", "survey", "achieve", "supreme", "rabbit",
 
-            "amateur", "disassociate", "yesterday", "forgiven", "commission", "machinery", "subsitute", "arthritis", "designing",
+            "amateur", "disassociate", "yesterday", "forgiven", "commission", "machinery", "substitute", "arthritis", "designing",
             "backslide", "forbidden", "boulder", "asylum", "continent", "meeting", "infringement", "miniature", "algorithm",
             "technology", "absorbed", "chemical", "complicated", "village", "wellington", "pharmacy", "utilise", "unauthorised",
             "subjective", "experience", "keyboard", "language", "detailed", "disclaimer", "fundamental", "malpractice", "cellular"

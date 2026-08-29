@@ -54,6 +54,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
 
             display.Characters[0].State = CharacterState.Current; // colours the first character blue
+            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
 
             display.Invalidate(); // calls to redraw (e.g. OnPaint method)
             this.Focus();
@@ -63,6 +64,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
+            char? incorrectCharacter = null;
+
             if (testFinished)
             {
                 return;
@@ -77,19 +80,31 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         display.Characters[currentIndex].State = CharacterState.Untyped;
                         display.Characters[currentIndex - 1].State = CharacterState.Current;
                         currentIndex--;
+
+                        if (currentIndex > 0 && display.Characters[currentIndex - 1].State  == CharacterState.Incorrect)
+                        {
+                            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, display.Characters[currentIndex - 1].Character);
+                        }
+                        else
+                        {
+                            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
+                        }
                     }
                 }
                 display.Invalidate();
                 return;
             }
 
+
             if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
             {
                 display.Characters[currentIndex].State = CharacterState.Correct;          // make correct
             }
+
             else
             {
                 display.Characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
+                incorrectCharacter = display.Characters[currentIndex].Character;
             }
 
             currentIndex++;
@@ -103,6 +118,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             if (currentIndex < display.Characters.Count)
             {
                 display.Characters[currentIndex].State = CharacterState.Current;
+                keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, incorrectCharacter);
+
 
                 if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     // shifts all text lines up when second row is completed
                 {
@@ -133,6 +150,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             else
             {
                 Controls.Remove(display);
+                //keyboardPanel.Controls.Remove(keyboardVisualiserControl1);
+                keyboardPanel.Visible = false;
             }
         }
 
