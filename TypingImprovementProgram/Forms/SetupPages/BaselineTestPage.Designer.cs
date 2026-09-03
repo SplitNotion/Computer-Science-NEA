@@ -28,23 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            lblbaselineTestPage = new Label();
             btnContinueBaselineTest = new Button();
             keyboardPanel = new Panel();
             keyboardVisualiserControl1 = new KeyboardVisualiserControl();
+            lbltypedWordProgressCounter = new Label();
             keyboardPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // lblbaselineTestPage
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Trebuchet MS", 42F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(3, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(527, 89);
-            label1.TabIndex = 0;
-            label1.Text = "BASELINE TEST";
-            label1.Click += label1_Click;
+            lblbaselineTestPage.AutoSize = true;
+            lblbaselineTestPage.Font = new Font("Trebuchet MS", 42F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblbaselineTestPage.Location = new Point(3, 0);
+            lblbaselineTestPage.Name = "lblbaselineTestPage";
+            lblbaselineTestPage.Size = new Size(527, 89);
+            lblbaselineTestPage.TabIndex = 0;
+            lblbaselineTestPage.Text = "BASELINE TEST";
+            lblbaselineTestPage.Click += label1_Click;
             // 
             // btnContinueBaselineTest
             // 
@@ -76,14 +77,25 @@
             keyboardVisualiserControl1.TabIndex = 0;
             keyboardVisualiserControl1.TabStop = false;
             // 
+            // lbltypedWordProgressCounter
+            // 
+            lbltypedWordProgressCounter.AutoSize = true;
+            lbltypedWordProgressCounter.Font = new Font("Segoe UI", 28.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbltypedWordProgressCounter.Location = new Point(41, 254);
+            lbltypedWordProgressCounter.Name = "lbltypedWordProgressCounter";
+            lbltypedWordProgressCounter.Size = new Size(95, 62);
+            lbltypedWordProgressCounter.TabIndex = 3;
+            lbltypedWordProgressCounter.Text = "0/0";
+            // 
             // BaselineTestPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
+            Controls.Add(lbltypedWordProgressCounter);
             Controls.Add(keyboardPanel);
             Controls.Add(btnContinueBaselineTest);
-            Controls.Add(label1);
+            Controls.Add(lblbaselineTestPage);
             Name = "BaselineTestPage";
             Size = new Size(1736, 1106);
             keyboardPanel.ResumeLayout(false);
@@ -93,9 +105,10 @@
 
         #endregion
 
-        private Label label1;
+        private Label lblbaselineTestPage;
         private Button btnContinueBaselineTest;
         private Panel keyboardPanel;
         private KeyboardVisualiserControl keyboardVisualiserControl1;
+        private Label lbltypedWordProgressCounter;
     }
 }

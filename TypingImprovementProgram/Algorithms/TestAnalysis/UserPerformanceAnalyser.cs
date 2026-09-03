@@ -7,14 +7,14 @@ using TypingImprovementProgram.Forms.SetupPages;
 
 namespace TypingImprovementProgram.Algorithms.TestAnalysis
 {
-    internal class TestPerformanceAnalyser
+    internal class UserPerformanceAnalyser
     {
         private int incorrectCounter;
         private int totalCharactersCount;
         private int totalCharacterAttempts;
         private int totalWords;
 
-        public TestPerformanceAnalyser(BaselineTestPage baselineTestPage)
+        public UserPerformanceAnalyser(BaselineTestPage baselineTestPage)
         {
             incorrectCounter = baselineTestPage.incorrectCounter;
             totalCharactersCount = baselineTestPage.totalCharacters;

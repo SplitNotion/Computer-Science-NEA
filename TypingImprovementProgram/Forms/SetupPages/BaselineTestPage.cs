@@ -18,7 +18,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
     {
         TypingDisplayControl display = new TypingDisplayControl();
         BaselineTestGenerator generator = new BaselineTestGenerator();
-        TestPerformanceAnalyser performanceAnalyser;
+        UserPerformanceAnalyser performanceAnalyser;
 
 
         bool testFinished = false;
@@ -26,6 +26,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalCharacters { get; set; }
         public int totalCharacterAttempts { get; set; }
         public int totalWords { get; set; }
+        public int typedWords { get; set; }
 
 
         int currentIndex = 0;
@@ -33,6 +34,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position
         {
             InitializeComponent();
+
             // this.BackColor = Color.FromArgb(20, 32, 45);
 
             btnContinueBaselineTest.Visible = false;
@@ -43,18 +45,18 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             Controls.Add(display);
             LoadTest();
-
+           
             totalCharacters = display.TotalCharacters;
             totalWords = display.TotalWords;
+
+            UpdateProgressLabel();
             KeyPress += BaselineTestPage_KeyPress; // calls key press method
         }
 
         private void LoadTest()
         {
             display.Characters.Clear();
-
             List<string> lines = generator.GenerateBaselineText();
-
 
             for (int i = 0; i < lines.Count; i++)
             {
@@ -74,6 +76,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         }
 
+        public void UpdateProgressLabel()
+        {
+            lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
+        }
 
         private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
@@ -128,6 +134,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             {
                 testFinished = true;
                 btnContinueBaselineTest.Visible = true;
+                typedWords++;
+                UpdateProgressLabel();
             }
 
             if (currentIndex < display.Characters.Count)
@@ -135,6 +143,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 display.Characters[currentIndex].State = CharacterState.Current;
                 keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, incorrectCharacter);
 
+                if (display.Characters[currentIndex - 1].Character == ' ')
+                {
+                    typedWords++;
+                    lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
+                }
 
                 if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     // shifts all text lines up when second row is completed
                 {
@@ -155,7 +168,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             if (performanceAnalyser == null)
             {
-                performanceAnalyser = new TestPerformanceAnalyser(this);
+                performanceAnalyser = new UserPerformanceAnalyser(this);
             }
             performanceAnalyser.AnalyseTest();
 
@@ -163,11 +176,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
             currentIndex = 0;
             btnContinueBaselineTest.Visible = false;
             display.CurrentLine = 0;
+            typedWords = 0;
 
             if (generator.testNumber != 3) 
             {
                 testFinished = false;
                 LoadTest();
+                totalWords = display.TotalWords;
+                UpdateProgressLabel();
             }
             else
             {

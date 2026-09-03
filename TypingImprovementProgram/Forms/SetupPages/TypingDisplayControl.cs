@@ -94,6 +94,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 CheckLineWidth(graphics, CurrentLine, maxWidth);
                 CheckLineWidth(graphics, CurrentLine + 1, maxWidth);
                 CheckLineWidth(graphics, CurrentLine + 2, maxWidth);
+                CheckLineWidth(graphics, CurrentLine + 3, maxWidth);
 
                 TotalWords = GetTotalWordCount();
             }
@@ -202,6 +203,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
         private int GetTotalWordCount()
         {
             int totalWords = 0;
+
+            if (Characters[Characters.Count - 1].Character == ' ')
+            {
+                totalWords--;
+            } 
 
             foreach (DisplayCharacter character in Characters)
             {
