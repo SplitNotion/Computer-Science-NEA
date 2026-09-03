@@ -15,6 +15,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
     {
         public List<DisplayCharacter> Characters { get; set; } = new List<DisplayCharacter>(); // stores each character being displayed as a list
         public int CurrentLine { get; set; }
+        public int TotalCharacters => Characters.Count;
 
         public TypingDisplayControl()
         {

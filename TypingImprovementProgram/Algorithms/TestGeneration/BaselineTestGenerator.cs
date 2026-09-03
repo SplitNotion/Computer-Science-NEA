@@ -7,13 +7,13 @@ using TypingImprovementProgram.Database;
 
 namespace TypingImprovementProgram.Algorithms.TestGeneration
 {
-    internal class GenerateBaselineTest
+    internal class BaselineTestGenerator
     {
         public int testNumber = 0;
         Random random = new Random();
         private List<string> shuffledBaselineWords;
 
-        public GenerateBaselineTest()
+        public BaselineTestGenerator()
         {
             shuffledBaselineWords = baselineWords.OrderBy(x => random.Next()).ToList();
         }            

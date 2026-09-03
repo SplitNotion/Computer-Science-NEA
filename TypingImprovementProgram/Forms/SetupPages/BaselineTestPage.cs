@@ -8,6 +8,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Algorithms.TestAnalysis;
 using TypingImprovementProgram.Algorithms.TestGeneration;
 using TypingImprovementProgram.Models;
 
@@ -16,8 +17,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
     public partial class BaselineTestPage : UserControl
     {
         TypingDisplayControl display = new TypingDisplayControl();
-        GenerateBaselineTest generator = new GenerateBaselineTest();
+        BaselineTestGenerator generator = new BaselineTestGenerator();
+
         bool testFinished = false;
+        public int incorrectCounter { get; set; }
+        public int totalCharacters { get; set; }
+        public int totalCharacterAttempts { get; set; }
 
         int currentIndex = 0;
 
@@ -35,6 +40,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             Controls.Add(display);
             LoadTest();
 
+            totalCharacters = display.TotalCharacters;
             KeyPress += BaselineTestPage_KeyPress; // calls key press method
         }
 
@@ -64,6 +70,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
+            totalCharacterAttempts++;
             char? incorrectCharacter = null;
 
             if (testFinished)
@@ -105,6 +112,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             {
                 display.Characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
                 incorrectCharacter = display.Characters[currentIndex].Character;
+                incorrectCounter += 1;
             }
 
             currentIndex++;
@@ -137,12 +145,15 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void btnContinueBaselineTest_Click(object sender, EventArgs e)
         {
+            TestPerformanceAnalyser performanceAnalyser = new TestPerformanceAnalyser(this);
+            performanceAnalyser.AnalyseTest();
+
             display.Characters.Clear();
             currentIndex = 0;
             btnContinueBaselineTest.Visible = false;
             display.CurrentLine = 0;
 
-            if (generator.testNumber != 3)
+            if (generator.testNumber != 3) 
             {
                 testFinished = false;
                 LoadTest();
@@ -152,6 +163,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 Controls.Remove(display);
                 //keyboardPanel.Controls.Remove(keyboardVisualiserControl1);
                 keyboardPanel.Visible = false;
+                testFinished = true;
             }
         }
 
