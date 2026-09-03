@@ -12,18 +12,23 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private int incorrectCounter;
         private int totalCharactersCount;
         private int totalCharacterAttempts;
+        private int totalWords;
 
         public TestPerformanceAnalyser(BaselineTestPage baselineTestPage)
         {
             incorrectCounter = baselineTestPage.incorrectCounter;
             totalCharactersCount = baselineTestPage.totalCharacters;
             totalCharacterAttempts = baselineTestPage.totalCharacterAttempts;
+            totalWords = baselineTestPage.totalWords;
         }
 
         public void AnalyseTest()
         {
             double testAccuracy = ((totalCharactersCount - (double)incorrectCounter) / totalCharacterAttempts) * 100;
             testAccuracy = Math.Round(testAccuracy, 2);
+
         }
+
+        
     }
 }

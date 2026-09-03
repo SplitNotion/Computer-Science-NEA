@@ -16,6 +16,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public List<DisplayCharacter> Characters { get; set; } = new List<DisplayCharacter>(); // stores each character being displayed as a list
         public int CurrentLine { get; set; }
         public int TotalCharacters => Characters.Count;
+        public int TotalWords { get; private set; }
 
         public TypingDisplayControl()
         {
@@ -84,6 +85,22 @@ namespace TypingImprovementProgram.Forms.SetupPages
         #endregion
 
 
+        public void MakeDisplayReady()
+        {
+            using (Graphics graphics = CreateGraphics())
+            {
+                float maxWidth = 1430;
+
+                CheckLineWidth(graphics, CurrentLine, maxWidth);
+                CheckLineWidth(graphics, CurrentLine + 1, maxWidth);
+                CheckLineWidth(graphics, CurrentLine + 2, maxWidth);
+
+                TotalWords = GetTotalWordCount();
+            }
+            Invalidate();
+        }
+
+
         protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
         {
             base.OnPaint(e);
@@ -99,15 +116,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             bool secondLineStarted = false;
             bool thirdLineStarted = false;
 
-            float maxWidth = 1430;
-
-            CheckLineWidth(e.Graphics, CurrentLine, maxWidth);
-            CheckLineWidth(e.Graphics, CurrentLine + 1, maxWidth);
-            CheckLineWidth(e.Graphics, CurrentLine + 2, maxWidth);
-
             foreach (DisplayCharacter character in Characters)
             {
-
                 if (character.Line < CurrentLine || character.Line > CurrentLine + 2)
                 {
                     continue;
@@ -129,7 +139,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     thirdLineStarted = true;
                 }
 
-                    Brush brush = Brushes.Gray;
+                Brush brush = Brushes.Gray;
 
                 if ((character.State == CharacterState.Current) && (character.Character != ' '))  // caret jumps after each character
                 {
@@ -187,8 +197,22 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     x += size.Width - 14;                  // decreases gap between letters
                 }
             }
-
-
         }
+
+        private int GetTotalWordCount()
+        {
+            int totalWords = 0;
+
+            foreach (DisplayCharacter character in Characters)
+            {
+                if (character.Character == ' ')
+                {
+                    totalWords++;
+                }
+            }
+            return totalWords + 1;
+        }
+
+
     }
 }

@@ -18,11 +18,15 @@ namespace TypingImprovementProgram.Forms.SetupPages
     {
         TypingDisplayControl display = new TypingDisplayControl();
         BaselineTestGenerator generator = new BaselineTestGenerator();
+        TestPerformanceAnalyser performanceAnalyser;
+
 
         bool testFinished = false;
         public int incorrectCounter { get; set; }
         public int totalCharacters { get; set; }
         public int totalCharacterAttempts { get; set; }
+        public int totalWords { get; set; }
+
 
         int currentIndex = 0;
 
@@ -41,6 +45,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             LoadTest();
 
             totalCharacters = display.TotalCharacters;
+            totalWords = display.TotalWords;
             KeyPress += BaselineTestPage_KeyPress; // calls key press method
         }
 
@@ -61,6 +66,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             display.Characters[0].State = CharacterState.Current; // colours the first character blue
             keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
+
+            display.MakeDisplayReady();
 
             display.Invalidate(); // calls to redraw (e.g. OnPaint method)
             this.Focus();
@@ -145,7 +152,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void btnContinueBaselineTest_Click(object sender, EventArgs e)
         {
-            TestPerformanceAnalyser performanceAnalyser = new TestPerformanceAnalyser(this);
+
+            if (performanceAnalyser == null)
+            {
+                performanceAnalyser = new TestPerformanceAnalyser(this);
+            }
             performanceAnalyser.AnalyseTest();
 
             display.Characters.Clear();
