@@ -85,6 +85,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         #endregion
 
 
+        // Method which calls the Overflow Prevention Functions, and then gets total word count
         public void MakeDisplayReady()
         {
             using (Graphics graphics = CreateGraphics())
@@ -102,7 +103,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         }
 
 
-        protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting
+        protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting - does not happen immediately, hence separate MakeDisplayReady() method
         {
             base.OnPaint(e);
 
@@ -119,11 +120,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             foreach (DisplayCharacter character in Characters)
             {
+                // Ignore characters which are on a previous line, or a few lines ahead
                 if (character.Line < CurrentLine || character.Line > CurrentLine + 2)
                 {
                     continue;
                 }
 
+                // begin second line if next character is on next line, and new line has not already been started
                 if (character.Line == CurrentLine + 1 && !secondLineStarted)
                 {
                     x = 20;
@@ -132,6 +135,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     secondLineStarted = true;
                 }
 
+                // begin third line if next character is on next line, and new line has not already been started
                 else if (character.Line == CurrentLine + 2 && !thirdLineStarted)
                 {
                     x = 20;
@@ -142,7 +146,9 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
                 Brush brush = Brushes.Gray;
 
-                if ((character.State == CharacterState.Current) && (character.Character != ' '))  // caret jumps after each character
+
+                // caret jumps after each character
+                if ((character.State == CharacterState.Current) && (character.Character != ' '))  
                 {
                     e.Graphics.FillRectangle(
                         Brushes.Black,
@@ -152,7 +158,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         FontHeight);
                 }
 
-                else if ((character.State == CharacterState.Current) && (character.Character == ' '))   // caret stays before space
+                // caret stays before space
+                else if ((character.State == CharacterState.Current) && (character.Character == ' '))   
                 {
                     e.Graphics.FillRectangle(
                         Brushes.Black,  // colour
@@ -162,6 +169,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         FontHeight);    // height
                 }
 
+
+                // manages character colours based on state
                 switch (character.State)
                 {
                     case CharacterState.Current:
@@ -181,13 +190,16 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         break;
                 }
 
-                e.Graphics.DrawString(                      // draws the character
+
+                // draws the character
+                e.Graphics.DrawString(                      
                     character.Character.ToString(),
                     Font,
                     brush,
                     x,
                     y);
 
+                // measures the length of each character
                 SizeF size = e.Graphics.MeasureString(character.Character.ToString(), Font);
                 if (character.Character == ' ')
                 {

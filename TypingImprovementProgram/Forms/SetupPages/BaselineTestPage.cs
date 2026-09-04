@@ -18,8 +18,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
     {
         TypingDisplayControl display = new TypingDisplayControl();
         BaselineTestGenerator generator = new BaselineTestGenerator();
-        UserPerformanceAnalyser performanceAnalyser;
-
+        HesitationAnalyser hesitationAnalyser = new HesitationAnalyser();
+        PerformanceAnalyser performanceAnalyser;
 
         bool testFinished = false;
         public int incorrectCounter { get; set; }
@@ -28,10 +28,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalWords { get; set; }
         public int typedWords { get; set; }
 
-
         int currentIndex = 0;
 
-        public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position
+
+        public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
         {
             InitializeComponent();
 
@@ -91,6 +91,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 return;
             }
 
+            #region Backspace Key Function
+
             if (e.KeyChar == (char)Keys.Back)                     // allows for backspace, disallowing over space between words
             {
                 if (currentIndex > 0)
@@ -114,8 +116,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 display.Invalidate();
                 return;
             }
+            #endregion
 
 
+            #region Correct/Incorrect Character Attribute Assignment
             if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
             {
                 display.Characters[currentIndex].State = CharacterState.Correct;          // make correct
@@ -127,10 +131,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 incorrectCharacter = display.Characters[currentIndex].Character;
                 incorrectCounter += 1;
             }
+            #endregion
 
-            currentIndex++;
 
-            if (currentIndex >= display.Characters.Count)  // event for end of test
+            currentIndex++; // move to next character
+
+
+            // end of test events
+            if (currentIndex >= display.Characters.Count)  
             {
                 testFinished = true;
                 btnContinueBaselineTest.Visible = true;
@@ -138,7 +146,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 UpdateProgressLabel();
             }
 
-            if (currentIndex < display.Characters.Count)
+            // updates the current character, word count and text position on the screen
+            if (currentIndex < display.Characters.Count)  
             {
                 display.Characters[currentIndex].State = CharacterState.Current;
                 keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, incorrectCharacter);
@@ -149,7 +158,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
                 }
 
-                if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     // shifts all text lines up when second row is completed
+                // shifts all text lines up when second row is completed
+                if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     
                 {
                     display.CurrentLine++;
                 }
@@ -163,12 +173,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         }
 
+
         private void btnContinueBaselineTest_Click(object sender, EventArgs e)
         {
 
             if (performanceAnalyser == null)
             {
-                performanceAnalyser = new UserPerformanceAnalyser(this);
+                performanceAnalyser = new PerformanceAnalyser(this);
             }
             performanceAnalyser.AnalyseTest();
 
