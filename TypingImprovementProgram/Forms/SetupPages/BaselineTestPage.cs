@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
@@ -29,6 +30,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int typedWords { get; set; }
 
         int currentIndex = 0;
+
+        private Stopwatch stopwatch = new Stopwatch();
+        private List<KeystrokeTiming> timings = new List<KeystrokeTiming>();
+        private TimeSpan previousKeyTime = TimeSpan.Zero;
 
 
         public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
@@ -81,19 +86,56 @@ namespace TypingImprovementProgram.Forms.SetupPages
             lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
         }
 
+        private void StartTiming()
+        {
+            timings.Clear();
+            previousKeyTime = TimeSpan.Zero;
+            stopwatch.Restart();
+        }
+
+        private void RecordKey(char character)
+        {
+            TimeSpan currentTime = stopwatch.Elapsed;
+            TimeSpan interval = TimeSpan.Zero;
+
+            if (timings.Count > 0)
+            {
+                interval = currentTime - previousKeyTime;
+            }
+
+            timings.Add(new KeystrokeTiming
+            {
+                CharacterTyped = character,
+                TimeSinceLastTypedKey = interval,
+            });
+
+            previousKeyTime = currentTime;
+        }
+
+
         private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
+            if (currentIndex == 0)
+            {
+                StartTiming();
+            }
+
+            if (currentIndex < display.Characters.Count)
+            {
+                RecordKey(display.Characters[currentIndex].Character);
+            }
+
             totalCharacterAttempts++;
             char? incorrectCharacter = null;
 
             if (testFinished)
-            {
+            { 
                 return;
             }
 
             #region Backspace Key Function
-
-            if (e.KeyChar == (char)Keys.Back)                     // allows for backspace, disallowing over space between words
+            // allows for backspace, however disallowing over space between words
+            if (e.KeyChar == (char)Keys.Back)                     
             {
                 if (currentIndex > 0)
                 {
@@ -137,9 +179,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
             currentIndex++; // move to next character
 
 
-            // end of test events
+            // events at end of test
             if (currentIndex >= display.Characters.Count)  
             {
+                stopwatch.Stop();
+                hesitationAnalyser.AnalyseHesitaton(timings);
                 testFinished = true;
                 btnContinueBaselineTest.Visible = true;
                 typedWords++;
@@ -166,11 +210,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
 
             display.Invalidate();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
 

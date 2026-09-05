@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawingCharactersTest", "DrawingCharactersTest\DrawingCharactersTest.csproj", "{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestingProjects", "TestingProjects", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{65126FA6-ABCF-48B1-BC57-7806FB584E64} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B30DCE16-9ED2-7107-BEA8-8FA707D5FBF5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B9C64548-A394-8C4E-682B-E54CD3BBCD14} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{162E1F4C-658F-4A75-9542-E9FBC1C8E9BD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C68F39A-7481-4ECA-B812-439DE0E5D431}

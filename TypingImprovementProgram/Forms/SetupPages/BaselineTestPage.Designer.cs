@@ -45,7 +45,6 @@
             lblbaselineTestPage.Size = new Size(527, 89);
             lblbaselineTestPage.TabIndex = 0;
             lblbaselineTestPage.Text = "BASELINE TEST";
-            lblbaselineTestPage.Click += label1_Click;
             // 
             // btnContinueBaselineTest
             // 
