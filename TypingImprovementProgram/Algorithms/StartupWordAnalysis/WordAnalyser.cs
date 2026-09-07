@@ -14,21 +14,25 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
         public WordBigramsSorter Bigrams { get; set; }
         DatabaseManager database = new DatabaseManager();
 
-        public List<Word> AnalyseFile(string filePath)  // takes each word in file, puts each word into an array, then sends each word to get analysed (AnalyseWord)
+
+        // takes each word in file, puts each word into an array, then sends each word to get analysed (AnalyseWord)
+        public List<Word> AnalyseFile(string filePath)  
         {
             string[] words = File.ReadAllLines(filePath);
             Bigrams = new WordBigramsSorter();
 
             List<Word> analysedWords = new List<Word>();
 
-            foreach (string wordText in words)  // each word in file is sent to be analysed
+            // each word in file is sent to be analysed
+            foreach (string wordText in words)  
             {
                 Word word = AnalyseWord(wordText);
                 Bigrams.AddWordBigrams(word);
                 analysedWords.Add(word);
             }
 
-            foreach (var bigram in Bigrams.PossibleBigramsDictionary)    // each bigram that is contained in the bigram dictionary is inserted into the PossibleBigrams database table
+            // each bigram that is contained in the bigram dictionary is inserted into the PossibleBigrams database table
+            foreach (var bigram in Bigrams.PossibleBigramsDictionary)    
             {
                 int id = database.InsertIntoPossibleBigrams(bigram.Key, bigram.Value);   // Each Bigram and its frequency is inserted into the PossibleBigrams table in the database. It also returns the BigramID for each bigram.
 
@@ -68,8 +72,8 @@ namespace TypingImprovementProgram.Algorithms.WordAnalysis
 
 
 
-
-        private static Word AnalyseWord(string text) // for each word in file (one at a time given by words array), it calculates the text, length and frequency of letters as part of word object
+        // for each word in file (one at a time given by words array), it calculates the text, length and frequency of letters as part of word object
+        private static Word AnalyseWord(string text) 
         {
             Word word = new Word();
 

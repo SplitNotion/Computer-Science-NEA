@@ -103,7 +103,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
         }
 
 
-        protected override void OnPaint(PaintEventArgs e) // is called automatically when control needs repainting - does not happen immediately, hence separate MakeDisplayReady() method
+        // OnPaint() is called automatically when control needs repainting - does not happen immediately, hence separate MakeDisplayReady() method
+        protected override void OnPaint(PaintEventArgs e) 
         {
             base.OnPaint(e);
 

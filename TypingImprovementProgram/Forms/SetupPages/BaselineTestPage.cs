@@ -36,7 +36,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
         private TimeSpan previousKeyTime = TimeSpan.Zero;
 
 
-        public BaselineTestPage()  // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
+        // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
+        public BaselineTestPage()
         {
             InitializeComponent();
 
@@ -88,7 +89,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void StartTiming()
         {
-            timings.Clear();
             previousKeyTime = TimeSpan.Zero;
             stopwatch.Restart();
         }
@@ -183,7 +183,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             if (currentIndex >= display.Characters.Count)  
             {
                 stopwatch.Stop();
-                hesitationAnalyser.AnalyseHesitaton(timings);
                 testFinished = true;
                 btnContinueBaselineTest.Visible = true;
                 typedWords++;
@@ -237,6 +236,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
             else
             {
+                hesitationAnalyser.AnalyseHesitaton(timings);
                 Controls.Remove(display);
                 //keyboardPanel.Controls.Remove(keyboardVisualiserControl1);
                 keyboardPanel.Visible = false;

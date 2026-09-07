@@ -11,6 +11,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
     internal class HesitationAnalyser
     {
         private List<KeystrokeTiming> timings = new List<KeystrokeTiming>();
+        private List<KeystrokeTiming> baselineTimings = new List<KeystrokeTiming>();
         private Dictionary<char, double> letterMeanTimes = new Dictionary<char, double>();
         private Dictionary<char, int> letterCount = new Dictionary<char, int>();
         private Dictionary<char, double> letterTotals = new Dictionary<char, double>();
@@ -29,6 +30,13 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         {
             this.timings = timings;
 
+            baselineTimings.Clear();
+
+            foreach(KeystrokeTiming timing in timings)
+            {
+                baselineTimings.Add(timing);
+            }
+
             letterMeanTimes.Clear();
             letterCount.Clear();
             letterTotals.Clear();
@@ -43,19 +51,16 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             AnalyseLetterHesitation();
             AnalyseBigramHesitation();
-
-
-            rint high = 5;
         }
 
         private void AnalyseLetterHesitation()
         {
             // calculates the threshold in which letter should be characterised as having hesitation (via standard deviation formula)
             double sumTimings = 0.0;  //  Σx
-            int countTimings = timings.Count; // n
+            int countTimings = baselineTimings.Count; // n
             double sumSquareTimings = 0.0; // Σx^2
 
-            foreach (KeystrokeTiming timing in timings)
+            foreach (KeystrokeTiming timing in baselineTimings)
             {
                 sumTimings += timing.TimeSinceLastTypedKey.TotalSeconds;
 
@@ -67,7 +72,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             slowSpeedThreshold = meanTimings + standardDeviationTimings;
 
 
-            foreach (KeystrokeTiming timing in timings)
+            foreach (KeystrokeTiming timing in baselineTimings)
             {
                 char letter = timing.CharacterTyped;
                 double seconds = timing.TimeSinceLastTypedKey.TotalSeconds;
@@ -89,24 +94,23 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             foreach (var letter in letterMeanTimes)
             {
-                if (letter.Value > (meanTimings + (standardDeviationTimings * 0.725)))
+                if (letter.Value > (meanTimings + (standardDeviationTimings * 0.635)))
                 {
                     problemLetters.Add(letter.Key);
                 }
             }
         }
 
-
         private void AnalyseBigramHesitation()
         {
-            for (int i = 1; i < timings.Count; i++)
+            for (int i = 1; i < baselineTimings.Count; i++)
             {
-                char previousLetter = timings[i - 1].CharacterTyped;
-                char currentLetter = timings[i].CharacterTyped;
+                char previousLetter = baselineTimings[i - 1].CharacterTyped;
+                char currentLetter = baselineTimings[i].CharacterTyped;
 
                 string bigram = previousLetter + "" + currentLetter;
 
-                double seconds = timings[i].TimeSinceLastTypedKey.TotalSeconds;
+                double seconds = baselineTimings[i].TimeSinceLastTypedKey.TotalSeconds;
 
                 if (!bigramTotals.ContainsKey(bigram))
                 {
@@ -125,7 +129,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             foreach (var bigram in bigramMeanTimes)
             {
-                if (bigram.Value > (slowSpeedThreshold * 1))
+                if (bigram.Value > (slowSpeedThreshold * 0.95))
                 {
                     problemBigrams.Add(bigram.Key);
                 }
