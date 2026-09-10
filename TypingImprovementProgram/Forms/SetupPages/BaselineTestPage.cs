@@ -238,6 +238,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             {
                 hesitationAnalyser.AnalyseHesitaton(timings);
                 Controls.Remove(display);
+                lbltypedWordProgressCounter.Visible = false;
                 //keyboardPanel.Controls.Remove(keyboardVisualiserControl1);
                 keyboardPanel.Visible = false;
                 testFinished = true;
