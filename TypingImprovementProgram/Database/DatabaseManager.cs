@@ -118,6 +118,22 @@ namespace TypingImprovementProgram.Database
                             );
                         END;
 
+
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'Users'
+                        )
+                        BEGIN
+                            CREATE TABLE Users
+                            (
+                                UserID INT PRIMARY KEY IDENTITY(1,1),
+                                Username VARCHAR(50) UNIQUE NOT NULL,
+                                PasswordHash VARCHAR(256) NOT NULL,
+                                BaselineCompleted BIT NOT NULL
+                            );
+                        END;
+                        
                         ";
 
                 using (var command = new SqlCommand(sql, connection))
