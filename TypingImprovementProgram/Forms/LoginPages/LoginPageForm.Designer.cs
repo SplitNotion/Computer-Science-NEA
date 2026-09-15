@@ -30,8 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginPageForm));
             pictureBox1 = new PictureBox();
-            panelLogin = new Panel();
+            panelLoginPage = new Panel();
+            loginDisplay1 = new LoginDisplay();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelLoginPage.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -45,14 +47,21 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // panelLogin
+            // panelLoginPage
             // 
-            panelLogin.BackColor = Color.White;
-            panelLogin.BorderStyle = BorderStyle.FixedSingle;
-            panelLogin.Location = new Point(506, 141);
-            panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(720, 831);
-            panelLogin.TabIndex = 0;
+            panelLoginPage.Controls.Add(loginDisplay1);
+            panelLoginPage.Location = new Point(506, 141);
+            panelLoginPage.Name = "panelLoginPage";
+            panelLoginPage.Size = new Size(720, 831);
+            panelLoginPage.TabIndex = 1;
+            // 
+            // loginDisplay1
+            // 
+            loginDisplay1.Dock = DockStyle.Fill;
+            loginDisplay1.Location = new Point(0, 0);
+            loginDisplay1.Name = "loginDisplay1";
+            loginDisplay1.Size = new Size(720, 831);
+            loginDisplay1.TabIndex = 0;
             // 
             // LoginPageForm
             // 
@@ -60,7 +69,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
             ClientSize = new Size(1732, 1113);
-            Controls.Add(panelLogin);
+            Controls.Add(panelLoginPage);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -70,12 +79,14 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPageForm";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelLoginPage.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private PictureBox pictureBox1;
-        private Panel panelLogin;
+        private Panel panelLoginPage;
+        private LoginDisplay loginDisplay1;
     }
 }

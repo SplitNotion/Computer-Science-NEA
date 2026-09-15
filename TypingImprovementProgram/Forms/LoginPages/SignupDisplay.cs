@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TypingImprovementProgram.Forms.LoginPages
 {
-    public partial class LoginPageForm : Form
+    public partial class SignupDisplay : UserControl
     {
-        public LoginPageForm()
+        public SignupDisplay()
         {
             InitializeComponent();
         }

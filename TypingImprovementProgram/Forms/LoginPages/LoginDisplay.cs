@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace TypingImprovementProgram.Forms.LoginPages
 {
-    public partial class LoginPageForm : Form
+    public partial class LoginDisplay : UserControl
     {
-        public LoginPageForm()
+        public LoginDisplay()
         {
             InitializeComponent();
+            //BackColor = Color.FromArgb(235, 255, 255, 255);
+        }
+
+        private void lblLoginUsername_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
