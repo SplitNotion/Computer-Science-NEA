@@ -15,6 +15,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
         public LoginPageForm()
         {
             InitializeComponent();
+            panelLogin.BackColor= Color.FromArgb(235, 255, 255, 255);
         }
     }
 }

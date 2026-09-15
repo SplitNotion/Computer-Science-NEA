@@ -46,9 +46,12 @@
             // introductionPage1
             // 
             introductionPage1.BackColor = Color.Coral;
+            introductionPage1.BorderStyle = BorderStyle.FixedSingle;
             introductionPage1.Location = new Point(-7, 0);
+            introductionPage1.MaximumSize = new Size(1750, 1160);
+            introductionPage1.MinimumSize = new Size(1750, 1160);
             introductionPage1.Name = "introductionPage1";
-            introductionPage1.Size = new Size(1739, 1153);
+            introductionPage1.Size = new Size(1750, 1160);
             introductionPage1.TabIndex = 0;
             // 
             // BaselineTestForm
@@ -57,6 +60,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1732, 1113);
             Controls.Add(panelScreen);
+            MaximizeBox = false;
             MinimumSize = new Size(1700, 1100);
             Name = "BaselineTestForm";
             StartPosition = FormStartPosition.CenterScreen;

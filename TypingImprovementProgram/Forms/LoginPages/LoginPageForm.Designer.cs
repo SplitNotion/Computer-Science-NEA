@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginPageForm));
             pictureBox1 = new PictureBox();
+            panelLogin = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -44,14 +45,27 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // panelLogin
+            // 
+            panelLogin.BackColor = Color.White;
+            panelLogin.BorderStyle = BorderStyle.FixedSingle;
+            panelLogin.Location = new Point(506, 141);
+            panelLogin.Name = "panelLogin";
+            panelLogin.Size = new Size(720, 831);
+            panelLogin.TabIndex = 0;
+            // 
             // LoginPageForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
             ClientSize = new Size(1732, 1113);
+            Controls.Add(panelLogin);
             Controls.Add(pictureBox1);
-            MinimumSize = new Size(1700, 1100);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MaximumSize = new Size(1750, 1160);
+            MinimumSize = new Size(1750, 1160);
             Name = "LoginPageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPageForm";
@@ -62,5 +76,6 @@
         #endregion
 
         private PictureBox pictureBox1;
+        private Panel panelLogin;
     }
 }

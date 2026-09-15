@@ -55,7 +55,7 @@
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(220, 673);
+            panelSidebar.Size = new Size(220, 1113);
             panelSidebar.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -73,7 +73,7 @@
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new Padding(10, 60, 10, 15);
-            flowLayoutPanel1.Size = new Size(220, 673);
+            flowLayoutPanel1.Size = new Size(220, 1113);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -191,7 +191,7 @@
             panelContent.Dock = DockStyle.Fill;
             panelContent.Location = new Point(220, 0);
             panelContent.Name = "panelContent";
-            panelContent.Size = new Size(1042, 673);
+            panelContent.Size = new Size(1512, 1113);
             panelContent.TabIndex = 1;
             // 
             // dashboardPage1
@@ -199,7 +199,7 @@
             dashboardPage1.Dock = DockStyle.Fill;
             dashboardPage1.Location = new Point(0, 0);
             dashboardPage1.Name = "dashboardPage1";
-            dashboardPage1.Size = new Size(1042, 673);
+            dashboardPage1.Size = new Size(1512, 1113);
             dashboardPage1.TabIndex = 0;
             dashboardPage1.Load += dashboardPage1_Load_1;
             // 
@@ -210,7 +210,7 @@
             panelTop.Dock = DockStyle.Top;
             panelTop.Location = new Point(220, 0);
             panelTop.Name = "panelTop";
-            panelTop.Size = new Size(1042, 49);
+            panelTop.Size = new Size(1512, 49);
             panelTop.TabIndex = 1;
             // 
             // lblPageName
@@ -228,11 +228,13 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1262, 673);
+            ClientSize = new Size(1732, 1113);
             Controls.Add(panelTop);
             Controls.Add(panelContent);
             Controls.Add(panelSidebar);
-            MinimumSize = new Size(1280, 720);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimumSize = new Size(1750, 1160);
             Name = "MainPagesForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainPages";

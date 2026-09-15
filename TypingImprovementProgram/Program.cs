@@ -19,8 +19,9 @@ namespace TypingImprovementProgram
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             //ApplicationConfiguration.Initialize();
-            Application.Run(new BaselineTestForm());
-            //Application.Run(new LoginPageForm());
+            //Application.Run(new BaselineTestForm());
+            Application.Run(new LoginPageForm());
+            
 
 
             DatabaseManager database = new DatabaseManager();
@@ -30,13 +31,6 @@ namespace TypingImprovementProgram
             analyser.AnalyseFile("words.txt");
 
             List<Word> analysedWords = analyser.AnalyseFile("words.txt");
-
-            //foreach (Word word in analysedWords)                  redundant???
-            //{
-            //    Debug.WriteLine(word.ToString()); 
-            //    database.InsertIntoTables(word);
-                
-            //}
         }
     }
 }
