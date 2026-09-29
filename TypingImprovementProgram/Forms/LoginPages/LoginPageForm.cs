@@ -16,5 +16,10 @@ namespace TypingImprovementProgram.Forms.LoginPages
         {
             InitializeComponent();
         }
+
+        private void loginDisplay1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -28,19 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
+            lblLoginWelcome = new Label();
             SuspendLayout();
+            // 
+            // lblLoginWelcome
+            // 
+            lblLoginWelcome.AutoSize = true;
+            lblLoginWelcome.BackColor = SystemColors.Window;
+            lblLoginWelcome.Font = new Font("Segoe UI", 32.2F);
+            lblLoginWelcome.ForeColor = Color.Purple;
+            lblLoginWelcome.Location = new Point(33, 31);
+            lblLoginWelcome.Name = "lblLoginWelcome";
+            lblLoginWelcome.Size = new Size(174, 59);
+            lblLoginWelcome.TabIndex = 9;
+            lblLoginWelcome.Text = "Sign Up";
             // 
             // SignupDisplay
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(lblLoginWelcome);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "SignupDisplay";
-            Size = new Size(718, 829);
+            Size = new Size(628, 622);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label lblLoginWelcome;
     }
 }
