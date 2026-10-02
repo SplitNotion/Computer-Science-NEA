@@ -26,7 +26,7 @@ namespace TypingImprovementProgram.Database
 
         #region InitalTableGenerationInsertion
 
-        public void CreateTables()                                 // creates all necessary SQL tables required for the program. Checks whether they already exist.
+        public void CreateTables()                                 // creates all necessary SQL tables required for the program. Checks whether they already exist also.
         {
             using (var connection = GetConnection())
             {
@@ -117,6 +117,21 @@ namespace TypingImprovementProgram.Database
                                 FOREIGN KEY (BigramID) REFERENCES PossibleBigrams(BigramID)
                             );
                         END;
+
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'Users'
+                        )
+                        BEGIN
+                            CREATE TABLE Users
+                            (
+                                UserID INT PRIMARY KEY IDENTITY(1,1),
+                                Username VARCHAR(50) NOT NULL,
+                                PasswordHash VARCHAR(50) NOT NULL,
+                                BaselineCompleted BIT NOT NULL
+                            );
+                        END
 
                         ";
 
@@ -252,5 +267,26 @@ namespace TypingImprovementProgram.Database
         }
 
         #endregion
+
+        public void InsertNewUserAccount(string username, string password)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) VALUES (@Username, @PasswordHash, @BaselineCompleted)" ;
+
+                using (var command = new SqlCommand(sql,connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@PasswordHash", password);
+                    command.Parameters.AddWithValue("@BaselineCompleted", false);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
+
+        

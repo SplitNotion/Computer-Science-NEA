@@ -118,6 +118,7 @@
             btnCreateUserAccount.TabIndex = 18;
             btnCreateUserAccount.Text = "Create Account";
             btnCreateUserAccount.UseVisualStyleBackColor = false;
+            btnCreateUserAccount.Click += btnCreateUserAccount_Click;
             // 
             // btnReturn
             // 

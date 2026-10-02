@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Forms.MainPages;
 
 namespace TypingImprovementProgram.Forms.LoginPages
