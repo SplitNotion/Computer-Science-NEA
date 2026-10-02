@@ -12,9 +12,19 @@ namespace TypingImprovementProgram.Forms.LoginPages
 {
     public partial class SignupDisplay : UserControl
     {
+
+        public event EventHandler IfReturnClicked;
+
         public SignupDisplay()
         {
             InitializeComponent();
         }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            IfReturnClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+
     }
 }

@@ -13,24 +13,18 @@ namespace TypingImprovementProgram.Forms.LoginPages
 {
     public partial class LoginDisplay : UserControl
     {
+
+        public event EventHandler IfCreateAccountClicked;
+
         public LoginDisplay()
         {
             InitializeComponent();
             //BackColor = Color.FromArgb(235, 255, 255, 255);
         }
 
-        private void btnSignIn_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnCreateAccount_Click(object sender, EventArgs e)
         {
-            panelContent.Controls.Clear();
-            LoginDisplay loginPage = new LoginDisplay();
-            practicePage.Dock = DockStyle.Fill;
-            panelContent.Controls.Add(practicePage);
-            lblPageName.Text = "Practice";
+            IfCreateAccountClicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }

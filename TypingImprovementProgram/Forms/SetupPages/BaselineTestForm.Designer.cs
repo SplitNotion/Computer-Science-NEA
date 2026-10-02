@@ -53,6 +53,7 @@
             introductionPage1.Name = "introductionPage1";
             introductionPage1.Size = new Size(1750, 1160);
             introductionPage1.TabIndex = 0;
+            introductionPage1.Load += introductionPage1_Load;
             // 
             // BaselineTestForm
             // 

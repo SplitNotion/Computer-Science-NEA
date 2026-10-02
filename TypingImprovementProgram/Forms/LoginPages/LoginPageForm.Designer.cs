@@ -41,9 +41,8 @@
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1517, 796);
+            pictureBox1.Size = new Size(1731, 1061);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -51,10 +50,9 @@
             // panelLoginPage
             // 
             panelLoginPage.Controls.Add(loginDisplay1);
-            panelLoginPage.Location = new Point(443, 106);
-            panelLoginPage.Margin = new Padding(3, 2, 3, 2);
+            panelLoginPage.Location = new Point(506, 141);
             panelLoginPage.Name = "panelLoginPage";
-            panelLoginPage.Size = new Size(630, 623);
+            panelLoginPage.Size = new Size(720, 831);
             panelLoginPage.TabIndex = 1;
             // 
             // loginDisplay1
@@ -63,25 +61,22 @@
             loginDisplay1.BorderStyle = BorderStyle.FixedSingle;
             loginDisplay1.Dock = DockStyle.Fill;
             loginDisplay1.Location = new Point(0, 0);
-            loginDisplay1.Margin = new Padding(3, 2, 3, 2);
             loginDisplay1.Name = "loginDisplay1";
-            loginDisplay1.Size = new Size(630, 623);
+            loginDisplay1.Size = new Size(720, 831);
             loginDisplay1.TabIndex = 0;
-            loginDisplay1.Load += loginDisplay1_Load;
             // 
             // LoginPageForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
-            ClientSize = new Size(1517, 796);
+            ClientSize = new Size(1731, 1061);
             Controls.Add(panelLoginPage);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
-            MaximumSize = new Size(1533, 880);
-            MinimumSize = new Size(1533, 782);
+            MaximumSize = new Size(1749, 1158);
+            MinimumSize = new Size(1749, 1027);
             Name = "LoginPageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPageForm";

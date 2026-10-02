@@ -43,9 +43,9 @@
             lblLoginPassword.BackColor = Color.Transparent;
             lblLoginPassword.Font = new Font("Trebuchet MS", 16F, FontStyle.Bold);
             lblLoginPassword.ForeColor = SystemColors.ButtonShadow;
-            lblLoginPassword.Location = new Point(33, 334);
+            lblLoginPassword.Location = new Point(38, 445);
             lblLoginPassword.Name = "lblLoginPassword";
-            lblLoginPassword.Size = new Size(106, 27);
+            lblLoginPassword.Size = new Size(132, 35);
             lblLoginPassword.TabIndex = 7;
             lblLoginPassword.Text = "Password";
             // 
@@ -54,10 +54,9 @@
             textBoxLoginPassword.BackColor = Color.Gainsboro;
             textBoxLoginPassword.BorderStyle = BorderStyle.FixedSingle;
             textBoxLoginPassword.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxLoginPassword.Location = new Point(33, 367);
-            textBoxLoginPassword.Margin = new Padding(3, 2, 3, 2);
+            textBoxLoginPassword.Location = new Point(38, 489);
             textBoxLoginPassword.Name = "textBoxLoginPassword";
-            textBoxLoginPassword.Size = new Size(565, 43);
+            textBoxLoginPassword.Size = new Size(645, 51);
             textBoxLoginPassword.TabIndex = 6;
             // 
             // lblLoginUsername
@@ -66,9 +65,9 @@
             lblLoginUsername.BackColor = Color.Transparent;
             lblLoginUsername.Font = new Font("Trebuchet MS", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblLoginUsername.ForeColor = SystemColors.ButtonShadow;
-            lblLoginUsername.Location = new Point(33, 216);
+            lblLoginUsername.Location = new Point(38, 288);
             lblLoginUsername.Name = "lblLoginUsername";
-            lblLoginUsername.Size = new Size(115, 27);
+            lblLoginUsername.Size = new Size(146, 36);
             lblLoginUsername.TabIndex = 5;
             lblLoginUsername.Text = "Username";
             // 
@@ -77,10 +76,9 @@
             textBoxLoginUsername.BackColor = Color.Gainsboro;
             textBoxLoginUsername.BorderStyle = BorderStyle.FixedSingle;
             textBoxLoginUsername.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxLoginUsername.Location = new Point(33, 248);
-            textBoxLoginUsername.Margin = new Padding(3, 2, 3, 2);
+            textBoxLoginUsername.Location = new Point(38, 331);
             textBoxLoginUsername.Name = "textBoxLoginUsername";
-            textBoxLoginUsername.Size = new Size(565, 43);
+            textBoxLoginUsername.Size = new Size(645, 51);
             textBoxLoginUsername.TabIndex = 4;
             // 
             // lblLoginWelcome
@@ -89,9 +87,9 @@
             lblLoginWelcome.BackColor = SystemColors.Window;
             lblLoginWelcome.Font = new Font("Segoe UI", 32.2F);
             lblLoginWelcome.ForeColor = Color.Purple;
-            lblLoginWelcome.Location = new Point(33, 31);
+            lblLoginWelcome.Location = new Point(38, 41);
             lblLoginWelcome.Name = "lblLoginWelcome";
-            lblLoginWelcome.Size = new Size(240, 59);
+            lblLoginWelcome.Size = new Size(297, 72);
             lblLoginWelcome.TabIndex = 8;
             lblLoginWelcome.Text = "Get Started";
             // 
@@ -100,9 +98,10 @@
             btnCreateAccount.BackColor = Color.WhiteSmoke;
             btnCreateAccount.BackgroundImageLayout = ImageLayout.None;
             btnCreateAccount.Font = new Font("Trebuchet MS", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCreateAccount.Location = new Point(33, 424);
+            btnCreateAccount.Location = new Point(38, 565);
+            btnCreateAccount.Margin = new Padding(3, 4, 3, 4);
             btnCreateAccount.Name = "btnCreateAccount";
-            btnCreateAccount.Size = new Size(190, 30);
+            btnCreateAccount.Size = new Size(217, 40);
             btnCreateAccount.TabIndex = 9;
             btnCreateAccount.TabStop = false;
             btnCreateAccount.Text = "New? Create Account";
@@ -113,17 +112,17 @@
             // 
             btnSignIn.BackColor = Color.WhiteSmoke;
             btnSignIn.Font = new Font("Trebuchet MS", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSignIn.Location = new Point(164, 498);
+            btnSignIn.Location = new Point(187, 664);
+            btnSignIn.Margin = new Padding(3, 4, 3, 4);
             btnSignIn.Name = "btnSignIn";
-            btnSignIn.Size = new Size(269, 60);
+            btnSignIn.Size = new Size(307, 80);
             btnSignIn.TabIndex = 10;
             btnSignIn.Text = "Sign In";
             btnSignIn.UseVisualStyleBackColor = false;
-            btnSignIn.Click += btnSignIn_Click;
             // 
             // LoginDisplay
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
@@ -134,9 +133,8 @@
             Controls.Add(textBoxLoginPassword);
             Controls.Add(lblLoginUsername);
             Controls.Add(textBoxLoginUsername);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "LoginDisplay";
-            Size = new Size(628, 622);
+            Size = new Size(718, 829);
             ResumeLayout(false);
             PerformLayout();
         }

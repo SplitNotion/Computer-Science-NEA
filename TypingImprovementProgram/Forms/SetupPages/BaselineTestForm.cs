@@ -48,5 +48,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             ShowScreen(new BaselineTestPage());
         }
+
+        private void introductionPage1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
