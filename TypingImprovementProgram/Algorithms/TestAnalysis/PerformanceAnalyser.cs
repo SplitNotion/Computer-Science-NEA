@@ -23,8 +23,8 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         private Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
 
-        private Dictionary<char, int> problemLetters = new Dictionary<char, int>();
-        private Dictionary<string, int> problemBigrams = new Dictionary<string, int>();
+        private Dictionary<char, (double, bool)> problemLetters = new Dictionary<char, (double, bool)>();
+        private Dictionary<string, (double, bool)> problemBigrams = new Dictionary<string, (double, bool)>();
         
 
 
@@ -71,17 +71,29 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
                 char letter = item.Key;
                 int opportunities = item.Value;
 
-                if (opportunities < 5)
+                if (opportunities < 5 || letter == ' ')
                 {
                     continue;
                 }
 
                 int errors = incorrectLetters.ContainsKey(letter) ? incorrectLetters[letter] : 0;
-                double errorRate = (double)errors / opportunities;
+                double errorRate = ((double)errors / opportunities) * 100;
+                bool hesitated = hesitatedLetters.Contains(letter);
 
-                double totalScore = 0.7 * errorRate;
+                // testLetters.Add(letter, errorRate);
 
+                if (opportunities >= 5 && (errorRate >= 2 && hesitated))
+                {
+                    problemLetters.Add(letter, (errorRate, true));
+                }
+
+                else if (opportunities >= 5 && errorRate >= 4)
+                {
+                    problemLetters.Add(letter, (errorRate, false));
+                }
             }
+
+
 
 
 
