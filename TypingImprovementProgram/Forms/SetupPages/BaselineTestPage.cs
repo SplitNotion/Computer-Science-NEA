@@ -31,6 +31,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
         public Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
+        public Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
 
         int currentIndex = 0;
 
@@ -82,6 +83,25 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         letterOpportunities.Add(c, 1);
                     }
                 }
+
+                // EDIT NEEDED
+                for (int j = 0; j < lines[i].Length - 1; j++)
+                {
+                    string bigram = "" + lines[i][j] + lines[i][j + 1];
+
+                    if (!bigram.Contains(" "))
+                    {
+                        if (bigramOpportunities.ContainsKey(bigram))
+                        {
+                            bigramOpportunities[bigram]++;
+                        }
+                        else
+                        {
+                            bigramOpportunities.Add(bigram, 1);
+                        }
+                    }
+                }
+
             }
 
             display.Characters[0].State = CharacterState.Current; // colours the first character blue
@@ -208,7 +228,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     {
                         incorrectBigrams.Add(bigramBefore, 1);
                     }
-                    else if (incorrectBigrams.ContainsKey(bigramBefore))
+                    else if (incorrectBigrams.ContainsKey(bigramBefore) && (incorrectBigrams[bigramBefore] < bigramOpportunities[bigramBefore]))
                     {
                         incorrectBigrams[bigramBefore]++;
                     }
@@ -222,7 +242,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     {
                         incorrectBigrams.Add(bigramAfter, 1);
                     }
-                    else if (incorrectBigrams.ContainsKey(bigramAfter))
+                    else if (incorrectBigrams.ContainsKey(bigramAfter) && (incorrectBigrams[bigramAfter] < bigramOpportunities[bigramAfter]))
                     {
                         incorrectBigrams[bigramAfter]++;
                     }
