@@ -54,7 +54,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         }
 
 
-        // calculates the threshold in which letter should be characterised as having hesitation(via standard deviation formula)
+        // calculates the threshold in which letter should be characterised as having hesitation (via standard deviation formula)
         private void AnalyseLetterHesitation()
         {
             double sumTimings = 0.0;  //  Σx
@@ -95,7 +95,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             foreach (var letter in letterMeanTimes)
             {
-                if (letter.Value > (meanTimings + (standardDeviationTimings * 0.635)))  // needs adjustment
+                if (letter.Value > (meanTimings + (standardDeviationTimings * 0.3)))  // needs adjustment
                 {
                     hesitatedLetters.Add(letter.Key);
                 }

@@ -30,6 +30,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int typedWords { get; set; }
         public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
+        public Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
 
         int currentIndex = 0;
 
@@ -71,6 +72,15 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 foreach (char c in lines[i])
                 {
                     display.Characters.Add(new DisplayCharacter { Character = c, Line = i }); // adds a new char object to the list
+
+                    if (letterOpportunities.ContainsKey(c))
+                    {
+                        letterOpportunities[c]++;
+                    }
+                    else
+                    {
+                        letterOpportunities.Add(c, 1);
+                    }
                 }
             }
 
@@ -180,7 +190,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 char character = display.Characters[currentIndex].Character;              
                 if (!incorrectLetters.ContainsKey(character))
                 {
-                    incorrectLetters.Add(character, 0);
+                    incorrectLetters.Add(character, 1);
                 }
                 else if (incorrectLetters.ContainsKey(character))
                 {
@@ -284,8 +294,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 hesitationAnalyser.AnalyseHesitaton(timings);
                 performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
 
-                performanceAnalyser.AnalyseTest();
-                performanceAnalyser.MistakeAnalyser(incorrectLetters, incorrectBigrams);
+                //performanceAnalyser.AnalyseTest(incorrectLetters, incorrectBigrams);
 
                 Controls.Remove(display);
                 lbltypedWordProgressCounter.Visible = false;
