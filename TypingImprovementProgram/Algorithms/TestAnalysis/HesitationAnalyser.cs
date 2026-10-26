@@ -20,8 +20,8 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private Dictionary<string, int> bigramCount = new Dictionary<string, int>();
         private Dictionary<string, double> bigramTotals = new Dictionary<string, double>();
 
-        private List<char> problemLetters = new List<char>();
-        private List<string> problemBigrams = new List<string>();
+        public List<char> hesitatedLetters = new List<char>();
+        public List<string> hesitatedBigrams = new List<string>();
 
 
         private double slowSpeedThreshold;
@@ -45,17 +45,18 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             bigramCount.Clear();
             bigramTotals.Clear();
 
-            problemLetters.Clear();
-            problemBigrams.Clear();
-
+            hesitatedLetters.Clear();
+            hesitatedBigrams.Clear();
 
             AnalyseLetterHesitation();
             AnalyseBigramHesitation();
+
         }
 
+
+        // calculates the threshold in which letter should be characterised as having hesitation(via standard deviation formula)
         private void AnalyseLetterHesitation()
         {
-            // calculates the threshold in which letter should be characterised as having hesitation (via standard deviation formula)
             double sumTimings = 0.0;  //  Σx
             int countTimings = baselineTimings.Count; // n
             double sumSquareTimings = 0.0; // Σx^2
@@ -94,9 +95,9 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             foreach (var letter in letterMeanTimes)
             {
-                if (letter.Value > (meanTimings + (standardDeviationTimings * 0.635)))
+                if (letter.Value > (meanTimings + (standardDeviationTimings * 0.635)))  // needs adjustment
                 {
-                    problemLetters.Add(letter.Key);
+                    hesitatedLetters.Add(letter.Key);
                 }
             }
         }
@@ -131,11 +132,11 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             {
                 if (bigram.Value > (slowSpeedThreshold * 0.95))
                 {
-                    problemBigrams.Add(bigram.Key);
+                    hesitatedBigrams.Add(bigram.Key);
                 }
             }
 
-            problemBigrams.RemoveAll(bigram => bigram.Contains(' '));
+            hesitatedBigrams.RemoveAll(bigram => bigram.Contains(' '));
         }
 
     }

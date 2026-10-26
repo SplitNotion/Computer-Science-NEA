@@ -28,6 +28,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalCharacterAttempts { get; set; }
         public int totalWords { get; set; }
         public int typedWords { get; set; }
+        public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
+        public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
 
         int currentIndex = 0;
 
@@ -161,7 +163,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             #endregion
 
 
-            #region Correct/Incorrect Character Attribute Assignment
+            #region Correct/Incorrect Character Attribute Assignment and Recording
             if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
             {
                 display.Characters[currentIndex].State = CharacterState.Correct;          // make correct
@@ -172,7 +174,51 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 display.Characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
                 incorrectCharacter = display.Characters[currentIndex].Character;
                 incorrectCounter += 1;
+
+
+                // adds incorrect character to a dictionary/increments occurences if it has been incorrectly typed
+                char character = display.Characters[currentIndex].Character;              
+                if (!incorrectLetters.ContainsKey(character))
+                {
+                    incorrectLetters.Add(character, 0);
+                }
+                else if (incorrectLetters.ContainsKey(character))
+                {
+                    incorrectLetters[character]++;
+                }
+
+                // adds incorrect bigrams (e.g. word => 'wo' and 'or') to a dictionary/increments occurences if it has been incorrectly typed
+
+
+                if (currentIndex > 0 && display.Characters[currentIndex - 1].Character != ' ' && display.Characters[currentIndex].Character != ' ')
+                {
+                    string bigramBefore = "" + display.Characters[currentIndex - 1].Character + display.Characters[currentIndex].Character;
+
+                    if (!incorrectBigrams.ContainsKey(bigramBefore))
+                    {
+                        incorrectBigrams.Add(bigramBefore, 1);
+                    }
+                    else if (incorrectBigrams.ContainsKey(bigramBefore))
+                    {
+                        incorrectBigrams[bigramBefore]++;
+                    }
+                }
+
+                if (currentIndex < display.Characters.Count - 1 && display.Characters[currentIndex + 1].Character != ' ' && display.Characters[currentIndex].Character != ' ')
+                {
+                    string bigramAfter = "" + display.Characters[currentIndex].Character + display.Characters[currentIndex + 1].Character;
+
+                    if (!incorrectBigrams.ContainsKey(bigramAfter))
+                    {
+                        incorrectBigrams.Add(bigramAfter, 1);
+                    }
+                    else if (incorrectBigrams.ContainsKey(bigramAfter))
+                    {
+                        incorrectBigrams[bigramAfter]++;
+                    }
+                }
             }
+
             #endregion
 
 
@@ -214,13 +260,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void btnContinueBaselineTest_Click(object sender, EventArgs e)
         {
-
-            if (performanceAnalyser == null)
-            {
-                performanceAnalyser = new PerformanceAnalyser(this);
-            }
-            performanceAnalyser.AnalyseTest();
-
             display.Characters.Clear();
             currentIndex = 0;
             btnContinueBaselineTest.Visible = false;
@@ -229,6 +268,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             if (generator.testNumber != 3) 
             {
+                //if (performanceAnalyser == null)
+                //{
+                //    performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
+                //}
+                //performanceAnalyser.AnalyseTest();
+
                 testFinished = false;
                 LoadTest();
                 totalWords = display.TotalWords;
@@ -237,6 +282,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
             else
             {
                 hesitationAnalyser.AnalyseHesitaton(timings);
+                performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
+
+                performanceAnalyser.AnalyseTest();
+                performanceAnalyser.MistakeAnalyser(incorrectLetters, incorrectBigrams);
+
                 Controls.Remove(display);
                 lbltypedWordProgressCounter.Visible = false;
                 //keyboardPanel.Controls.Remove(keyboardVisualiserControl1);

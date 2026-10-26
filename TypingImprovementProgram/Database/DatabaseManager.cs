@@ -26,7 +26,8 @@ namespace TypingImprovementProgram.Database
 
         #region InitalTableGenerationInsertion
 
-        public void CreateTables()                                 // creates all necessary SQL tables required for the program. Checks whether they already exist also.
+        // creates all necessary SQL tables required for the program. Checks whether they already exist also.
+        public void CreateTables()                                 
         {
             using (var connection = GetConnection())
             {
@@ -133,7 +134,39 @@ namespace TypingImprovementProgram.Database
                             );
                         END
 
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'UserLetterStats'
+                        )
+                        BEGIN
+                            CREATE TABLE UserLetterStats
+                            (
+                                UserID INT NOT NULL REFERENCES Users(UserID),
+                                Letter VARCHAR(1) NOT NULL,
+                                Accuracy INT NOT NULL,
+
+                                PRIMARY KEY (UserID, Letter)
+                            );
+                        END
+
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'UserBigramStats'
+                        )
+                        BEGIN
+                            CREATE TABLE UserBigramStats
+                            (
+                                UserID INT NOT NULL REFERENCES Users(UserID),
+                                Bigram VARCHAR(2) NOT NULL,
+                                Accuracy INT NOT NULL,
+
+                                PRIMARY KEY (UserID, Bigram)
+                            );
+                        END
                         ";
+
 
                 using (var command = new SqlCommand(sql, connection))
                 {
