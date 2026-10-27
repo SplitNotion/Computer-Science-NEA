@@ -51,6 +51,9 @@ namespace TypingImprovementProgram.Forms.LoginPages
             screen.Focus();
         }
 
-
+        private void LoginPageForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

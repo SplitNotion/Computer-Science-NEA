@@ -1,12 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Algorithms.WordAnalysis;
 using TypingImprovementProgram.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace TypingImprovementProgram.Database
 {
@@ -315,6 +317,46 @@ namespace TypingImprovementProgram.Database
                     command.Parameters.AddWithValue("@BaselineCompleted", false);
 
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public string ValidateLogin(string username, string password, out int userID, out bool baselineCompleted)
+        {
+            userID = 0;
+            baselineCompleted = false;
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT * FROM Users WHERE Username = @Username";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string storedPassword = (string)reader["PasswordHash"];
+
+                            if (password == storedPassword)
+                            {
+                                userID = (int)reader["UserID"];
+                                baselineCompleted = (bool)reader["baselineCompleted"];
+                                return "Success";
+                            }
+                            else
+                            {
+                                return "Incorrect Password";
+                            }
+                        }
+                        else
+                        {
+                            return "Username not found";
+                        }
+                    }
                 }
             }
         }

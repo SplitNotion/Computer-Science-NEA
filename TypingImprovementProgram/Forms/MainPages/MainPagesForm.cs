@@ -81,5 +81,10 @@ namespace TypingImprovementProgram.Forms
         {
 
         }
+
+        private void MainPagesForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

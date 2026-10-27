@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TypingImprovementProgram.Algorithms.UserProcessingAlgorithms;
+using TypingImprovementProgram.Forms.SetupPages;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace TypingImprovementProgram.Forms.LoginPages
 {
@@ -21,6 +26,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
             InitializeComponent();
         }
 
+
         private void btnReturn_Click(object sender, EventArgs e)
         {
             IfReturnClicked?.Invoke(this, EventArgs.Empty);
@@ -28,9 +34,122 @@ namespace TypingImprovementProgram.Forms.LoginPages
 
         private void btnCreateUserAccount_Click(object sender, EventArgs e)
         {
-            UserLogin userLogin = new UserLogin();
+            string username = textBoxSignUpUsername.Text.Trim();
+            string password = textboxSignUpPassword.Text.Trim();
+            string confirmPassword = textBoxReenterPassword.Text.Trim();
 
-            userLogin.CreateAccount(textBoxSignUpUsername.Text, textBoxLoginPassword.Text);
+            bool valid = false;
+
+            valid = AccountCreationValidator(username, password, confirmPassword);
+
+            if (valid)
+            {
+                UserLogin userLogin = new UserLogin();
+
+                userLogin.CreateAccount(username, password);
+
+                this.FindForm().Hide();
+
+                BaselineTestForm baselineTestForm = new BaselineTestForm();
+                baselineTestForm.Show();
+            }
         }
+
+        private bool AccountCreationValidator(string username, string password, string confirmPassword)
+        {
+
+            #region empty textboxes event handling
+
+            if (username.Length == 0)
+            {
+                if (password.Length == 0)
+                {
+                    if (confirmPassword.Length == 0)
+                    {
+                        MessageBox.Show("  Boxes have been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("  Username and Password has been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (confirmPassword.Length == 0)
+                    {
+                        MessageBox.Show("  Username and Confirm Password has been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("  Username has been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+            }
+            else if (password.Length == 0)
+            {
+                if (confirmPassword.Length == 0)
+                {
+                    MessageBox.Show("  Password and Confirm Password has been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                else
+                {
+                    MessageBox.Show("  Password has been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            else if (confirmPassword.Length == 0)
+            {
+                MessageBox.Show("  Confirm Password has been left blank!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            #endregion
+
+            #region textbox inputs handling
+            List<string> passwordErrors = new List<string>();
+
+            if (username.Length < 5)
+            {
+                MessageBox.Show("  Username must be at least 5 characters long!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return false;
+            }
+
+            if (password.Length < 5)
+            {
+                passwordErrors.Add("   Password must be at least 5 characters long!");
+            }
+
+            if (!password.Any(char.IsUpper))
+            {
+                passwordErrors.Add("   Password must contain at least one uppercase character!");
+            }
+
+            if (!password.Any(c => !char.IsLetterOrDigit(c)))
+            {
+                passwordErrors.Add("   Password must contain at least one special character!");
+            }
+
+            if (passwordErrors.Count > 0)
+            {
+                MessageBox.Show(string.Join("\n", passwordErrors), "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+                return false;
+            }
+
+            else if (password != confirmPassword)
+            {
+                MessageBox.Show("  Password and Confirm Password inputs must match!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return false;
+            }
+            #endregion
+
+            return true;
+        }
+
+
     }
 }

@@ -53,5 +53,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
 
         }
+
+        private void BaselineTestForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

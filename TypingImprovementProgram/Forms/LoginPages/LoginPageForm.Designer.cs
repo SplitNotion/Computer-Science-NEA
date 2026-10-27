@@ -80,6 +80,7 @@
             Name = "LoginPageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginPageForm";
+            FormClosing += LoginPageForm_FormClosing;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelLoginPage.ResumeLayout(false);
             ResumeLayout(false);

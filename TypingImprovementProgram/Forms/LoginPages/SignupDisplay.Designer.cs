@@ -32,7 +32,7 @@
             lblLoginUsername = new Label();
             textBoxSignUpUsername = new TextBox();
             lblLoginPassword = new Label();
-            textBoxLoginPassword = new TextBox();
+            textboxSignUpPassword = new TextBox();
             label1 = new Label();
             btnCreateUserAccount = new Button();
             btnReturn = new Button();
@@ -85,15 +85,15 @@
             lblLoginPassword.TabIndex = 13;
             lblLoginPassword.Text = "Password:";
             // 
-            // textBoxLoginPassword
+            // textboxSignUpPassword
             // 
-            textBoxLoginPassword.BackColor = Color.Gainsboro;
-            textBoxLoginPassword.BorderStyle = BorderStyle.FixedSingle;
-            textBoxLoginPassword.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxLoginPassword.Location = new Point(38, 391);
-            textBoxLoginPassword.Name = "textBoxLoginPassword";
-            textBoxLoginPassword.Size = new Size(645, 51);
-            textBoxLoginPassword.TabIndex = 12;
+            textboxSignUpPassword.BackColor = Color.Gainsboro;
+            textboxSignUpPassword.BorderStyle = BorderStyle.FixedSingle;
+            textboxSignUpPassword.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textboxSignUpPassword.Location = new Point(38, 391);
+            textboxSignUpPassword.Name = "textboxSignUpPassword";
+            textboxSignUpPassword.Size = new Size(645, 51);
+            textboxSignUpPassword.TabIndex = 12;
             // 
             // label1
             // 
@@ -156,7 +156,7 @@
             Controls.Add(btnCreateUserAccount);
             Controls.Add(label1);
             Controls.Add(lblLoginPassword);
-            Controls.Add(textBoxLoginPassword);
+            Controls.Add(textboxSignUpPassword);
             Controls.Add(lblLoginUsername);
             Controls.Add(textBoxSignUpUsername);
             Controls.Add(lblSignUpWelcome);
@@ -172,7 +172,7 @@
         private Label lblLoginUsername;
         private TextBox textBoxSignUpUsername;
         private Label lblLoginPassword;
-        private TextBox textBoxLoginPassword;
+        private TextBox textboxSignUpPassword;
         private Label label1;
         private Button btnCreateUserAccount;
         private Button btnReturn;

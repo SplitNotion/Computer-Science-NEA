@@ -238,6 +238,7 @@
             Name = "MainPagesForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainPages";
+            FormClosing += MainPagesForm_FormClosing;
             panelSidebar.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             panelContent.ResumeLayout(false);

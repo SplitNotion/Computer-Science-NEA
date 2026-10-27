@@ -66,6 +66,7 @@
             Name = "BaselineTestForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "BaselineTestForm";
+            FormClosing += BaselineTestForm_FormClosing;
             panelScreen.ResumeLayout(false);
             ResumeLayout(false);
         }
