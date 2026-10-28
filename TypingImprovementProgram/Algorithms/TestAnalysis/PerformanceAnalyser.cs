@@ -23,9 +23,13 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private List<string> hesitatedBigrams = new List<string>();
         private Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         private Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
+        private int userID = 0;
+        private bool isBaselineCompleted = false;
+        private string testNote = "";
 
-        private Dictionary<char, (double, bool)> problemLetters = new Dictionary<char, (double, bool)>();
-        private Dictionary<string, (double, bool)> problemBigrams = new Dictionary<string, (double, bool)>();
+        public Dictionary<char, (double, bool)> problemLetters { get; private set; } = new Dictionary<char, (double, bool)>();
+        public Dictionary<string, (double, bool)> problemBigrams { get; private set; } = new Dictionary<string, (double, bool)>();
+        public bool isBaselineTest { get; private set; }
 
         private Dictionary<string, double> testLetters = new Dictionary<string, double>();
 
@@ -37,6 +41,8 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             totalWords = baselineTestPage.totalWords;
             letterOpportunities = baselineTestPage.letterOpportunities;
             bigramOpportunities = baselineTestPage.bigramOpportunities;
+            userID = baselineTestPage.userID;
+            isBaselineCompleted = baselineTestPage.isBaselineCompleted;
 
             hesitatedLetters = hesitationAnalyser.hesitatedLetters;
             hesitatedBigrams = hesitationAnalyser.hesitatedBigrams;
@@ -138,6 +144,19 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
                 }
             }
 
+            if (isBaselineCompleted)
+            {
+                testNote = "Practice Test";
+            }
+            else
+            {
+                testNote = "Baseline Test";
+            }
+
+            TestSaver testSaver = new TestSaver(this);
+
+            testSaver.SaveTest(userID, testNote, 0, (int)testAccuracy);
+            
 
             int x = 3;
 

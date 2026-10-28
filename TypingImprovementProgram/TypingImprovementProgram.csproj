@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Algorithms\UserProcessingAlgorithms\" />
     <Folder Include="Forms\UniversalForms\" />
   </ItemGroup>
 

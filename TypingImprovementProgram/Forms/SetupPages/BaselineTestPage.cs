@@ -28,6 +28,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalCharacterAttempts { get; set; }
         public int totalWords { get; set; }
         public int typedWords { get; set; }
+
+        public int userID;
+        public bool isBaselineCompleted = false;
+
         public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
         public Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
@@ -35,16 +39,17 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         int currentIndex = 0;
 
+
         private Stopwatch stopwatch = new Stopwatch();
         private List<KeystrokeTiming> timings = new List<KeystrokeTiming>();
         private TimeSpan previousKeyTime = TimeSpan.Zero;
 
 
         // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
-        public BaselineTestPage()
+        public BaselineTestPage(int userID)
         {
             InitializeComponent();
-
+            this.userID = userID;
             // this.BackColor = Color.FromArgb(20, 32, 45);
 
             btnContinueBaselineTest.Visible = false;

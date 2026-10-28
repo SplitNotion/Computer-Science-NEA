@@ -166,7 +166,7 @@ namespace TypingImprovementProgram.Database
                             (
                                 TestProblemLetterID INT PRIMARY KEY IDENTITY(1,1),
                                 TestID INT NOT NULL,
-                                Letter INT NOT NULL,
+                                Letter CHAR(1) NOT NULL,
                                 ErrorRate FLOAT NOT NULL,
                                 Hesitation BIT NOT NULL,
 
@@ -327,12 +327,13 @@ namespace TypingImprovementProgram.Database
 
         #endregion
 
-        public void InsertNewUserAccount(string username, string password)
+        public int InsertNewUserAccount(string username, string password)
         {
+            int testID = 0;
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) VALUES (@Username, @PasswordHash, @BaselineCompleted)" ;
+                string sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) OUTPUT INSERTED.UserID VALUES (@Username, @PasswordHash, @BaselineCompleted)" ;
 
                 using (var command = new SqlCommand(sql,connection))
                 {
@@ -340,8 +341,9 @@ namespace TypingImprovementProgram.Database
                     command.Parameters.AddWithValue("@PasswordHash", password);
                     command.Parameters.AddWithValue("@BaselineCompleted", false);
 
-                    command.ExecuteNonQuery();
+                    testID = (int)command.ExecuteScalar();
                 }
+                return testID;
             }
         }
 
@@ -384,6 +386,82 @@ namespace TypingImprovementProgram.Database
                 }
             }
         }
+
+        public int SaveTestResults(int userID, string testNote, int WPM, double accuracy, Dictionary<char, (double errorRate, bool hesitated)> problemLetters, Dictionary<string, (double errorRate, bool hesitated)> problemBigrams)
+        {
+            int testID = 0;
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // creates a new test record in the Tests database and returns the TestID from that record, so then that ID can be used as the foreign key for the ProblemLetters and ProblemBigrams records of the same test
+                        string sql = @"INSERT INTO Tests(UserID, TestNote, TestDate, WPM, Accuracy) OUTPUT INSERTED.TestID VALUES (@UserID, @TestNote, @TestDate, @WPM, @Accuracy)";
+
+                        using (var command = new SqlCommand(sql, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@UserID", userID);
+                            command.Parameters.AddWithValue("@TestNote", testNote);
+                            command.Parameters.AddWithValue("@TestDate", DateTime.Now);
+                            command.Parameters.AddWithValue("@WPM", WPM);
+                            command.Parameters.AddWithValue("@Accuracy", accuracy);
+
+                            testID = (int)command.ExecuteScalar();
+                        }
+
+                        // creates a new record in the TestProblemLetters database which stores all the user's 'problem' letters for each test, so that it can be retrieved at a later date.
+                        sql = @"INSERT INTO TestProblemLetters(TestID, Letter, ErrorRate, Hesitation) VALUES (@TestID, @Letter, @ErrorRate, @Hesitation)";
+                        foreach (var item in problemLetters)
+                        {
+                            using (var command = new SqlCommand(sql, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@TestID", testID);
+                                command.Parameters.AddWithValue("@Letter", item.Key);
+                                command.Parameters.AddWithValue("@ErrorRate", item.Value.errorRate);
+                                command.Parameters.AddWithValue("@Hesitation", item.Value.hesitated);
+                                
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        // creates a new record in the TestProblemBigrams database which stores all the user's 'problem' bigrams for each test, so that it can be retrieved at a later date.
+                        sql = @"INSERT INTO TestProblemBigrams(TestID, Bigram, ErrorRate, Hesitation) VALUES (@TestID, @Bigram, @ErrorRate, @Hesitation)";
+                        foreach (var item in problemBigrams)
+                        {
+                            using (var command = new SqlCommand(sql, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@TestID", testID);
+                                command.Parameters.AddWithValue("@Bigram", item.Key);
+                                command.Parameters.AddWithValue("@ErrorRate", item.Value.errorRate);
+                                command.Parameters.AddWithValue("@Hesitation", item.Value.hesitated);
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+                        transaction.Commit();
+                        return testID;
+                    }
+
+                    catch (Exception ex) 
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Data saving failed. Please contact the program developer, or stop trying to break the program...","WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        throw;
+                    }
+                }
+
+
+            }
+
+            
+        }
+
+
+
 
     }
 }

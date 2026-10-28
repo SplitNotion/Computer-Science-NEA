@@ -1,1 +1,3 @@
 ﻿DELETE FROM Users
+DELETE FROM TestProblemLetters
+DELETE FROM TestProblemBigrams

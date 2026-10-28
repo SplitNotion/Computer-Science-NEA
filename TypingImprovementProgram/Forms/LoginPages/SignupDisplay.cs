@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TypingImprovementProgram.Algorithms.UserProcessingAlgorithms;
+using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Forms.SetupPages;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -43,13 +44,13 @@ namespace TypingImprovementProgram.Forms.LoginPages
 
             if (valid)
             {
-                UserLogin userLogin = new UserLogin();
-
-                userLogin.CreateAccount(username, password);
+                DatabaseManager databaseManager = new DatabaseManager();
+                int userID = databaseManager.InsertNewUserAccount(username, password);
+                MessageBox.Show($"ID returned from database: {userID}");
 
                 this.FindForm().Hide();
 
-                BaselineTestForm baselineTestForm = new BaselineTestForm();
+                BaselineTestForm baselineTestForm = new BaselineTestForm(userID);
                 baselineTestForm.Show();
             }
         }

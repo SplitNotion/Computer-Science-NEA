@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Forms.LoginPages;
 
 namespace TypingImprovementProgram.Forms.SetupPages
 {
     public partial class BaselineTestForm : Form
     {
-        public BaselineTestForm()
+        private int userID = 0;
+        public BaselineTestForm(int userID)
         {
             InitializeComponent();
 
@@ -22,7 +24,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             //int h = Height >= screen.Height ? screen.Height : (screen.Height + Height) / 2;
             //Location = new Point(screen.Left + (screen.Width - w) / 2, screen.Top + (screen.Height - h) / 2);
             //Size = new Size(w, h);
-
+            this.userID = userID;
 
             IntroductionPage introductionPage = new IntroductionPage();
 
@@ -46,7 +48,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         private void IntroductionAcceptClicked(object sender, EventArgs e)
         {
-            ShowScreen(new BaselineTestPage());
+            ShowScreen(new BaselineTestPage(userID));
         }
 
         private void introductionPage1_Load(object sender, EventArgs e)

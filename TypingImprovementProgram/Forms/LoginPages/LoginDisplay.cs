@@ -15,7 +15,6 @@ namespace TypingImprovementProgram.Forms.LoginPages
 {
     public partial class LoginDisplay : UserControl
     {
-
         public event EventHandler IfCreateAccountClicked;
         DatabaseManager databaseManager = new DatabaseManager();
 
@@ -47,7 +46,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
                 {
                     this.FindForm().Hide();
 
-                    BaselineTestForm baselineTestForm = new BaselineTestForm();
+                    BaselineTestForm baselineTestForm = new BaselineTestForm(userID);
                     baselineTestForm.Show();
                 }
             }
@@ -55,8 +54,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
 
         private bool accountLoginValidator(string username, string password)
         {
-
-            string validationResult = databaseManager.ValidateLogin(username, password, out int userID, out bool baselineCompleted);
+            string validationResult = databaseManager.ValidateLogin(username, password, out int getUserID, out bool getBaselineCompleted);
 
             if (username.Length == 0)
             {
@@ -87,6 +85,13 @@ namespace TypingImprovementProgram.Forms.LoginPages
             {
                 MessageBox.Show("  Incorrect Password!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return false;
+            }
+
+            if (validationResult == "Success")
+            {
+                userID = getUserID;
+                baselineCompleted = getBaselineCompleted;
+                return true;
             }
             return true;
 
