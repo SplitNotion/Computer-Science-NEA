@@ -26,7 +26,6 @@ namespace TypingImprovementProgram.Forms.LoginPages
             InitializeComponent();
         }
 
-
         private void btnReturn_Click(object sender, EventArgs e)
         {
             IfReturnClicked?.Invoke(this, EventArgs.Empty);
@@ -166,7 +165,5 @@ namespace TypingImprovementProgram.Forms.LoginPages
 
             return true;
         }
-
-
     }
 }

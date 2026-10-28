@@ -2,6 +2,8 @@
 DROP TABLE WordDifficulty
 DROP TABLE WordBigrams
 DROP TABLE PossibleBigrams
-DROP TABLE UserLetterStats
-DROP TABLE UserBigramStats
+DROP TABLE TestProblemLetters
+DROP TABLE TestProblemBigrams
+DROP TABLE Tests
+DROP TABLE Users
 DROP TABLE Words

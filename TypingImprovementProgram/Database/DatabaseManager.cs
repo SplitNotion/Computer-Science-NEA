@@ -136,35 +136,59 @@ namespace TypingImprovementProgram.Database
                             );
                         END
 
+
                         IF NOT EXISTS (
                             SELECT *
                             FROM INFORMATION_SCHEMA.TABLES
-                            WHERE TABLE_NAME = 'UserLetterStats'
+                            WHERE TABLE_NAME = 'Tests'
                         )
                         BEGIN
-                            CREATE TABLE UserLetterStats
+                            CREATE TABLE Tests
                             (
-                                UserID INT NOT NULL REFERENCES Users(UserID),
-                                Letter VARCHAR(1) NOT NULL,
-                                Accuracy INT NOT NULL,
+                                TestID INT PRIMARY KEY IDENTITY(1,1),
+                                UserID INT,
+                                TestNote VARCHAR(30) NOT NULL,
+                                TestDate DATETIME NOT NULL,
+                                WPM INT,
+                                Accuracy FLOAT NOT NULL,
 
-                                PRIMARY KEY (UserID, Letter)
+                                FOREIGN KEY (UserID) REFERENCES Users(UserID)
                             );
                         END
 
                         IF NOT EXISTS (
                             SELECT *
                             FROM INFORMATION_SCHEMA.TABLES
-                            WHERE TABLE_NAME = 'UserBigramStats'
+                            WHERE TABLE_NAME = 'TestProblemLetters'
                         )
                         BEGIN
-                            CREATE TABLE UserBigramStats
+                            CREATE TABLE TestProblemLetters
                             (
-                                UserID INT NOT NULL REFERENCES Users(UserID),
-                                Bigram VARCHAR(2) NOT NULL,
-                                Accuracy INT NOT NULL,
+                                TestProblemLetterID INT PRIMARY KEY IDENTITY(1,1),
+                                TestID INT NOT NULL,
+                                Letter INT NOT NULL,
+                                ErrorRate FLOAT NOT NULL,
+                                Hesitation BIT NOT NULL,
 
-                                PRIMARY KEY (UserID, Bigram)
+                                FOREIGN KEY (TestID) REFERENCES Tests(TestID)
+                            );
+                        END
+
+                        IF NOT EXISTS (
+                            SELECT *
+                            FROM INFORMATION_SCHEMA.TABLES
+                            WHERE TABLE_NAME = 'TestProblemBigrams'
+                        )
+                        BEGIN
+                            CREATE TABLE TestProblemBigrams
+                            (
+                                TestProblemBigramID INT PRIMARY KEY IDENTITY(1,1),
+                                TestID INT NOT NULL,
+                                Bigram VARCHAR(2) NOT NULL,
+                                ErrorRate FLOAT NOT NULL,
+                                Hesitation BIT NOT NULL,
+
+                                FOREIGN KEY (TestID) REFERENCES Tests(TestID)
                             );
                         END
                         ";
