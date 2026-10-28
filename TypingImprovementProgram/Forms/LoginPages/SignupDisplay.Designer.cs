@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             lblSignUpWelcome = new Label();
             lblLoginUsername = new Label();
             textBoxSignUpUsername = new TextBox();
@@ -37,6 +38,7 @@
             btnCreateUserAccount = new Button();
             btnReturn = new Button();
             textBoxReenterPassword = new TextBox();
+            toolTip1 = new ToolTip(components);
             SuspendLayout();
             // 
             // lblSignUpWelcome
@@ -72,6 +74,7 @@
             textBoxSignUpUsername.Name = "textBoxSignUpUsername";
             textBoxSignUpUsername.Size = new Size(645, 51);
             textBoxSignUpUsername.TabIndex = 10;
+            toolTip1.SetToolTip(textBoxSignUpUsername, "Username must:\r\n• Be at least 5 characters long\r\n• Not contain spaces");
             // 
             // lblLoginPassword
             // 
@@ -94,6 +97,7 @@
             textboxSignUpPassword.Name = "textboxSignUpPassword";
             textboxSignUpPassword.Size = new Size(645, 51);
             textboxSignUpPassword.TabIndex = 12;
+            toolTip1.SetToolTip(textboxSignUpPassword, "Password must:\r\n• Be at least 5 characters long\r\n• Contain at least one uppercase character\r\n• Contain at least one special character");
             // 
             // label1
             // 
@@ -144,6 +148,7 @@
             textBoxReenterPassword.Name = "textBoxReenterPassword";
             textBoxReenterPassword.Size = new Size(645, 51);
             textBoxReenterPassword.TabIndex = 16;
+            toolTip1.SetToolTip(textBoxReenterPassword, "Password must:\r\n• Be at least 5 characters long\r\n• Contain at least one uppercase character\r\n• Contain at least one special character");
             // 
             // SignupDisplay
             // 
@@ -177,5 +182,6 @@
         private Button btnCreateUserAccount;
         private Button btnReturn;
         private TextBox textBoxReenterPassword;
+        private ToolTip toolTip1;
     }
 }

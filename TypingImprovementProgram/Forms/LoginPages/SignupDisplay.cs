@@ -110,41 +110,58 @@ namespace TypingImprovementProgram.Forms.LoginPages
             #endregion
 
             #region textbox inputs handling
+            List<string> usernameErrors = new List<string>();
             List<string> passwordErrors = new List<string>();
+
+            List<string> errors = new List<string>();
 
             if (username.Length < 5)
             {
-                MessageBox.Show("  Username must be at least 5 characters long!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return false;
+                //usernameErrors.Add("   Username must be at least 5 characters long!");
+                errors.Add("   Username must be at least 5 characters long!");
+            }
+            if (username.Contains(' '))
+            {
+                errors.Add("   Username must not contain whitepsace!");
+            }
+
+            if (errors.Count > 0)
+            {
+                errors.Add(" ");
             }
 
             if (password.Length < 5)
             {
-                passwordErrors.Add("   Password must be at least 5 characters long!");
+                errors.Add("   Password must be at least 5 characters long!");
             }
 
             if (!password.Any(char.IsUpper))
             {
-                passwordErrors.Add("   Password must contain at least one uppercase character!");
+                errors.Add("   Password must contain at least one uppercase character!");
             }
 
             if (!password.Any(c => !char.IsLetterOrDigit(c)))
             {
-                passwordErrors.Add("   Password must contain at least one special character!");
+                errors.Add("   Password must contain at least one special character!");
             }
 
-            if (passwordErrors.Count > 0)
+            if (errors.Count > 0)
             {
-                MessageBox.Show(string.Join("\n", passwordErrors), "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                errors.Add(" ");
+            }
+
+            if (password != confirmPassword)
+            {
+                errors.Add("   Password and Confirm Password inputs must match!");
+            }
+
+            if (errors.Count > 0)
+            {
+                MessageBox.Show(string.Join("\n", errors), "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
                 return false;
             }
 
-            else if (password != confirmPassword)
-            {
-                MessageBox.Show("  Password and Confirm Password inputs must match!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return false;
-            }
             #endregion
 
             return true;
