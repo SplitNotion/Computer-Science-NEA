@@ -59,6 +59,28 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             AnalyseTest();
         }
 
+        public PerformanceAnalyser(PracticeTestPage practiceTestPage, HesitationAnalyser hesitationAnalyser)
+        {
+            incorrectCounter = practiceTestPage.incorrectCounter;
+            totalCharactersCount = practiceTestPage.totalCharacters;
+            totalCharacterAttempts = practiceTestPage.totalCharacterAttempts;
+            totalWords = practiceTestPage.totalBaselineWords;
+            letterOpportunities = practiceTestPage.letterOpportunities;
+            bigramOpportunities = practiceTestPage.bigramOpportunities;
+            userID = practiceTestPage.userID;
+            isBaselineCompleted = practiceTestPage.isBaselineCompleted;
+
+            totalSeconds = practiceTestPage.totalTestSeconds;
+
+            hesitatedLetters = hesitationAnalyser.hesitatedLetters;
+            hesitatedBigrams = hesitationAnalyser.hesitatedBigrams;
+
+            incorrectLetters = practiceTestPage.incorrectLetters;
+            incorrectBigrams = practiceTestPage.incorrectBigrams;
+
+            AnalyseTest();
+        }
+
         public void AnalyseTest()
         {
 

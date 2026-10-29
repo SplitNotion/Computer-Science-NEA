@@ -1,0 +1,334 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using TypingImprovementProgram.Algorithms.TestAnalysis;
+using TypingImprovementProgram.Algorithms.TestGeneration;
+using TypingImprovementProgram.Models;
+
+namespace TypingImprovementProgram.Forms.SetupPages
+{
+    public partial class BaselineTestPage : UserControl
+    {
+        TypingDisplayControl display = new TypingDisplayControl();
+        BaselineTestGenerator generator = new BaselineTestGenerator();
+        HesitationAnalyser hesitationAnalyser = new HesitationAnalyser();
+        PerformanceAnalyser performanceAnalyser;
+
+        bool testFinished = false;
+        public int incorrectCounter { get; set; }
+        public int totalCharacters { get; set; }
+        public int totalCharacterAttempts { get; set; }
+        public int totalWords { get; set; }
+        public int totalBaselineWords { get; set; }
+        public int typedWords { get; set; }
+
+        public int userID;
+        public bool isBaselineCompleted = false;
+
+        public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
+        public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
+        public Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
+        public Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
+
+        int currentIndex = 0;
+
+
+        private Stopwatch stopwatch = new Stopwatch();
+        private Stopwatch totalTypingTimeStopwatch = new Stopwatch();
+        public List<KeystrokeTiming> timings { get; set; } = new List<KeystrokeTiming>();
+        private TimeSpan previousKeyTime = TimeSpan.Zero;
+        public double totalTestSeconds = 0.0;
+
+        
+
+        // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
+        public BaselineTestPage(int userID)
+        {
+            InitializeComponent();
+            this.userID = userID;
+            // this.BackColor = Color.FromArgb(20, 32, 45);
+
+            btnContinueBaselineTest.Visible = false;
+
+            display.Location = new Point(30, 250);
+            display.Size = new Size(1450, 200);
+            TabStop = true;
+
+            Controls.Add(display);
+            LoadTest();
+           
+            totalCharacters = display.TotalCharacters;
+            totalWords = display.TotalWords;
+
+            UpdateProgressLabel();
+            KeyPress += BaselineTestPage_KeyPress; // calls key press method
+        }
+
+        private void LoadTest()
+        {
+            display.Characters.Clear();
+            List<string> lines = generator.GenerateBaselineText();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                foreach (char c in lines[i])
+                {
+                    display.Characters.Add(new DisplayCharacter { Character = c, Line = i }); // adds a new char object to the list
+
+                    if (letterOpportunities.ContainsKey(c))
+                    {
+                        letterOpportunities[c]++;
+                    }
+                    else
+                    {
+                        letterOpportunities.Add(c, 1);
+                    }
+                }
+
+                // EDIT NEEDED
+                for (int j = 0; j < lines[i].Length - 1; j++)
+                {
+                    string bigram = "" + lines[i][j] + lines[i][j + 1];
+
+                    if (!bigram.Contains(" "))
+                    {
+                        if (bigramOpportunities.ContainsKey(bigram))
+                        {
+                            bigramOpportunities[bigram]++;
+                        }
+                        else
+                        {
+                            bigramOpportunities.Add(bigram, 1);
+                        }
+                    }
+                }
+
+            }
+
+            display.Characters[0].State = CharacterState.Current; // colours the first character blue
+            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
+
+            display.MakeDisplayReady();
+
+            display.Invalidate(); // calls to redraw (e.g. OnPaint method)
+            this.Focus();
+
+        }
+
+        public void UpdateProgressLabel()
+        {
+            lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
+        }
+
+        private void StartTiming()
+        {
+            previousKeyTime = TimeSpan.Zero;
+            stopwatch.Restart();
+        }
+
+        private void RecordKey(char character)
+        {
+            TimeSpan currentTime = stopwatch.Elapsed;
+            TimeSpan interval = TimeSpan.Zero;
+
+            if (timings.Count > 0)
+            {
+                interval = currentTime - previousKeyTime;
+            }
+
+            timings.Add(new KeystrokeTiming
+            {
+                CharacterTyped = character,
+                TimeSinceLastTypedKey = interval,
+            });
+
+            previousKeyTime = currentTime;
+        }
+
+
+        private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
+        {
+            if (currentIndex == 0)
+            {
+                StartTiming();
+                totalTypingTimeStopwatch.Start();
+            }
+
+            char? incorrectCharacter = null;
+
+            if (testFinished)
+            { 
+                return;
+            }
+
+            #region Backspace Key Function
+            // allows for backspace, however disallowing over space between words
+            if (e.KeyChar == (char)Keys.Back)                     
+            {
+                if (currentIndex > 0)
+                {
+                    if (display.Characters[currentIndex - 1].Character != ' ')
+                    {
+                        display.Characters[currentIndex].State = CharacterState.Untyped;
+                        display.Characters[currentIndex - 1].State = CharacterState.Current;
+                        currentIndex--;
+
+                        if (currentIndex > 0 && display.Characters[currentIndex - 1].State  == CharacterState.Incorrect)
+                        {
+                            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, display.Characters[currentIndex - 1].Character);
+                        }
+                        else
+                        {
+                            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
+                        }
+                    }
+                }
+                display.Invalidate();
+                return;
+            }
+            #endregion
+
+            totalCharacterAttempts++;
+
+            if (currentIndex < display.Characters.Count)
+            {
+                RecordKey(display.Characters[currentIndex].Character);
+            }
+
+
+            #region Correct/Incorrect Character Attribute Assignment and Recording
+            if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
+            {
+                display.Characters[currentIndex].State = CharacterState.Correct;          // make correct
+            }
+
+            else
+            {
+                display.Characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
+                incorrectCharacter = display.Characters[currentIndex].Character;
+                incorrectCounter += 1;
+
+
+                // adds incorrect character to a dictionary/increments occurences if it has been incorrectly typed
+                char character = display.Characters[currentIndex].Character;              
+                if (!incorrectLetters.ContainsKey(character))
+                {
+                    incorrectLetters.Add(character, 1);
+                }
+                else if (incorrectLetters.ContainsKey(character))
+                {
+                    incorrectLetters[character]++;
+                }
+
+                // adds incorrect bigrams (e.g. word => 'wo' and 'or') to a dictionary/increments occurences if it has been incorrectly typed
+
+
+                if (currentIndex > 0 && display.Characters[currentIndex - 1].Character != ' ' && display.Characters[currentIndex].Character != ' ')
+                {
+                    string bigramBefore = "" + display.Characters[currentIndex - 1].Character + display.Characters[currentIndex].Character;
+
+                    if (!incorrectBigrams.ContainsKey(bigramBefore))
+                    {
+                        incorrectBigrams.Add(bigramBefore, 1);
+                    }
+                    else if (incorrectBigrams.ContainsKey(bigramBefore) && (incorrectBigrams[bigramBefore] < bigramOpportunities[bigramBefore]))
+                    {
+                        incorrectBigrams[bigramBefore]++;
+                    }
+                }
+
+                if (currentIndex < display.Characters.Count - 1 && display.Characters[currentIndex + 1].Character != ' ' && display.Characters[currentIndex].Character != ' ')
+                {
+                    string bigramAfter = "" + display.Characters[currentIndex].Character + display.Characters[currentIndex + 1].Character;
+
+                    if (!incorrectBigrams.ContainsKey(bigramAfter))
+                    {
+                        incorrectBigrams.Add(bigramAfter, 1);
+                    }
+                    else if (incorrectBigrams.ContainsKey(bigramAfter) && (incorrectBigrams[bigramAfter] < bigramOpportunities[bigramAfter]))
+                    {
+                        incorrectBigrams[bigramAfter]++;
+                    }
+                }
+            }
+
+            #endregion
+
+
+            currentIndex++; // move to next character
+
+
+            // events at end of test
+            if (currentIndex >= display.Characters.Count)  
+            {
+                stopwatch.Stop();
+                totalTypingTimeStopwatch.Stop();
+                testFinished = true;
+                btnContinueBaselineTest.Visible = true;
+                typedWords++;
+                UpdateProgressLabel();
+            }
+
+            // updates the current character, word count and text position on the screen
+            if (currentIndex < display.Characters.Count)  
+            {
+                display.Characters[currentIndex].State = CharacterState.Current;
+                keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, incorrectCharacter);
+
+                if (display.Characters[currentIndex - 1].Character == ' ')
+                {
+                    typedWords++;
+                    lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
+                }
+
+                // shifts all text lines up when second row is completed
+                if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     
+                {
+                    display.CurrentLine++;
+                }
+            }
+
+            display.Invalidate();
+        }
+
+
+        private void btnContinueBaselineTest_Click(object sender, EventArgs e)
+        {
+            display.Characters.Clear();
+            currentIndex = 0;
+            btnContinueBaselineTest.Visible = false;
+            display.CurrentLine = 0;
+            typedWords = 0;
+
+            if (generator.testNumber != 3) 
+            {
+                testFinished = false;
+                LoadTest();
+                totalWords = display.TotalWords;
+                totalBaselineWords += totalWords;
+                UpdateProgressLabel();
+            }
+            else
+            {
+                totalBaselineWords += totalWords;
+                totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
+                hesitationAnalyser.AnalyseHesitaton(timings);
+                performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
+
+                Controls.Remove(display);
+                lbltypedWordProgressCounter.Visible = false;
+                keyboardPanel.Visible = false;
+                testFinished = true;
+            }
+        }
+
+    }
+}

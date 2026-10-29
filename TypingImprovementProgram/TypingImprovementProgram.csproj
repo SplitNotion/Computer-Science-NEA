@@ -17,4 +17,13 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Forms\TestPages\PracticeTests\PracticeTestPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\TestPages\PracticeTests\PracticeTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

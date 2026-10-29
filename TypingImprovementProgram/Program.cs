@@ -20,10 +20,10 @@ namespace TypingImprovementProgram
             // see https://aka.ms/applicationconfiguration.
 
             //ApplicationConfiguration.Initialize();
-            //Application.Run(new BaselineTestForm());
-            Application.Run(new LoginPageForm());
+            //Application.Run(new BaselineTestForm(4));
+            //Application.Run(new LoginPageForm());
             //Application.Run(new MainPagesForm());
-
+            Application.Run(new PracticeTestForm(3));
 
             DatabaseManager database = new DatabaseManager();
             database.CreateTables();
