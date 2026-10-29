@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TypingImprovementProgram.Models
 {
-    internal class KeystrokeTiming
+    public class KeystrokeTiming
     {
         public char CharacterTyped { get; set; }
         public TimeSpan TimeSinceLastTypedKey { get; set; }

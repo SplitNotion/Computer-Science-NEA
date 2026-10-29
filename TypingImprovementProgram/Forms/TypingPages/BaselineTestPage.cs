@@ -27,6 +27,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalCharacters { get; set; }
         public int totalCharacterAttempts { get; set; }
         public int totalWords { get; set; }
+        public int totalBaselineWords { get; set; }
         public int typedWords { get; set; }
 
         public int userID;
@@ -41,9 +42,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
 
         private Stopwatch stopwatch = new Stopwatch();
-        private List<KeystrokeTiming> timings = new List<KeystrokeTiming>();
+        private Stopwatch totalTypingTimeStopwatch = new Stopwatch();
+        public List<KeystrokeTiming> timings { get; set; } = new List<KeystrokeTiming>();
         private TimeSpan previousKeyTime = TimeSpan.Zero;
+        public double totalTestSeconds = 0.0;
 
+        
 
         // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
         public BaselineTestPage(int userID)
@@ -155,14 +159,9 @@ namespace TypingImprovementProgram.Forms.SetupPages
             if (currentIndex == 0)
             {
                 StartTiming();
+                totalTypingTimeStopwatch.Start();
             }
 
-            if (currentIndex < display.Characters.Count)
-            {
-                RecordKey(display.Characters[currentIndex].Character);
-            }
-
-            totalCharacterAttempts++;
             char? incorrectCharacter = null;
 
             if (testFinished)
@@ -196,6 +195,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 return;
             }
             #endregion
+
+            totalCharacterAttempts++;
+
+            if (currentIndex < display.Characters.Count)
+            {
+                RecordKey(display.Characters[currentIndex].Character);
+            }
 
 
             #region Correct/Incorrect Character Attribute Assignment and Recording
@@ -264,6 +270,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             if (currentIndex >= display.Characters.Count)  
             {
                 stopwatch.Stop();
+                totalTypingTimeStopwatch.Stop();
                 testFinished = true;
                 btnContinueBaselineTest.Visible = true;
                 typedWords++;
@@ -312,10 +319,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 testFinished = false;
                 LoadTest();
                 totalWords = display.TotalWords;
+                totalBaselineWords += totalWords;
                 UpdateProgressLabel();
             }
             else
             {
+                totalBaselineWords += totalWords;
+                totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
                 hesitationAnalyser.AnalyseHesitaton(timings);
                 performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
 

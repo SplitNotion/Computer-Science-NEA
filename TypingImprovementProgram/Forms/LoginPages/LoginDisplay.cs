@@ -24,7 +24,6 @@ namespace TypingImprovementProgram.Forms.LoginPages
         public LoginDisplay()
         {
             InitializeComponent();
-            //BackColor = Color.FromArgb(235, 255, 255, 255);
         }
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
@@ -49,9 +48,18 @@ namespace TypingImprovementProgram.Forms.LoginPages
                     BaselineTestForm baselineTestForm = new BaselineTestForm(userID);
                     baselineTestForm.Show();
                 }
+                else
+                {
+                    this.FindForm().Hide();
+
+                    MainPagesForm mainPagesForm = new MainPagesForm(userID);
+                    mainPagesForm.Show();
+                }
             }
         }
 
+
+        // validates the details inputted into the login page textboxes, whilst also retrieving the user's ID and whether they have completed the baseline test on successful login
         private bool accountLoginValidator(string username, string password)
         {
             string validationResult = databaseManager.ValidateLogin(username, password, out int getUserID, out bool getBaselineCompleted);
@@ -76,25 +84,25 @@ namespace TypingImprovementProgram.Forms.LoginPages
                 return false;
             }
 
-            if (validationResult == "Username not found")
+            switch (validationResult)
             {
-                MessageBox.Show("  Username not found!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return false;
-            }
-            if (validationResult == "Incorrect Password")
-            {
-                MessageBox.Show("  Incorrect Password!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return false;
-            }
+                case "Username not found":
+                    MessageBox.Show("  Username not found!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    return false;
 
-            if (validationResult == "Success")
-            {
-                userID = getUserID;
-                baselineCompleted = getBaselineCompleted;
-                return true;
-            }
-            return true;
+                case "Incorrect Password":
+                    MessageBox.Show("  Username not found!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    return false;
 
+                case "Success":
+                    userID = getUserID;
+                    baselineCompleted = getBaselineCompleted;
+                    return true;
+
+                default:
+                    MessageBox.Show("Login Validation Failed. Please contact program developer.", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+            }
         }
     }
 }

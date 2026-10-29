@@ -13,9 +13,12 @@ namespace TypingImprovementProgram.Forms
 {
     public partial class MainPagesForm : Form
     {
-        public MainPagesForm()
+        private int userID = 0;
+
+        public MainPagesForm(int userID)
         {
             InitializeComponent();
+            this.userID = userID;
         }
 
         private void btnSidebarDashboard_Click(object sender, EventArgs e) // open dashboard page button click event

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Forms.SetupPages;
+using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Algorithms.TestAnalysis
 {
@@ -16,6 +17,10 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private int totalCharactersCount;
         private int totalCharacterAttempts;
         private int totalWords;
+        private int userID = 0;
+        private bool isBaselineCompleted = false;
+        private string testNote = "";
+        private double totalSeconds;
 
         private Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
         private Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
@@ -23,26 +28,27 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private List<string> hesitatedBigrams = new List<string>();
         private Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         private Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
-        private int userID = 0;
-        private bool isBaselineCompleted = false;
-        private string testNote = "";
 
         public Dictionary<char, (double, bool)> problemLetters { get; private set; } = new Dictionary<char, (double, bool)>();
         public Dictionary<string, (double, bool)> problemBigrams { get; private set; } = new Dictionary<string, (double, bool)>();
         public bool isBaselineTest { get; private set; }
 
-        private Dictionary<string, double> testLetters = new Dictionary<string, double>();
+
+       
+        private Dictionary<string, double> testLetters = new Dictionary<string, double>(); // can delete once problem boundary multipliers are finalised
 
         public PerformanceAnalyser(BaselineTestPage baselineTestPage, HesitationAnalyser hesitationAnalyser)
         {
             incorrectCounter = baselineTestPage.incorrectCounter;
             totalCharactersCount = baselineTestPage.totalCharacters;
             totalCharacterAttempts = baselineTestPage.totalCharacterAttempts;
-            totalWords = baselineTestPage.totalWords;
+            totalWords = baselineTestPage.totalBaselineWords;
             letterOpportunities = baselineTestPage.letterOpportunities;
             bigramOpportunities = baselineTestPage.bigramOpportunities;
             userID = baselineTestPage.userID;
             isBaselineCompleted = baselineTestPage.isBaselineCompleted;
+
+            totalSeconds = baselineTestPage.totalTestSeconds;
 
             hesitatedLetters = hesitationAnalyser.hesitatedLetters;
             hesitatedBigrams = hesitationAnalyser.hesitatedBigrams;
@@ -55,8 +61,12 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
         public void AnalyseTest()
         {
-            double testAccuracy = ((totalCharactersCount - (double)incorrectCounter) / totalCharacterAttempts) * 100;
+
+            double testAccuracy = ((totalCharacterAttempts - (double)incorrectCounter) / totalCharacterAttempts) * 100;
             testAccuracy = Math.Round(testAccuracy, 2);
+
+            double WPM = totalWords / (totalSeconds / 60);
+            WPM = Math.Round(WPM, 1);
 
 
             // Adds total weighting for letters in test
@@ -144,6 +154,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
                 }
             }
 
+            // defines whether each test record in database relates to a baseline test or user practice test
             if (isBaselineCompleted)
             {
                 testNote = "Practice Test";
@@ -153,13 +164,10 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
                 testNote = "Baseline Test";
             }
 
+            // initialises all test data to be saved after data is analysed and finalised
             TestSaver testSaver = new TestSaver(this);
-
-            testSaver.SaveTest(userID, testNote, 0, (int)testAccuracy);
+            testSaver.SaveTest(userID, testNote, (int)WPM, (int)testAccuracy);
             
-
-            int x = 3;
-
         }
     }
 }

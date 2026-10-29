@@ -9,7 +9,6 @@ using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TypingImprovementProgram.Algorithms.UserProcessingAlgorithms;
 using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Forms.SetupPages;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -39,14 +38,13 @@ namespace TypingImprovementProgram.Forms.LoginPages
             string confirmPassword = textBoxReenterPassword.Text.Trim();
 
             bool valid = false;
+            valid = AccountCreationValidator(username, password, confirmPassword); 
 
-            valid = AccountCreationValidator(username, password, confirmPassword);
-
+            // if textbox inputs are valid, then a new user account is created, added to the database, and baseline test is initated
             if (valid)
             {
                 DatabaseManager databaseManager = new DatabaseManager();
                 int userID = databaseManager.InsertNewUserAccount(username, password);
-                MessageBox.Show($"ID returned from database: {userID}");
 
                 this.FindForm().Hide();
 
@@ -55,6 +53,8 @@ namespace TypingImprovementProgram.Forms.LoginPages
             }
         }
 
+
+        // validates all possible textbox inputs, including empty boxes and password rules
         private bool AccountCreationValidator(string username, string password, string confirmPassword)
         {
 
