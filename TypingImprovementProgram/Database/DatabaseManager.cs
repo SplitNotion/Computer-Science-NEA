@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -557,6 +558,60 @@ namespace TypingImprovementProgram.Database
             return (problemLetters, problemBigrams);
         }
 
+        public List<string> GetWordsFromChosenBigrams(string bigram)
+        {
+            List<string> possibleWords = new List<string>();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT Words.WordID, Words.Word FROM Words, WordBigrams, PossibleBigrams 
+                               WHERE Words.WordID = WordBigrams.WordID AND 
+                               WordBigrams.BigramID = PossibleBigrams.BigramID AND
+                               PossibleBigrams.Bigram = @Bigram";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Bigram", bigram);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string word = (string)reader["Word"];
+                            possibleWords.Add(word);
+                        }
+                    }
+                }
+            }
+            return possibleWords;
+        }
+
+        public List<string> GetRemainingRandomWords(int numberofWords)
+        {
+            List<string> remainingWords = new List<string>();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT TOP (@Amount) Words.WordID, Words.Word FROM Words ORDER BY NEWID();";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Amount", numberofWords);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string word = (string)reader["Word"];
+                            remainingWords.Add(word);
+                        }
+                    }
+                }
+            }
+            return remainingWords;
+        }
 
 
         #endregion
