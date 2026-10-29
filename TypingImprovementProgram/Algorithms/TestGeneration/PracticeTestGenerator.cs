@@ -9,10 +9,23 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 {
     internal class PracticeTestGenerator
     {
+        private Dictionary<char, (double errorRate, bool hesitation)> problemLetters = new Dictionary<char, (double, bool)>();
+        private Dictionary<string, (double errorRate, bool hesitation)> problemBigrams = new Dictionary<string, (double, bool)>();
 
-        DatabaseManager databaseManager = new DatabaseManager();
+
+        public PracticeTestGenerator()
+        {
+
+        }
 
 
+        public void GetLatestUserData(int userID)
+        {
+            DatabaseManager databaseManager = new DatabaseManager();
+            (problemLetters, problemBigrams) = databaseManager.GetLatestUserLetterBigramProblems(userID);
+
+            int test = 4;
+        }
 
         public void GeneratePracticeTest()
         {

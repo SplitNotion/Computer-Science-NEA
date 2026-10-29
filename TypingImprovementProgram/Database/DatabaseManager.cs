@@ -481,7 +481,6 @@ namespace TypingImprovementProgram.Database
 
             
         }
-
         public void CompletedBaselineTest(int userID)
         {
             using (var connection  = GetConnection())
@@ -498,5 +497,70 @@ namespace TypingImprovementProgram.Database
                 }
             }
         }
+
+        #region Practice Test Generation
+        public (Dictionary<char, (double, bool)> problemLetters, Dictionary<string, (double, bool)> problemBigrams) GetLatestUserLetterBigramProblems(int userID)
+        {
+            Dictionary<char, (double errorRate, bool hesitation)> problemLetters = new Dictionary<char, (double, bool)>();
+            Dictionary<string, (double errorRate, bool hesitation)> problemBigrams = new Dictionary<string, (double, bool)>();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT TestID FROM Tests WHERE TestDate = (SELECT MAX(TestDate) FROM Tests WHERE UserID = @UserID)";
+                int testID;
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", userID);
+                    testID = (int)command.ExecuteScalar();
+                }
+
+                sql = @"SELECT Letter, ErrorRate, Hesitation FROM TestProblemLetters WHERE TestID = @TestID";
+
+                using (var command = new SqlCommand(sql,connection))
+                {
+                    command.Parameters.AddWithValue("@TestID", testID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            char letter = Convert.ToChar(reader["Letter"].ToString());
+                            double errorRate = (double)reader["ErrorRate"];
+                            bool hesitation = (bool)reader["Hesitation"];
+
+                            problemLetters.Add(letter, (errorRate, hesitation));
+                        }
+                    }  
+                }
+
+                sql = @"SELECT Bigram, ErrorRate, Hesitation FROM TestProblemBigrams WHERE TestID = @TestID";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@TestID", testID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string bigram = (string)reader["Bigram"];
+                            double errorRate = (double)reader["ErrorRate"];
+                            bool hesitation = (bool)reader["Hesitation"];
+
+                            problemBigrams.Add(bigram, (errorRate, hesitation));
+                        }
+                    }
+                }
+            }
+            return (problemLetters, problemBigrams);
+        }
+
+
+
+        #endregion
+
+
     }
 }

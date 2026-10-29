@@ -15,7 +15,7 @@ namespace TypingImprovementProgram.Forms
 {
     public partial class MainPagesForm : Form
     {
-        private int userID = 0;
+        private int userID;
 
         public MainPagesForm(int userID)
         {
@@ -45,7 +45,7 @@ namespace TypingImprovementProgram.Forms
         private void btnSidebarPractice_Click(object sender, EventArgs e) // open practice button click event
         {
             panelContent.Controls.Clear();
-            PracticePage practicePage = new PracticePage();
+            PracticePage practicePage = new PracticePage(userID);
             practicePage.Dock = DockStyle.Fill;
             panelContent.Controls.Add(practicePage);
             lblPageName.Text = "Practice";
