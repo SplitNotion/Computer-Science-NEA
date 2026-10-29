@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Forms.LoginPages;
 using TypingImprovementProgram.Forms.MainPages;
+using TypingImprovementProgram.Forms.SetupPages;
 
 namespace TypingImprovementProgram.Forms
 {
@@ -19,6 +21,16 @@ namespace TypingImprovementProgram.Forms
         {
             InitializeComponent();
             this.userID = userID;
+
+
+            foreach (Control control in flowLayoutPanel1.Controls)
+            {
+                if (control is Button btn)
+                {
+                    btn.Margin = new Padding(0, 10, 0, 10);
+                    btn.Height = 75;
+                }
+            }
         }
 
         private void btnSidebarDashboard_Click(object sender, EventArgs e) // open dashboard page button click event
@@ -77,8 +89,20 @@ namespace TypingImprovementProgram.Forms
 
         private void btnSidebarSignout_Click(object sender, EventArgs e)
         {
-
+            DialogResult userSelection = MessageBox.Show("   Are you sure you want to sign out?", "WARNING", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (DialogResult.OK == userSelection)
+            {
+                this.FindForm().Hide();
+                LoginPageForm loginPageForm = new LoginPageForm();
+                loginPageForm.Show();
+            }
+            else
+            {
+                return;
+            }
         }
+
+
 
         private void dashboardPage1_Load_1(object sender, EventArgs e)
         {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Forms.SetupPages;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -46,10 +47,17 @@ namespace TypingImprovementProgram.Forms.LoginPages
                 DatabaseManager databaseManager = new DatabaseManager();
                 int userID = databaseManager.InsertNewUserAccount(username, password);
 
-                this.FindForm().Hide();
+                if (userID != -1)
+                {
+                    this.FindForm().Hide();
+                    BaselineTestForm baselineTestForm = new BaselineTestForm(userID);
+                    baselineTestForm.Show();
+                }
 
-                BaselineTestForm baselineTestForm = new BaselineTestForm(userID);
-                baselineTestForm.Show();
+                else
+                {
+                    MessageBox.Show("   Username already exists!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
@@ -114,6 +122,8 @@ namespace TypingImprovementProgram.Forms.LoginPages
             List<string> passwordErrors = new List<string>();
 
             List<string> errors = new List<string>();
+
+            
 
             if (username.Length < 5)
             {

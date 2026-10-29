@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Algorithms.WordAnalysis;
 using TypingImprovementProgram.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace TypingImprovementProgram.Database
@@ -327,13 +328,34 @@ namespace TypingImprovementProgram.Database
 
         #endregion
 
+
+        // method which creates a new record/user account in the Users database, however if it already exists then it returns and error to
         public int InsertNewUserAccount(string username, string password)
         {
             int testID = 0;
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) OUTPUT INSERTED.UserID VALUES (@Username, @PasswordHash, @BaselineCompleted)" ;
+                string sql = @"SELECT Username FROM Users WHERE Username = @Username";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string storedUsername = (string)reader["Username"];
+                            if (username == storedUsername)
+                            {
+                                return -1;
+                            }
+                        }
+                    }
+                }
+
+                sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) OUTPUT INSERTED.UserID VALUES (@Username, @PasswordHash, @BaselineCompleted)" ;
 
                 using (var command = new SqlCommand(sql,connection))
                 {
@@ -460,10 +482,21 @@ namespace TypingImprovementProgram.Database
             
         }
 
+        public void CompletedBaselineTest(int userID)
+        {
+            using (var connection  = GetConnection())
+            {
+                connection.Open();
+                string sql = @"UPDATE Users SET BaselineCompleted = @BaselineCompleted WHERE UserID = @UserID";
 
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@BaselineCompleted", true);
+                    command.Parameters.AddWithValue("@UserID", userID);
 
-
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
-
-        

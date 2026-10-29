@@ -64,7 +64,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             incorrectCounter = practiceTestPage.incorrectCounter;
             totalCharactersCount = practiceTestPage.totalCharacters;
             totalCharacterAttempts = practiceTestPage.totalCharacterAttempts;
-            totalWords = practiceTestPage.totalBaselineWords;
+            totalWords = practiceTestPage.totalWords;
             letterOpportunities = practiceTestPage.letterOpportunities;
             bigramOpportunities = practiceTestPage.bigramOpportunities;
             userID = practiceTestPage.userID;

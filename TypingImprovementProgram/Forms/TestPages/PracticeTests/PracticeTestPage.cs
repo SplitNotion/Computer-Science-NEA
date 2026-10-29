@@ -27,7 +27,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalCharacters { get; set; }
         public int totalCharacterAttempts { get; set; }
         public int totalWords { get; set; }
-        public int totalBaselineWords { get; set; }
         public int typedWords { get; set; }
 
         public int userID;
@@ -310,26 +309,16 @@ namespace TypingImprovementProgram.Forms.SetupPages
             display.CurrentLine = 0;
             typedWords = 0;
 
-            if (generator.testNumber != 3)
-            {
-                testFinished = false;
-                LoadTest();
-                totalWords = display.TotalWords;
-                totalBaselineWords += totalWords;
-                UpdateProgressLabel();
-            }
-            else
-            {
-                totalBaselineWords += totalWords;
-                totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
-                hesitationAnalyser.AnalyseHesitaton(timings);
-                performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
+            totalWords = display.TotalWords;
+            totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
+            hesitationAnalyser.AnalyseHesitaton(timings);
+            performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
 
-                Controls.Remove(display);
-                lbltypedWordProgressCounter.Visible = false;
-                keyboardPanel.Visible = false;
-                testFinished = true;
-            }
+            Controls.Remove(display);
+            lbltypedWordProgressCounter.Visible = false;
+            keyboardPanel.Visible = false;
+            testFinished = true;
+
         }
     }
 }

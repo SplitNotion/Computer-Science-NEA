@@ -60,6 +60,7 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.BackColor = Color.Azure;
             flowLayoutPanel1.Controls.Add(btnSidebarDashboard);
             flowLayoutPanel1.Controls.Add(btnSidebarPractice);
@@ -71,21 +72,22 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 0);
+            flowLayoutPanel1.Margin = new Padding(3, 100, 3, 100);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(10, 60, 10, 15);
+            flowLayoutPanel1.Padding = new Padding(5, 140, 10, 10);
             flowLayoutPanel1.Size = new Size(220, 1113);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
             // 
             // btnSidebarDashboard
             // 
-            btnSidebarDashboard.FlatAppearance.BorderSize = 0;
+            btnSidebarDashboard.FlatAppearance.BorderColor = Color.FromArgb(64, 64, 64);
             btnSidebarDashboard.FlatStyle = FlatStyle.Flat;
-            btnSidebarDashboard.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarDashboard.Location = new Point(13, 63);
+            btnSidebarDashboard.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarDashboard.Location = new Point(8, 143);
             btnSidebarDashboard.Name = "btnSidebarDashboard";
             btnSidebarDashboard.Padding = new Padding(0, 5, 0, 5);
-            btnSidebarDashboard.Size = new Size(200, 50);
+            btnSidebarDashboard.Size = new Size(210, 105);
             btnSidebarDashboard.TabIndex = 0;
             btnSidebarDashboard.Text = "Dashboard";
             btnSidebarDashboard.TextAlign = ContentAlignment.MiddleLeft;
@@ -95,15 +97,14 @@
             // btnSidebarPractice
             // 
             btnSidebarPractice.Dock = DockStyle.Top;
-            btnSidebarPractice.FlatAppearance.BorderSize = 0;
             btnSidebarPractice.FlatStyle = FlatStyle.Flat;
-            btnSidebarPractice.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarPractice.Location = new Point(13, 119);
+            btnSidebarPractice.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarPractice.Location = new Point(8, 254);
             btnSidebarPractice.Name = "btnSidebarPractice";
             btnSidebarPractice.Padding = new Padding(0, 5, 0, 5);
-            btnSidebarPractice.Size = new Size(200, 50);
+            btnSidebarPractice.Size = new Size(210, 105);
             btnSidebarPractice.TabIndex = 1;
-            btnSidebarPractice.Text = "Practice";
+            btnSidebarPractice.Text = "Practise";
             btnSidebarPractice.TextAlign = ContentAlignment.MiddleLeft;
             btnSidebarPractice.UseVisualStyleBackColor = true;
             btnSidebarPractice.Click += btnSidebarPractice_Click;
@@ -111,12 +112,11 @@
             // btnSidebarStatistics
             // 
             btnSidebarStatistics.Dock = DockStyle.Top;
-            btnSidebarStatistics.FlatAppearance.BorderSize = 0;
             btnSidebarStatistics.FlatStyle = FlatStyle.Flat;
-            btnSidebarStatistics.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarStatistics.Location = new Point(13, 175);
+            btnSidebarStatistics.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarStatistics.Location = new Point(8, 365);
             btnSidebarStatistics.Name = "btnSidebarStatistics";
-            btnSidebarStatistics.Size = new Size(200, 50);
+            btnSidebarStatistics.Size = new Size(210, 105);
             btnSidebarStatistics.TabIndex = 2;
             btnSidebarStatistics.Text = "Statistics";
             btnSidebarStatistics.TextAlign = ContentAlignment.MiddleLeft;
@@ -126,14 +126,13 @@
             // btnSidebarPrevTests
             // 
             btnSidebarPrevTests.Dock = DockStyle.Top;
-            btnSidebarPrevTests.FlatAppearance.BorderSize = 0;
             btnSidebarPrevTests.FlatStyle = FlatStyle.Flat;
-            btnSidebarPrevTests.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarPrevTests.Location = new Point(13, 231);
+            btnSidebarPrevTests.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarPrevTests.Location = new Point(8, 476);
             btnSidebarPrevTests.Name = "btnSidebarPrevTests";
-            btnSidebarPrevTests.Size = new Size(200, 50);
+            btnSidebarPrevTests.Size = new Size(210, 105);
             btnSidebarPrevTests.TabIndex = 3;
-            btnSidebarPrevTests.Text = "Previous Tests";
+            btnSidebarPrevTests.Text = "Previous\r\nTests";
             btnSidebarPrevTests.TextAlign = ContentAlignment.MiddleLeft;
             btnSidebarPrevTests.UseVisualStyleBackColor = true;
             btnSidebarPrevTests.Click += btnSidebarPrevTests_Click;
@@ -141,12 +140,11 @@
             // btnSidebarHelp
             // 
             btnSidebarHelp.Dock = DockStyle.Top;
-            btnSidebarHelp.FlatAppearance.BorderSize = 0;
             btnSidebarHelp.FlatStyle = FlatStyle.Flat;
-            btnSidebarHelp.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarHelp.Location = new Point(13, 287);
+            btnSidebarHelp.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarHelp.Location = new Point(8, 587);
             btnSidebarHelp.Name = "btnSidebarHelp";
-            btnSidebarHelp.Size = new Size(200, 50);
+            btnSidebarHelp.Size = new Size(210, 105);
             btnSidebarHelp.TabIndex = 4;
             btnSidebarHelp.Text = "Help ";
             btnSidebarHelp.TextAlign = ContentAlignment.MiddleLeft;
@@ -156,12 +154,11 @@
             // btnSidebarSettings
             // 
             btnSidebarSettings.Dock = DockStyle.Top;
-            btnSidebarSettings.FlatAppearance.BorderSize = 0;
             btnSidebarSettings.FlatStyle = FlatStyle.Flat;
-            btnSidebarSettings.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarSettings.Location = new Point(13, 343);
+            btnSidebarSettings.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarSettings.Location = new Point(8, 698);
             btnSidebarSettings.Name = "btnSidebarSettings";
-            btnSidebarSettings.Size = new Size(200, 50);
+            btnSidebarSettings.Size = new Size(210, 105);
             btnSidebarSettings.TabIndex = 5;
             btnSidebarSettings.Text = "Settings";
             btnSidebarSettings.TextAlign = ContentAlignment.MiddleLeft;
@@ -170,13 +167,12 @@
             // 
             // btnSidebarSignout
             // 
-            btnSidebarSignout.FlatAppearance.BorderSize = 0;
             btnSidebarSignout.FlatStyle = FlatStyle.Flat;
-            btnSidebarSignout.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSidebarSignout.Location = new Point(13, 399);
+            btnSidebarSignout.Font = new Font("Segoe UI Semibold", 21F, FontStyle.Bold);
+            btnSidebarSignout.Location = new Point(8, 809);
             btnSidebarSignout.Name = "btnSidebarSignout";
             btnSidebarSignout.Padding = new Padding(0, 5, 0, 5);
-            btnSidebarSignout.Size = new Size(200, 50);
+            btnSidebarSignout.Size = new Size(210, 105);
             btnSidebarSignout.TabIndex = 6;
             btnSidebarSignout.Text = "Sign Out";
             btnSidebarSignout.TextAlign = ContentAlignment.MiddleLeft;
@@ -210,17 +206,17 @@
             panelTop.Dock = DockStyle.Top;
             panelTop.Location = new Point(220, 0);
             panelTop.Name = "panelTop";
-            panelTop.Size = new Size(1512, 49);
+            panelTop.Size = new Size(1512, 100);
             panelTop.TabIndex = 1;
             // 
             // lblPageName
             // 
             lblPageName.AutoSize = true;
             lblPageName.BackColor = Color.Azure;
-            lblPageName.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPageName.Font = new Font("Segoe UI", 40.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblPageName.Location = new Point(6, 0);
             lblPageName.Name = "lblPageName";
-            lblPageName.Size = new Size(193, 46);
+            lblPageName.Size = new Size(378, 89);
             lblPageName.TabIndex = 0;
             lblPageName.Text = "Dashboard";
             // 

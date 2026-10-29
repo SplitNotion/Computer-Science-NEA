@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TypingImprovementProgram.Algorithms.TestAnalysis;
 using TypingImprovementProgram.Algorithms.TestGeneration;
+using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.SetupPages
@@ -327,6 +328,16 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 lbltypedWordProgressCounter.Visible = false;
                 keyboardPanel.Visible = false;
                 testFinished = true;
+
+                DatabaseManager databaseManager = new DatabaseManager();
+                databaseManager.CompletedBaselineTest(userID);
+
+                this.FindForm().Hide();
+                MainPagesForm mainPagesForm = new MainPagesForm(userID);
+                mainPagesForm.Show();
+
+
+
             }
         }
 

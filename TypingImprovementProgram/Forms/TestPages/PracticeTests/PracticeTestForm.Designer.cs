@@ -53,7 +53,6 @@
             practiceTestPage1.Name = "practiceTestPage1";
             practiceTestPage1.Size = new Size(1732, 1113);
             practiceTestPage1.TabIndex = 0;
-            practiceTestPage1.totalBaselineWords = 0;
             practiceTestPage1.totalCharacterAttempts = 0;
             practiceTestPage1.totalCharacters = 174;
             practiceTestPage1.totalWords = 23;
