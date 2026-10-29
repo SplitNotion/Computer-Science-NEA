@@ -56,7 +56,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             InitializeComponent();
             this.userID = userID;
             // this.BackColor = Color.FromArgb(20, 32, 45);
-
+            lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
             btnContinuePracticeTest.Visible = false;
 
             display.Location = new Point(30, 250);
@@ -154,6 +154,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
             previousKeyTime = currentTime;
         }
 
+        private void CapsLockChecker(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.CapsLock)
+            {
+                lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
+            }
+        }
 
         private void PracticeTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
@@ -169,6 +176,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             {
                 return;
             }
+
 
             #region Backspace Key Function
             // allows for backspace, however disallowing over space between words
@@ -299,7 +307,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             display.Invalidate();
         }
-
 
         private void btnContinuePracticeTest_Click(object sender, EventArgs e)
         {

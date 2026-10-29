@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TypingImprovementProgram.Database;
 
 namespace TypingImprovementProgram.Algorithms.TestGeneration
 {
     internal class PracticeTestGenerator
     {
 
+        DatabaseManager databaseManager = new DatabaseManager();
 
 
+
+        public void GeneratePracticeTest()
+        {
+
+        }
 
 
         //public List<string> GeneratePracticeText()

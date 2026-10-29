@@ -48,7 +48,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         private TimeSpan previousKeyTime = TimeSpan.Zero;
         public double totalTestSeconds = 0.0;
 
-        
+
 
         // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
         public BaselineTestPage(int userID)
@@ -56,7 +56,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             InitializeComponent();
             this.userID = userID;
             // this.BackColor = Color.FromArgb(20, 32, 45);
-
+            lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
             btnContinueBaselineTest.Visible = false;
 
             display.Location = new Point(30, 250);
@@ -65,7 +65,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             Controls.Add(display);
             LoadTest();
-           
+
             totalCharacters = display.TotalCharacters;
             totalWords = display.TotalWords;
 
@@ -154,6 +154,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
             previousKeyTime = currentTime;
         }
 
+        private void CapsLockChecker(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.CapsLock)
+            {
+                lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
+            }
+        }
 
         private void BaselineTestPage_KeyPress(object? sender, KeyPressEventArgs e) // method which reacts to each keypress
         {
@@ -166,13 +173,16 @@ namespace TypingImprovementProgram.Forms.SetupPages
             char? incorrectCharacter = null;
 
             if (testFinished)
-            { 
+            {
                 return;
             }
 
+
+
+
             #region Backspace Key Function
             // allows for backspace, however disallowing over space between words
-            if (e.KeyChar == (char)Keys.Back)                     
+            if (e.KeyChar == (char)Keys.Back)
             {
                 if (currentIndex > 0)
                 {
@@ -182,7 +192,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         display.Characters[currentIndex - 1].State = CharacterState.Current;
                         currentIndex--;
 
-                        if (currentIndex > 0 && display.Characters[currentIndex - 1].State  == CharacterState.Incorrect)
+                        if (currentIndex > 0 && display.Characters[currentIndex - 1].State == CharacterState.Incorrect)
                         {
                             keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, display.Characters[currentIndex - 1].Character);
                         }
@@ -204,7 +214,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 RecordKey(display.Characters[currentIndex].Character);
             }
 
-
             #region Correct/Incorrect Character Attribute Assignment and Recording
             if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
             {
@@ -219,7 +228,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
 
                 // adds incorrect character to a dictionary/increments occurences if it has been incorrectly typed
-                char character = display.Characters[currentIndex].Character;              
+                char character = display.Characters[currentIndex].Character;
                 if (!incorrectLetters.ContainsKey(character))
                 {
                     incorrectLetters.Add(character, 1);
@@ -268,7 +277,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
 
             // events at end of test
-            if (currentIndex >= display.Characters.Count)  
+            if (currentIndex >= display.Characters.Count)
             {
                 stopwatch.Stop();
                 totalTypingTimeStopwatch.Stop();
@@ -279,7 +288,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
 
             // updates the current character, word count and text position on the screen
-            if (currentIndex < display.Characters.Count)  
+            if (currentIndex < display.Characters.Count)
             {
                 display.Characters[currentIndex].State = CharacterState.Current;
                 keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, incorrectCharacter);
@@ -291,7 +300,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 }
 
                 // shifts all text lines up when second row is completed
-                if (display.Characters[currentIndex].Line > display.CurrentLine + 1)     
+                if (display.Characters[currentIndex].Line > display.CurrentLine + 1)
                 {
                     display.CurrentLine++;
                 }
@@ -309,7 +318,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             display.CurrentLine = 0;
             typedWords = 0;
 
-            if (generator.testNumber != 3) 
+            if (generator.testNumber != 3)
             {
                 testFinished = false;
                 LoadTest();
@@ -340,6 +349,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             }
         }
+
 
     }
 }

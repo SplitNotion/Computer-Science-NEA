@@ -33,6 +33,7 @@
             keyboardPanel = new Panel();
             keyboardVisualiserControl1 = new KeyboardVisualiserControl();
             lbltypedWordProgressCounter = new Label();
+            lblCapsLockOnWarning = new Label();
             keyboardPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -86,17 +87,32 @@
             lbltypedWordProgressCounter.TabIndex = 3;
             lbltypedWordProgressCounter.Text = "0/0";
             // 
+            // lblCapsLockOnWarning
+            // 
+            lblCapsLockOnWarning.AutoSize = true;
+            lblCapsLockOnWarning.BackColor = SystemColors.ControlDarkDark;
+            lblCapsLockOnWarning.BorderStyle = BorderStyle.FixedSingle;
+            lblCapsLockOnWarning.Font = new Font("Segoe UI", 28.2F);
+            lblCapsLockOnWarning.ForeColor = Color.Salmon;
+            lblCapsLockOnWarning.Location = new Point(174, 252);
+            lblCapsLockOnWarning.Name = "lblCapsLockOnWarning";
+            lblCapsLockOnWarning.Size = new Size(410, 64);
+            lblCapsLockOnWarning.TabIndex = 4;
+            lblCapsLockOnWarning.Text = "CAPS LOCK IS ON!";
+            // 
             // BaselineTestPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
+            Controls.Add(lblCapsLockOnWarning);
             Controls.Add(lbltypedWordProgressCounter);
             Controls.Add(keyboardPanel);
             Controls.Add(btnContinueBaselineTest);
             Controls.Add(lblbaselineTestPage);
             Name = "BaselineTestPage";
             Size = new Size(1736, 1106);
+            KeyUp += CapsLockChecker;
             keyboardPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -109,5 +125,6 @@
         private Panel keyboardPanel;
         private KeyboardVisualiserControl keyboardVisualiserControl1;
         private Label lbltypedWordProgressCounter;
+        private Label lblCapsLockOnWarning;
     }
 }

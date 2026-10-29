@@ -42,7 +42,7 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1731, 1061);
+            pictureBox1.Size = new Size(1731, 1111);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -70,12 +70,12 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
-            ClientSize = new Size(1731, 1061);
+            ClientSize = new Size(1731, 1111);
             Controls.Add(panelLoginPage);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            MaximumSize = new Size(1749, 1158);
+            MaximumSize = new Size(1750, 1160);
             MinimumSize = new Size(1749, 1027);
             Name = "LoginPageForm";
             StartPosition = FormStartPosition.CenterScreen;

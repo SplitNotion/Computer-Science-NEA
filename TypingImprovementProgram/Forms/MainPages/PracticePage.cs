@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Forms.SetupPages;
 
 namespace TypingImprovementProgram.Forms.MainPages
 {
@@ -15,6 +16,15 @@ namespace TypingImprovementProgram.Forms.MainPages
         public PracticePage()
         {
             InitializeComponent();
+        }
+
+        private void btnGeneratePracticeTest_Click(object sender, EventArgs e)
+        {
+            this.FindForm().Hide();
+            PracticeTestForm practiceTestForm = new PracticeTestForm(0);
+            practiceTestForm.Show();
+
+
         }
     }
 }

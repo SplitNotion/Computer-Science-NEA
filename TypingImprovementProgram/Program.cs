@@ -21,8 +21,8 @@ namespace TypingImprovementProgram
 
             //ApplicationConfiguration.Initialize();
             //Application.Run(new BaselineTestForm(4));
-            Application.Run(new LoginPageForm());
-            //Application.Run(new MainPagesForm());
+            //Application.Run(new LoginPageForm());
+            Application.Run(new MainPagesForm(5));
             //Application.Run(new PracticeTestForm(3));
 
             DatabaseManager database = new DatabaseManager();

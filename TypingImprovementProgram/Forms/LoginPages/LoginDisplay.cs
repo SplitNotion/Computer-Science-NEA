@@ -43,17 +43,16 @@ namespace TypingImprovementProgram.Forms.LoginPages
             {
                 if (!baselineCompleted)
                 {
-                    this.FindForm().Hide();
-
                     BaselineTestForm baselineTestForm = new BaselineTestForm(userID);
                     baselineTestForm.Show();
+                    this.FindForm().Hide();
                 }
+
                 else
                 {
-                    this.FindForm().Hide();
-
                     MainPagesForm mainPagesForm = new MainPagesForm(userID);
                     mainPagesForm.Show();
+                    this.FindForm().Hide();
                 }
             }
         }
