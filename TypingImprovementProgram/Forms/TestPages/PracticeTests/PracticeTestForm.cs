@@ -14,19 +14,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
     public partial class PracticeTestForm : Form
     {
         private int userID;
-        public PracticeTestForm(int userID)
+        public PracticeTestForm(int userID, string difficulty, int testTiming, int testWords)
         {
             InitializeComponent();
-
-            //StartPosition = FormStartPosition.Manual;
-            //Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
-            //int w = Width >= screen.Width ? screen.Width : (screen.Width + Width) / 2;
-            //int h = Height >= screen.Height ? screen.Height : (screen.Height + Height) / 2;
-            //Location = new Point(screen.Left + (screen.Width - w) / 2, screen.Top + (screen.Height - h) / 2);
-            //Size = new Size(w, h);
             this.userID = userID;
 
-            ShowScreen(new PracticeTestPage());
+            practiceTestPage1.InitialiseTest(difficulty, testTiming, testWords, userID);
+
+            ShowScreen(practiceTestPage1);
 
         }
 

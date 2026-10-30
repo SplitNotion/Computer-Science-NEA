@@ -18,7 +18,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
     public partial class PracticeTestPage : UserControl
     {
         TypingDisplayControl display = new TypingDisplayControl();
-        BaselineTestGenerator generator = new BaselineTestGenerator();
+        PracticeTestGenerator generator;
         HesitationAnalyser hesitationAnalyser = new HesitationAnalyser();
         PerformanceAnalyser performanceAnalyser;
 
@@ -54,7 +54,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public PracticeTestPage()
         {
             InitializeComponent();
-            this.userID = userID;
             // this.BackColor = Color.FromArgb(20, 32, 45);
             lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
             btnContinuePracticeTest.Visible = false;
@@ -64,7 +63,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             TabStop = true;
 
             Controls.Add(display);
-            LoadTest();
 
             totalCharacters = display.TotalCharacters;
             totalWords = display.TotalWords;
@@ -73,10 +71,20 @@ namespace TypingImprovementProgram.Forms.SetupPages
             KeyPress += PracticeTestPage_KeyPress; // calls key press method
         }
 
+        public void InitialiseTest(string difficulty, int testTiming, int testWords, int userID)
+        {
+            this.userID = userID;
+
+            generator = new PracticeTestGenerator(difficulty, testTiming, testWords);
+            generator.GetLatestUserData(userID);
+
+            LoadTest();
+        }
+
         private void LoadTest()
         {
             display.Characters.Clear();
-            List<string> lines = generator.GenerateBaselineText();
+            List<string> lines = generator.GeneratePracticeText();
 
             for (int i = 0; i < lines.Count; i++)
             {
@@ -111,7 +119,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
                         }
                     }
                 }
-
             }
 
             display.Characters[0].State = CharacterState.Current; // colours the first character blue
@@ -317,7 +324,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             typedWords = 0;
 
             totalWords = display.TotalWords;
-            totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
+            stotalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
             hesitationAnalyser.AnalyseHesitaton(timings);
             performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
 

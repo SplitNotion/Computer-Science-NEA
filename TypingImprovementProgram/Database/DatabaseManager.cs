@@ -587,18 +587,20 @@ namespace TypingImprovementProgram.Database
             return possibleWords;
         }
 
-        public List<string> GetRemainingRandomWords(int numberofWords)
+        public List<string> GetRemainingRandomWords(int numberofWords, int scoreMinimum, int scoreMaximum)
         {
             List<string> remainingWords = new List<string>();
 
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string sql = @"SELECT TOP (@Amount) Words.WordID, Words.Word FROM Words ORDER BY NEWID();";
+                string sql = @"SELECT TOP (@Amount) Words.WordID, Words.Word FROM Words WHERE Words.DifficultyScore BETWEEN @ScoreMinimum AND @ScoreMaximum ORDER BY NEWID();";
 
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Amount", numberofWords);
+                    command.Parameters.AddWithValue("@ScoreMinimum",  scoreMinimum);
+                    command.Parameters.AddWithValue("@ScoreMaximum", scoreMaximum);
 
                     using (var reader = command.ExecuteReader())
                     {

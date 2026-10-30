@@ -32,16 +32,21 @@ namespace TypingImprovementProgram.Forms.MainPages
         private void btnGeneratePracticeTest_Click(object sender, EventArgs e)
         {
             this.FindForm().Hide();
-            PracticeTestForm practiceTestForm = new PracticeTestForm(userID);
-            practiceTestForm.Show();
+            
 
             if (testWords == 99)
             {
                 testWords = Convert.ToInt32(txtBoxCustomLength.Text);
             }
 
-            PracticeTestGenerator practiceTestGenerator = new PracticeTestGenerator(difficulty, testTiming, testWords);
-            practiceTestGenerator.GetLatestUserData(userID);
+            PracticeTestForm practiceTestForm = new PracticeTestForm(userID, difficulty, testTiming, testWords);
+            practiceTestForm.Show();
+
+            // PracticeTestForm practiceTestForm1 = new PracticeTestForm(userID);
+            // practiceTestForm1.Show();
+
+            // PracticeTestPage practiceTestPage = new PracticeTestPage();
+            // practiceTestPage.InitialiseTest(difficulty, testTiming, testWords, userID);
         }
 
 

@@ -773,7 +773,7 @@ printer
 condition
 effective
 believe
-organization
+organisation
 effect
 mind
 selection
@@ -3620,7 +3620,7 @@ tales
 lite
 hub
 targeted
-organizational
+organisational
 twelve
 founder
 decade
