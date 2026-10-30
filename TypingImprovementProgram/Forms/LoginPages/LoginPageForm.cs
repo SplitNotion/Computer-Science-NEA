@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Algorithms.WordAnalysis;
+using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Forms.SetupPages;
+using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.LoginPages
 {

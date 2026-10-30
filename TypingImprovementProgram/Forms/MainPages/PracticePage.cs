@@ -16,9 +16,9 @@ namespace TypingImprovementProgram.Forms.MainPages
     {
         private int userID;
 
-        private string difficulty;
-        private int testTiming;
-        private int testWords;
+        private string difficulty = "mixed";
+        private int testTiming = -1;
+        private int testWords = -1;
 
 
         public PracticePage(int userID)

@@ -64,12 +64,9 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             }
         }
 
-
         public void GetLatestUserData(int userID)
         {
             (problemLetters, problemBigrams) = databaseManager.GetLatestUserLetterBigramProblems(userID);
-
-            int test = 4;
 
             ChooseBigrams(problemBigrams);
 
@@ -100,7 +97,16 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
                 for (int i = 0; i < Math.Min(5, shuffledPossibleWords.Count); i++)
                 {
-                    if (usingWords.Count >= testWords * 0.6)
+                    if (testWords != -1)
+                    {
+                        if (usingWords.Count >= testWords * 0.6)
+                        {
+                            break;
+                        }
+                        break;
+                    }
+
+                    else if (usingWords.Count >= random.Next(20, 35))
                     {
                         break;
                     }
@@ -111,12 +117,20 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
                     }
                 }
 
-                if (usingWords.Count >= testWords * 0.6)
+                if (testWords != -1)
                 {
+                    if (usingWords.Count >= testWords * 0.6)
+                    {
+                        break;
+                    }
                     break;
                 }
             }
-            int test = 4;
+
+            if (testWords == -1)
+            {
+                testWords = random.Next(usingWords.Count, 99 - usingWords.Count);
+            }
 
             List<string> remainingWords = databaseManager.GetRemainingRandomWords((testWords - usingWords.Count), minimumDifficulty, maximumDifficulty);
             usingWords.AddRange(remainingWords);
@@ -133,7 +147,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             {
                 List<string> tempWordList = new List<string>();
 
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < wordsPerLine; i++)
                 {
                     int wordIndex = (line * wordsPerLine) + i;
 
@@ -155,10 +169,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
             int tesdwadts = 4;
 
-
             return linesTest;
-
-
 
         }
 

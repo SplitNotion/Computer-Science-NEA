@@ -324,7 +324,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             typedWords = 0;
 
             totalWords = display.TotalWords;
-            stotalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
+            totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
             hesitationAnalyser.AnalyseHesitaton(timings);
             performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
 
