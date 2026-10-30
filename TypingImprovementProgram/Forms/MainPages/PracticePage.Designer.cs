@@ -29,24 +29,26 @@
         private void InitializeComponent()
         {
             btnGeneratePracticeTest = new Button();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            btnDifficultyEasy = new Button();
+            btnDifficultyMedium = new Button();
+            btnDifficultyHard = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            button4 = new Button();
+            btnDifficultyMixed = new Button();
             label1 = new Label();
             label2 = new Label();
             flowLayoutPanel2 = new FlowLayoutPanel();
-            button5 = new Button();
-            button6 = new Button();
-            button7 = new Button();
-            button8 = new Button();
+            btnTimedNone = new Button();
+            btnTimed15Sec = new Button();
+            btnTimed30Sec = new Button();
+            btnTimed1Min = new Button();
             label3 = new Label();
             flowLayoutPanel3 = new FlowLayoutPanel();
-            button9 = new Button();
-            button10 = new Button();
-            button11 = new Button();
-            button12 = new Button();
+            btnLengthRandom = new Button();
+            btnLength30Words = new Button();
+            btnLength40Words = new Button();
+            btnLengthCustom = new Button();
+            txtBoxCustomLength = new TextBox();
+            lblCustomLength = new Label();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             flowLayoutPanel3.SuspendLayout();
@@ -64,60 +66,64 @@
             btnGeneratePracticeTest.UseVisualStyleBackColor = false;
             btnGeneratePracticeTest.Click += btnGeneratePracticeTest_Click;
             // 
-            // button1
+            // btnDifficultyEasy
             // 
-            button1.BackColor = SystemColors.ControlLightLight;
-            button1.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(3, 122);
-            button1.Name = "button1";
-            button1.Size = new Size(239, 113);
-            button1.TabIndex = 3;
-            button1.Text = "Easy";
-            button1.UseVisualStyleBackColor = false;
+            btnDifficultyEasy.BackColor = SystemColors.ControlLightLight;
+            btnDifficultyEasy.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDifficultyEasy.Location = new Point(3, 122);
+            btnDifficultyEasy.Name = "btnDifficultyEasy";
+            btnDifficultyEasy.Size = new Size(239, 113);
+            btnDifficultyEasy.TabIndex = 3;
+            btnDifficultyEasy.Text = "Easy";
+            btnDifficultyEasy.UseVisualStyleBackColor = false;
+            btnDifficultyEasy.Click += btnDifficultyEasy_Click;
             // 
-            // button2
+            // btnDifficultyMedium
             // 
-            button2.BackColor = SystemColors.ControlLightLight;
-            button2.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.Location = new Point(3, 241);
-            button2.Name = "button2";
-            button2.Size = new Size(239, 113);
-            button2.TabIndex = 4;
-            button2.Text = "Medium";
-            button2.UseVisualStyleBackColor = false;
+            btnDifficultyMedium.BackColor = SystemColors.ControlLightLight;
+            btnDifficultyMedium.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDifficultyMedium.Location = new Point(3, 241);
+            btnDifficultyMedium.Name = "btnDifficultyMedium";
+            btnDifficultyMedium.Size = new Size(239, 113);
+            btnDifficultyMedium.TabIndex = 4;
+            btnDifficultyMedium.Text = "Medium";
+            btnDifficultyMedium.UseVisualStyleBackColor = false;
+            btnDifficultyMedium.Click += btnDifficultyMedium_Click;
             // 
-            // button3
+            // btnDifficultyHard
             // 
-            button3.BackColor = SystemColors.ControlLightLight;
-            button3.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button3.Location = new Point(3, 360);
-            button3.Name = "button3";
-            button3.Size = new Size(239, 113);
-            button3.TabIndex = 5;
-            button3.Text = "Difficult";
-            button3.UseVisualStyleBackColor = false;
+            btnDifficultyHard.BackColor = SystemColors.ControlLightLight;
+            btnDifficultyHard.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDifficultyHard.Location = new Point(3, 360);
+            btnDifficultyHard.Name = "btnDifficultyHard";
+            btnDifficultyHard.Size = new Size(239, 113);
+            btnDifficultyHard.TabIndex = 5;
+            btnDifficultyHard.Text = "Hard";
+            btnDifficultyHard.UseVisualStyleBackColor = false;
+            btnDifficultyHard.Click += btnDifficultyHard_Click;
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Controls.Add(button4);
-            flowLayoutPanel1.Controls.Add(button1);
-            flowLayoutPanel1.Controls.Add(button2);
-            flowLayoutPanel1.Controls.Add(button3);
+            flowLayoutPanel1.Controls.Add(btnDifficultyMixed);
+            flowLayoutPanel1.Controls.Add(btnDifficultyEasy);
+            flowLayoutPanel1.Controls.Add(btnDifficultyMedium);
+            flowLayoutPanel1.Controls.Add(btnDifficultyHard);
             flowLayoutPanel1.Location = new Point(37, 197);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(249, 475);
             flowLayoutPanel1.TabIndex = 6;
             // 
-            // button4
+            // btnDifficultyMixed
             // 
-            button4.BackColor = SystemColors.ControlLightLight;
-            button4.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button4.Location = new Point(3, 3);
-            button4.Name = "button4";
-            button4.Size = new Size(239, 113);
-            button4.TabIndex = 7;
-            button4.Text = "Mixed";
-            button4.UseVisualStyleBackColor = false;
+            btnDifficultyMixed.BackColor = SystemColors.ControlLightLight;
+            btnDifficultyMixed.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDifficultyMixed.Location = new Point(3, 3);
+            btnDifficultyMixed.Name = "btnDifficultyMixed";
+            btnDifficultyMixed.Size = new Size(239, 113);
+            btnDifficultyMixed.TabIndex = 7;
+            btnDifficultyMixed.Text = "Mixed";
+            btnDifficultyMixed.UseVisualStyleBackColor = false;
+            btnDifficultyMixed.Click += btnDifficultyMixed_Click;
             // 
             // label1
             // 
@@ -141,58 +147,62 @@
             // 
             // flowLayoutPanel2
             // 
-            flowLayoutPanel2.Controls.Add(button5);
-            flowLayoutPanel2.Controls.Add(button6);
-            flowLayoutPanel2.Controls.Add(button7);
-            flowLayoutPanel2.Controls.Add(button8);
+            flowLayoutPanel2.Controls.Add(btnTimedNone);
+            flowLayoutPanel2.Controls.Add(btnTimed15Sec);
+            flowLayoutPanel2.Controls.Add(btnTimed30Sec);
+            flowLayoutPanel2.Controls.Add(btnTimed1Min);
             flowLayoutPanel2.Location = new Point(380, 197);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Size = new Size(249, 475);
             flowLayoutPanel2.TabIndex = 8;
             // 
-            // button5
+            // btnTimedNone
             // 
-            button5.BackColor = SystemColors.ControlLightLight;
-            button5.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button5.Location = new Point(3, 3);
-            button5.Name = "button5";
-            button5.Size = new Size(239, 113);
-            button5.TabIndex = 7;
-            button5.Text = "None";
-            button5.UseVisualStyleBackColor = false;
+            btnTimedNone.BackColor = SystemColors.ControlLightLight;
+            btnTimedNone.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTimedNone.Location = new Point(3, 3);
+            btnTimedNone.Name = "btnTimedNone";
+            btnTimedNone.Size = new Size(239, 113);
+            btnTimedNone.TabIndex = 7;
+            btnTimedNone.Text = "None";
+            btnTimedNone.UseVisualStyleBackColor = false;
+            btnTimedNone.Click += btnTimedNone_Click;
             // 
-            // button6
+            // btnTimed15Sec
             // 
-            button6.BackColor = SystemColors.ControlLightLight;
-            button6.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button6.Location = new Point(3, 122);
-            button6.Name = "button6";
-            button6.Size = new Size(239, 113);
-            button6.TabIndex = 3;
-            button6.Text = "15 seconds";
-            button6.UseVisualStyleBackColor = false;
+            btnTimed15Sec.BackColor = SystemColors.ControlLightLight;
+            btnTimed15Sec.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTimed15Sec.Location = new Point(3, 122);
+            btnTimed15Sec.Name = "btnTimed15Sec";
+            btnTimed15Sec.Size = new Size(239, 113);
+            btnTimed15Sec.TabIndex = 3;
+            btnTimed15Sec.Text = "15 seconds";
+            btnTimed15Sec.UseVisualStyleBackColor = false;
+            btnTimed15Sec.Click += btnTimed15Sec_Click;
             // 
-            // button7
+            // btnTimed30Sec
             // 
-            button7.BackColor = SystemColors.ControlLightLight;
-            button7.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button7.Location = new Point(3, 241);
-            button7.Name = "button7";
-            button7.Size = new Size(239, 113);
-            button7.TabIndex = 4;
-            button7.Text = "30 seconds";
-            button7.UseVisualStyleBackColor = false;
+            btnTimed30Sec.BackColor = SystemColors.ControlLightLight;
+            btnTimed30Sec.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTimed30Sec.Location = new Point(3, 241);
+            btnTimed30Sec.Name = "btnTimed30Sec";
+            btnTimed30Sec.Size = new Size(239, 113);
+            btnTimed30Sec.TabIndex = 4;
+            btnTimed30Sec.Text = "30 seconds";
+            btnTimed30Sec.UseVisualStyleBackColor = false;
+            btnTimed30Sec.Click += btnTimed30Sec_Click;
             // 
-            // button8
+            // btnTimed1Min
             // 
-            button8.BackColor = SystemColors.ControlLightLight;
-            button8.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button8.Location = new Point(3, 360);
-            button8.Name = "button8";
-            button8.Size = new Size(239, 113);
-            button8.TabIndex = 5;
-            button8.Text = "1 minute";
-            button8.UseVisualStyleBackColor = false;
+            btnTimed1Min.BackColor = SystemColors.ControlLightLight;
+            btnTimed1Min.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTimed1Min.Location = new Point(3, 360);
+            btnTimed1Min.Name = "btnTimed1Min";
+            btnTimed1Min.Size = new Size(239, 113);
+            btnTimed1Min.TabIndex = 5;
+            btnTimed1Min.Text = "1 minute";
+            btnTimed1Min.UseVisualStyleBackColor = false;
+            btnTimed1Min.Click += btnTimed1Min_Click;
             // 
             // label3
             // 
@@ -206,63 +216,87 @@
             // 
             // flowLayoutPanel3
             // 
-            flowLayoutPanel3.Controls.Add(button9);
-            flowLayoutPanel3.Controls.Add(button10);
-            flowLayoutPanel3.Controls.Add(button11);
-            flowLayoutPanel3.Controls.Add(button12);
+            flowLayoutPanel3.Controls.Add(btnLengthRandom);
+            flowLayoutPanel3.Controls.Add(btnLength30Words);
+            flowLayoutPanel3.Controls.Add(btnLength40Words);
+            flowLayoutPanel3.Controls.Add(btnLengthCustom);
             flowLayoutPanel3.Location = new Point(726, 200);
             flowLayoutPanel3.Name = "flowLayoutPanel3";
             flowLayoutPanel3.Size = new Size(249, 475);
             flowLayoutPanel3.TabIndex = 10;
             // 
-            // button9
+            // btnLengthRandom
             // 
-            button9.BackColor = SystemColors.ControlLightLight;
-            button9.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button9.Location = new Point(3, 3);
-            button9.Name = "button9";
-            button9.Size = new Size(239, 113);
-            button9.TabIndex = 7;
-            button9.Text = "30 words";
-            button9.UseVisualStyleBackColor = false;
+            btnLengthRandom.BackColor = SystemColors.ControlLightLight;
+            btnLengthRandom.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLengthRandom.Location = new Point(3, 3);
+            btnLengthRandom.Name = "btnLengthRandom";
+            btnLengthRandom.Size = new Size(239, 113);
+            btnLengthRandom.TabIndex = 7;
+            btnLengthRandom.Text = "Random";
+            btnLengthRandom.UseVisualStyleBackColor = false;
+            btnLengthRandom.Click += btnLengthRandom_Click;
             // 
-            // button10
+            // btnLength30Words
             // 
-            button10.BackColor = SystemColors.ControlLightLight;
-            button10.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button10.Location = new Point(3, 122);
-            button10.Name = "button10";
-            button10.Size = new Size(239, 113);
-            button10.TabIndex = 3;
-            button10.Text = "40 words";
-            button10.UseVisualStyleBackColor = false;
+            btnLength30Words.BackColor = SystemColors.ControlLightLight;
+            btnLength30Words.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLength30Words.Location = new Point(3, 122);
+            btnLength30Words.Name = "btnLength30Words";
+            btnLength30Words.Size = new Size(239, 113);
+            btnLength30Words.TabIndex = 3;
+            btnLength30Words.Text = "30 words";
+            btnLength30Words.UseVisualStyleBackColor = false;
+            btnLength30Words.Click += btnLength30Words_Click;
             // 
-            // button11
+            // btnLength40Words
             // 
-            button11.BackColor = SystemColors.ControlLightLight;
-            button11.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button11.Location = new Point(3, 241);
-            button11.Name = "button11";
-            button11.Size = new Size(239, 113);
-            button11.TabIndex = 4;
-            button11.Text = "50 words";
-            button11.UseVisualStyleBackColor = false;
+            btnLength40Words.BackColor = SystemColors.ControlLightLight;
+            btnLength40Words.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLength40Words.Location = new Point(3, 241);
+            btnLength40Words.Name = "btnLength40Words";
+            btnLength40Words.Size = new Size(239, 113);
+            btnLength40Words.TabIndex = 4;
+            btnLength40Words.Text = "40 words";
+            btnLength40Words.UseVisualStyleBackColor = false;
+            btnLength40Words.Click += btnLength40Words_Click;
             // 
-            // button12
+            // btnLengthCustom
             // 
-            button12.BackColor = SystemColors.ControlLightLight;
-            button12.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button12.Location = new Point(3, 360);
-            button12.Name = "button12";
-            button12.Size = new Size(239, 113);
-            button12.TabIndex = 5;
-            button12.Text = "Custom";
-            button12.UseVisualStyleBackColor = false;
+            btnLengthCustom.BackColor = SystemColors.ControlLightLight;
+            btnLengthCustom.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLengthCustom.Location = new Point(3, 360);
+            btnLengthCustom.Name = "btnLengthCustom";
+            btnLengthCustom.Size = new Size(239, 113);
+            btnLengthCustom.TabIndex = 5;
+            btnLengthCustom.Text = "Custom";
+            btnLengthCustom.UseVisualStyleBackColor = false;
+            btnLengthCustom.Click += btnLengthCustom_Click;
+            // 
+            // txtBoxCustomLength
+            // 
+            txtBoxCustomLength.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBoxCustomLength.Location = new Point(974, 605);
+            txtBoxCustomLength.Name = "txtBoxCustomLength";
+            txtBoxCustomLength.Size = new Size(33, 38);
+            txtBoxCustomLength.TabIndex = 12;
+            // 
+            // lblCustomLength
+            // 
+            lblCustomLength.AutoSize = true;
+            lblCustomLength.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCustomLength.Location = new Point(1013, 608);
+            lblCustomLength.Name = "lblCustomLength";
+            lblCustomLength.Size = new Size(82, 31);
+            lblCustomLength.TabIndex = 13;
+            lblCustomLength.Text = "Words";
             // 
             // PracticePage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblCustomLength);
+            Controls.Add(txtBoxCustomLength);
             Controls.Add(label3);
             Controls.Add(flowLayoutPanel3);
             Controls.Add(label2);
@@ -282,23 +316,25 @@
         #endregion
 
         private Button btnGeneratePracticeTest;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button btnDifficultyEasy;
+        private Button btnDifficultyMedium;
+        private Button btnDifficultyHard;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button button4;
+        private Button btnDifficultyMixed;
         private Label label1;
         private Label label2;
         private FlowLayoutPanel flowLayoutPanel2;
-        private Button button5;
-        private Button button6;
-        private Button button7;
-        private Button button8;
+        private Button btnTimedNone;
+        private Button btnTimed15Sec;
+        private Button btnTimed30Sec;
+        private Button btnTimed1Min;
         private Label label3;
         private FlowLayoutPanel flowLayoutPanel3;
-        private Button button9;
-        private Button button10;
-        private Button button11;
-        private Button button12;
+        private Button btnLengthRandom;
+        private Button btnLength30Words;
+        private Button btnLength40Words;
+        private Button btnLengthCustom;
+        private TextBox txtBoxCustomLength;
+        private Label lblCustomLength;
     }
 }
