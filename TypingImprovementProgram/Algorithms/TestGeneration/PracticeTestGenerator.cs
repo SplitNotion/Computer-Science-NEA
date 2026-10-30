@@ -33,12 +33,8 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             OrganiseDifficutly(difficulty);
         }
 
-
-
         private void OrganiseDifficutly(string difficulty)
         {
-            // 20-45, 46-65, 66-100
-
             switch (difficulty)
             {
                 case "easy":
@@ -69,7 +65,6 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             (problemLetters, problemBigrams) = databaseManager.GetLatestUserLetterBigramProblems(userID);
 
             ChooseBigrams(problemBigrams);
-
         }
 
         private void ChooseBigrams(Dictionary<string, (double errorRate, bool hesitation)> problemBigrams)
@@ -89,7 +84,6 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
                 }
             }
             
-
             foreach (string bigram in chosenBigrams)
             {
                 possibleWords = databaseManager.GetWordsFromChosenBigrams(bigram);
@@ -137,6 +131,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             usingWords = usingWords.OrderBy(x => random.Next()).ToList();
         }
 
+
         public List<string> GeneratePracticeText()
         {
             List<string> linesTest = new List<string>();
@@ -172,41 +167,5 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             return linesTest;
 
         }
-
-
-
-
-        //public List<string> GeneratePracticeText()
-        //{
-
-        //    List<string> linesTest = new List<string>();
-
-        //    int startIndex = testNumber * 36;
-
-        //    for (int line = 0; line < 4; line++)
-        //    {
-        //        List<string> tempWordList = new List<string>();
-
-        //        for (int i = 0; i < 9; i++)
-        //        {
-        //            tempWordList.Add(shuffledBaselineWords[startIndex + line * 9 + i]);
-        //        }
-
-        //        string tempSentence = string.Join(" ", tempWordList);
-
-        //        if (line != 3)
-        //        {
-        //            tempSentence += " ";
-        //        }
-
-        //        linesTest.Add(tempSentence);
-        //    }
-
-
-        //    return linesTest;
-
-        //}
-
-
     }
 }
