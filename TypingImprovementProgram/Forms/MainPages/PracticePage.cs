@@ -21,84 +21,162 @@ namespace TypingImprovementProgram.Forms.MainPages
             InitializeComponent();
 
             this.userID = userID;
+            HideCustomLengthInputs();
         }
-
-        //    foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
-        //        {
-        //            button.BackColor = Color.White;
-        //        }
-        //btnLength30Words.BackColor = Color.Gray;
 
         private void btnGeneratePracticeTest_Click(object sender, EventArgs e)
         {
             this.FindForm().Hide();
-            PracticeTestForm practiceTestForm = new PracticeTestForm(0);
+            PracticeTestForm practiceTestForm = new PracticeTestForm(userID);
             practiceTestForm.Show();
 
             PracticeTestGenerator practiceTestGenerator = new PracticeTestGenerator();
             practiceTestGenerator.GetLatestUserData(userID);
-
-
         }
+
+
 
         private void btnDifficultyMixed_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel1.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnDifficultyMixed.BackColor = Color.Gray;
         }
 
         private void btnDifficultyEasy_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void btnDifficultyHard_Click(object sender, EventArgs e)
-        {
-
+            foreach (Button button in flowLayoutPanel1.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnDifficultyEasy.BackColor = Color.Gray;
         }
 
         private void btnDifficultyMedium_Click(object sender, EventArgs e)
         {
+            foreach (Button button in flowLayoutPanel1.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnDifficultyMedium.BackColor = Color.Gray;
+        }
 
+        private void btnDifficultyHard_Click(object sender, EventArgs e)
+        {
+            foreach (Button button in flowLayoutPanel1.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnDifficultyHard.BackColor = Color.Gray;
         }
 
         private void btnTimedNone_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel2.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnTimedNone.BackColor = Color.Gray;
+            EnableLengthButtons();
         }
 
         private void btnTimed15Sec_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel2.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnTimed15Sec.BackColor = Color.Gray;
+            DisableLengthButtons();
         }
 
         private void btnTimed30Sec_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel2.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnTimed30Sec.BackColor = Color.Gray;
+            DisableLengthButtons();
         }
 
         private void btnTimed1Min_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel2.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnTimed1Min.BackColor = Color.Gray;
+            DisableLengthButtons();
         }
 
         private void btnLengthRandom_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnLengthRandom.BackColor = Color.Gray;
+            HideCustomLengthInputs();
         }
 
         private void btnLength30Words_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnLength30Words.BackColor = Color.Gray;
+            HideCustomLengthInputs();
         }
 
         private void btnLength40Words_Click(object sender, EventArgs e)
         {
-
+            foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnLength40Words.BackColor = Color.Gray;
+            HideCustomLengthInputs();
         }
 
         private void btnLengthCustom_Click(object sender, EventArgs e)
         {
+            foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+            }
+            btnLengthCustom.BackColor = Color.Gray;
+            txtBoxCustomLength.Visible = true;
+            lblCustomLength.Visible = true;
+        }
 
+        private void HideCustomLengthInputs()
+        {
+            txtBoxCustomLength.Visible = false;
+            lblCustomLength.Visible = false;
+        }
+
+        private void DisableLengthButtons()
+        {
+            foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.DimGray;
+                button.Enabled = false;
+            }
+            HideCustomLengthInputs();
+        }
+
+        private void EnableLengthButtons()
+        {
+            foreach (Button button in flowLayoutPanel3.Controls.OfType<Button>())
+            {
+                button.BackColor = Color.White;
+                button.Enabled = true;
+            }
+            btnLengthRandom.BackColor = Color.Gray;
         }
     }
 }

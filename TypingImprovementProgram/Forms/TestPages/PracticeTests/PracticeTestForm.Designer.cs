@@ -69,7 +69,7 @@
             Name = "PracticeTestForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "BaselineTestForm";
-            FormClosing += BaselineTestForm_FormClosing;
+            FormClosing += PracticeTestForm_FormClosing;
             panelScreen.ResumeLayout(false);
             ResumeLayout(false);
         }

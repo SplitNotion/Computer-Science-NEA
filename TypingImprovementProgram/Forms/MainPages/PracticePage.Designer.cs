@@ -115,7 +115,7 @@
             // 
             // btnDifficultyMixed
             // 
-            btnDifficultyMixed.BackColor = SystemColors.ControlLightLight;
+            btnDifficultyMixed.BackColor = Color.Gray;
             btnDifficultyMixed.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDifficultyMixed.Location = new Point(3, 3);
             btnDifficultyMixed.Name = "btnDifficultyMixed";
@@ -158,7 +158,7 @@
             // 
             // btnTimedNone
             // 
-            btnTimedNone.BackColor = SystemColors.ControlLightLight;
+            btnTimedNone.BackColor = Color.Gray;
             btnTimedNone.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnTimedNone.Location = new Point(3, 3);
             btnTimedNone.Name = "btnTimedNone";
@@ -227,7 +227,7 @@
             // 
             // btnLengthRandom
             // 
-            btnLengthRandom.BackColor = SystemColors.ControlLightLight;
+            btnLengthRandom.BackColor = Color.Gray;
             btnLengthRandom.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLengthRandom.Location = new Point(3, 3);
             btnLengthRandom.Name = "btnLengthRandom";

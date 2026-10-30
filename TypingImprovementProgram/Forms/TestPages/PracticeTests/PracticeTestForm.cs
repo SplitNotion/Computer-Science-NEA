@@ -13,7 +13,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
 {
     public partial class PracticeTestForm : Form
     {
-        private int userID = 0;
+        private int userID;
         public PracticeTestForm(int userID)
         {
             InitializeComponent();
@@ -47,10 +47,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
 
         }
-
-        private void BaselineTestForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void PracticeTestForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            this.FindForm().Hide();
+            MainPagesForm mainPagesForm = new MainPagesForm(userID);
+            mainPagesForm.Show();
         }
     }
 }
