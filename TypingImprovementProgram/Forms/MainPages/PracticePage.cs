@@ -16,6 +16,11 @@ namespace TypingImprovementProgram.Forms.MainPages
     {
         private int userID;
 
+        private string difficulty;
+        private int testTiming;
+        private int testWords;
+
+
         public PracticePage(int userID)
         {
             InitializeComponent();
@@ -30,10 +35,14 @@ namespace TypingImprovementProgram.Forms.MainPages
             PracticeTestForm practiceTestForm = new PracticeTestForm(userID);
             practiceTestForm.Show();
 
-            PracticeTestGenerator practiceTestGenerator = new PracticeTestGenerator();
+            if (testWords == 99)
+            {
+                testWords = Convert.ToInt32(txtBoxCustomLength.Text);
+            }
+
+            PracticeTestGenerator practiceTestGenerator = new PracticeTestGenerator(difficulty, testTiming, testWords);
             practiceTestGenerator.GetLatestUserData(userID);
         }
-
 
 
         private void btnDifficultyMixed_Click(object sender, EventArgs e)
@@ -43,6 +52,7 @@ namespace TypingImprovementProgram.Forms.MainPages
                 button.BackColor = Color.White;
             }
             btnDifficultyMixed.BackColor = Color.Gray;
+            difficulty = "mixed";
         }
 
         private void btnDifficultyEasy_Click(object sender, EventArgs e)
@@ -52,6 +62,7 @@ namespace TypingImprovementProgram.Forms.MainPages
                 button.BackColor = Color.White;
             }
             btnDifficultyEasy.BackColor = Color.Gray;
+            difficulty = "easy";
         }
 
         private void btnDifficultyMedium_Click(object sender, EventArgs e)
@@ -61,6 +72,7 @@ namespace TypingImprovementProgram.Forms.MainPages
                 button.BackColor = Color.White;
             }
             btnDifficultyMedium.BackColor = Color.Gray;
+            difficulty = "medium";
         }
 
         private void btnDifficultyHard_Click(object sender, EventArgs e)
@@ -70,6 +82,7 @@ namespace TypingImprovementProgram.Forms.MainPages
                 button.BackColor = Color.White;
             }
             btnDifficultyHard.BackColor = Color.Gray;
+            difficulty = "hard";
         }
 
         private void btnTimedNone_Click(object sender, EventArgs e)
@@ -80,6 +93,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnTimedNone.BackColor = Color.Gray;
             EnableLengthButtons();
+            testTiming = -1;
         }
 
         private void btnTimed15Sec_Click(object sender, EventArgs e)
@@ -90,6 +104,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnTimed15Sec.BackColor = Color.Gray;
             DisableLengthButtons();
+            testTiming = 15;
         }
 
         private void btnTimed30Sec_Click(object sender, EventArgs e)
@@ -100,6 +115,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnTimed30Sec.BackColor = Color.Gray;
             DisableLengthButtons();
+            testTiming = 30;
         }
 
         private void btnTimed1Min_Click(object sender, EventArgs e)
@@ -110,6 +126,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnTimed1Min.BackColor = Color.Gray;
             DisableLengthButtons();
+            testTiming = 60;
         }
 
         private void btnLengthRandom_Click(object sender, EventArgs e)
@@ -120,6 +137,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnLengthRandom.BackColor = Color.Gray;
             HideCustomLengthInputs();
+            testWords = -1;
         }
 
         private void btnLength30Words_Click(object sender, EventArgs e)
@@ -130,6 +148,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnLength30Words.BackColor = Color.Gray;
             HideCustomLengthInputs();
+            testWords = 30;
         }
 
         private void btnLength40Words_Click(object sender, EventArgs e)
@@ -140,6 +159,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             }
             btnLength40Words.BackColor = Color.Gray;
             HideCustomLengthInputs();
+            testWords = 40;
         }
 
         private void btnLengthCustom_Click(object sender, EventArgs e)
@@ -151,6 +171,7 @@ namespace TypingImprovementProgram.Forms.MainPages
             btnLengthCustom.BackColor = Color.Gray;
             txtBoxCustomLength.Visible = true;
             lblCustomLength.Visible = true;
+            testWords = 99;
         }
 
         private void HideCustomLengthInputs()

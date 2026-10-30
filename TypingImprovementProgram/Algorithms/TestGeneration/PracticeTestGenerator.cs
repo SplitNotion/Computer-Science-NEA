@@ -14,9 +14,16 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
         DatabaseManager databaseManager = new DatabaseManager();
         Random random = new Random();
 
-        public PracticeTestGenerator()
-        {
+        private string difficulty;
+        private int testTiming;
+        private int testWords;
 
+
+        public PracticeTestGenerator(string difficulty, int testTiming, int testWords)
+        {
+            this.difficulty = difficulty; 
+            this.testTiming = testTiming;
+            this.testWords = testWords;
         }
 
 
