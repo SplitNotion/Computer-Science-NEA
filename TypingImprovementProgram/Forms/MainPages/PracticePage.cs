@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TypingImprovementProgram.Algorithms.TestGeneration;
 using TypingImprovementProgram.Forms.SetupPages;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TypingImprovementProgram.Forms.MainPages
 {
@@ -31,22 +32,24 @@ namespace TypingImprovementProgram.Forms.MainPages
 
         private void btnGeneratePracticeTest_Click(object sender, EventArgs e)
         {
-            this.FindForm().Hide();
-            
-
+            // 99 meaning that it is a custom value
             if (testWords == 99)
             {
+                if (txtBoxCustomLength.Text.Any(c => !char.IsDigit(c)))
+                {
+                    MessageBox.Show("   Number of words must be an integer between 20-99", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    return;
+                }
                 testWords = Convert.ToInt32(txtBoxCustomLength.Text);
             }
+
+            // NEED CHECK FOR NO INPUT!!!!!
+
+            this.FindForm().Hide();
 
             PracticeTestForm practiceTestForm = new PracticeTestForm(userID, difficulty, testTiming, testWords);
             practiceTestForm.Show();
 
-            // PracticeTestForm practiceTestForm1 = new PracticeTestForm(userID);
-            // practiceTestForm1.Show();
-
-            // PracticeTestPage practiceTestPage = new PracticeTestPage();
-            // practiceTestPage.InitialiseTest(difficulty, testTiming, testWords, userID);
         }
 
 

@@ -277,6 +277,7 @@
             // 
             txtBoxCustomLength.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBoxCustomLength.Location = new Point(974, 605);
+            txtBoxCustomLength.MaxLength = 2;
             txtBoxCustomLength.Name = "txtBoxCustomLength";
             txtBoxCustomLength.Size = new Size(33, 38);
             txtBoxCustomLength.TabIndex = 12;

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Forms.SetupPages;
 using TypingImprovementProgram.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TypingImprovementProgram.Algorithms.TestAnalysis
 {
@@ -56,6 +57,8 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             incorrectLetters = baselineTestPage.incorrectLetters;
             incorrectBigrams = baselineTestPage.incorrectBigrams;
 
+            testNote = "Baseline Test";  // defines each test record as being part a baseline test
+
             AnalyseTest();
         }
 
@@ -77,6 +80,8 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             incorrectLetters = practiceTestPage.incorrectLetters;
             incorrectBigrams = practiceTestPage.incorrectBigrams;
+
+            testNote = "Practice Test";  // defines each test record as being part a practice test
 
             AnalyseTest();
         }
@@ -174,16 +179,6 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
                 {
                     problemBigrams.Add(bigram, (errorRate, false));
                 }
-            }
-
-            // defines whether each test record in database relates to a baseline test or user practice test
-            if (isBaselineCompleted)
-            {
-                testNote = "Practice Test";
-            }
-            else
-            {
-                testNote = "Baseline Test";
             }
 
             // initialises all test data to be saved after data is analysed and finalised

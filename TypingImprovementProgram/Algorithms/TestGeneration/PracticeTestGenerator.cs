@@ -39,23 +39,23 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             {
                 case "easy":
                     minimumDifficulty = 20;
-                    maximumDifficulty = 45;
-                    wordsPerLine = 10;
+                    maximumDifficulty = 50;
+                    wordsPerLine = 15;
                     return;
                 case "medium":
-                    minimumDifficulty = 46;
+                    minimumDifficulty = 51;
                     maximumDifficulty = 65;
-                    wordsPerLine = 7;
+                    wordsPerLine = 15;
                     return;
                 case "hard":
                     minimumDifficulty = 66; 
                     maximumDifficulty = 100;
-                    wordsPerLine = 5;
+                    wordsPerLine = 15;
                     return;
                 default:
                     minimumDifficulty = 0;
                     maximumDifficulty = 100;
-                    wordsPerLine = 8;
+                    wordsPerLine = 15;
                     return;
             }
         }
@@ -154,10 +154,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
                 string tempSentence = string.Join(" ", tempWordList);
 
-                if (line != numberOfLines - 1)
-                {
-                    tempSentence += " ";
-                }
+                tempSentence += " ";
 
                 linesTest.Add(tempSentence);
             }

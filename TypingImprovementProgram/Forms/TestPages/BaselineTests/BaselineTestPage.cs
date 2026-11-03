@@ -77,6 +77,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             display.Characters.Clear();
             List<string> lines = generator.GenerateBaselineText();
+            display.NumberOfLines = lines.Count;
 
             for (int i = 0; i < lines.Count; i++)
             {
@@ -94,8 +95,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     }
                 }
 
-                // EDIT NEEDED
-                for (int j = 0; j < lines[i].Length - 1; j++)
+                // edit needed?
+                for (int j = 0; j < lines[i].Length - 1;j++)
                 {
                     string bigram = "" + lines[i][j] + lines[i][j + 1];
 

@@ -67,7 +67,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             totalCharacters = display.TotalCharacters;
             totalWords = display.TotalWords;
 
-            UpdateProgressLabel();
             KeyPress += PracticeTestPage_KeyPress; // calls key press method
         }
 
@@ -85,6 +84,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             display.Characters.Clear();
             List<string> lines = generator.GeneratePracticeText();
+            display.NumberOfLines = lines.Count;
 
             for (int i = 0; i < lines.Count; i++)
             {
@@ -102,7 +102,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     }
                 }
 
-                // EDIT NEEDED
+                // edit needed?
                 for (int j = 0; j < lines[i].Length - 1; j++)
                 {
                     string bigram = "" + lines[i][j] + lines[i][j + 1];
@@ -125,6 +125,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
 
             display.MakeDisplayReady();
+            totalWords = display.TotalWords;
+            UpdateProgressLabel();
 
             display.Invalidate(); // calls to redraw (e.g. OnPaint method)
             this.Focus();
@@ -323,7 +325,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             display.CurrentLine = 0;
             typedWords = 0;
 
-            totalWords = display.TotalWords;
             totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
             hesitationAnalyser.AnalyseHesitaton(timings);
             performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);

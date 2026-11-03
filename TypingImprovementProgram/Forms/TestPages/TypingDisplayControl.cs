@@ -15,6 +15,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
     {
         public List<DisplayCharacter> Characters { get; set; } = new List<DisplayCharacter>(); // stores each character being displayed as a list
         public int CurrentLine { get; set; }
+        public int NumberOfLines { get; set; }
         public int TotalCharacters => Characters.Count;
         public int TotalWords { get; private set; }
 
@@ -29,14 +30,17 @@ namespace TypingImprovementProgram.Forms.SetupPages
         }
 
         #region OverflowPreventionFunctions
-        private void CheckLineWidth(Graphics graphics, int lineNumber, float maxWidth)
+        private List<DisplayCharacter> CheckLineWidth(Graphics graphics, int lineNumber, float maxWidth)
         {
             List<DisplayCharacter> lineCharacters = Characters.Where(c => c.Line == lineNumber).ToList();
+            List<DisplayCharacter> removedCharacters = new List<DisplayCharacter>();
 
 
             while (CalculateLineWidth(graphics, lineCharacters) > maxWidth)
             {
-                RemoveLastWord(lineCharacters);
+                List<DisplayCharacter> removedWords = RemoveLastWords(lineCharacters);
+                removedCharacters.InsertRange(0, removedWords);
+
             }
 
             foreach (DisplayCharacter character in Characters.Where(c => c.Line == lineNumber).ToList())
@@ -47,6 +51,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 }
             };
 
+            return removedCharacters;
         }
 
         private float CalculateLineWidth(Graphics graphics, List<DisplayCharacter> characters)
@@ -68,20 +73,27 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
             return width;
         }
-
-        private void RemoveLastWord(List<DisplayCharacter> characters)
+        private List<DisplayCharacter> RemoveLastWords(List<DisplayCharacter> characters)
         {
-            if (characters.Last().Character == ' ')
+            List<DisplayCharacter> removedWords = new List<DisplayCharacter>();
+
+            // removes trailing spaces
+            if (characters.Count > 0 && characters.Last().Character == ' ')
             {
+                removedWords.Insert(0, characters.Last());
                 characters.RemoveAt(characters.Count - 1);
             }
 
-            while ((characters.Count > 0) && characters.Last().Character != ' ')
+            // addds last (removed) characters to a new list
+            while (characters.Count > 0 && characters.Last().Character != ' ')
             {
+                removedWords.Insert(0, characters.Last());
                 characters.RemoveAt(characters.Count - 1);
             }
 
+            return removedWords;
         }
+
         #endregion
 
 
@@ -90,13 +102,58 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             using (Graphics graphics = CreateGraphics())
             {
-                float maxWidth = 1430;
+                float maxWidth = 1420;
+                List<DisplayCharacter> removedCharacters = new List<DisplayCharacter>();
 
-                CheckLineWidth(graphics, CurrentLine, maxWidth);
-                CheckLineWidth(graphics, CurrentLine + 1, maxWidth);
-                CheckLineWidth(graphics, CurrentLine + 2, maxWidth);
-                CheckLineWidth(graphics, CurrentLine + 3, maxWidth);
+                for (int i = 0; i < NumberOfLines; i++)
+                {
+                    removedCharacters.AddRange(CheckLineWidth(graphics, CurrentLine + i, maxWidth));
+                }
 
+                int lastLine = CurrentLine + NumberOfLines - 1;
+                List<DisplayCharacter> lastLineCharacters = Characters.Where(c => c.Line == lastLine).ToList();     // all characters which are on the last line (used to check total space available)
+
+                List<DisplayCharacter> wordBeingChecked = new List<DisplayCharacter>();      // each individual word to be checked if it can fit, taken from the removed words
+
+                foreach (DisplayCharacter character in  removedCharacters)
+                {
+                    wordBeingChecked.Add(character);
+
+                    if (character.Character == ' ')
+                    {
+                        if (CalculateLineWidth(graphics, lastLineCharacters) + CalculateLineWidth(graphics, wordBeingChecked) > maxWidth)
+                        {
+                            lastLine++;  // moves to a new line if it exceeds the max width
+                            lastLineCharacters.Clear();
+                        }
+
+                        // sets the line of the word being checked to the current max line value
+                        foreach (DisplayCharacter c in wordBeingChecked)      
+                        {
+                            c.Line = lastLine;
+                        }
+
+                        Characters.AddRange(wordBeingChecked);       // adds the word being checked to the test
+                        lastLineCharacters.AddRange(wordBeingChecked);  // remaining available space is shortened accordingly to new word being added to final line
+                        wordBeingChecked.Clear();
+                    }
+                }
+
+                if (wordBeingChecked.Count > 0)
+                {
+                    if (CalculateLineWidth(graphics, lastLineCharacters) + CalculateLineWidth(graphics, wordBeingChecked) > maxWidth)
+                    {
+                        lastLine++;  // moves to a new line if it exceeds the max width
+                        lastLineCharacters.Clear();
+                    }
+
+                    // sets the line of the word being checked to the current max line value
+                    foreach (DisplayCharacter c in wordBeingChecked)
+                    {
+                        c.Line = lastLine;
+                    }
+                    Characters.AddRange(wordBeingChecked);
+                }
                 TotalWords = GetTotalWordCount();
             }
             Invalidate();
@@ -116,34 +173,24 @@ namespace TypingImprovementProgram.Forms.SetupPages
             float x = 20; // moves text left/right on control
             float y = 20; // moves text up/down on control
 
-            bool secondLineStarted = false;
-            bool thirdLineStarted = false;
+            int lastLine = CurrentLine;
 
             foreach (DisplayCharacter character in Characters)
             {
-                // Ignore characters which are on a previous line, or a few lines ahead
+                // Ignore characters which are on a previous line, or a few lines ahead (only 3 lines can be seen at any one time)
                 if (character.Line < CurrentLine || character.Line > CurrentLine + 2)
                 {
                     continue;
                 }
 
-                // begin second line if next character is on next line, and new line has not already been started
-                if (character.Line == CurrentLine + 1 && !secondLineStarted)
+                // automatically creates line separations for variable number of lines in the test
+                if (character.Line != lastLine)
                 {
                     x = 20;
-                    y = 74;
-
-                    secondLineStarted = true;
+                    y = 20 + ((character.Line - CurrentLine) * 54);
+                    lastLine = character.Line;
                 }
 
-                // begin third line if next character is on next line, and new line has not already been started
-                else if (character.Line == CurrentLine + 2 && !thirdLineStarted)
-                {
-                    x = 20;
-                    y = 128;
-
-                    thirdLineStarted = true;
-                }
 
                 Brush brush = Brushes.Gray;
 
@@ -231,6 +278,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
             return totalWords + 1;
         }
+
+
 
 
     }
