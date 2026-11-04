@@ -476,12 +476,9 @@ namespace TypingImprovementProgram.Database
                         throw;
                     }
                 }
-
-
             }
-
-            
         }
+
         public void CompletedBaselineTest(int userID)
         {
             using (var connection  = GetConnection())
@@ -531,7 +528,7 @@ namespace TypingImprovementProgram.Database
                             double errorRate = (double)reader["ErrorRate"];
                             bool hesitation = (bool)reader["Hesitation"];
 
-                            problemLetters.Add(letter, (errorRate, hesitation));
+                            problemLetters.Add((char)letter, (errorRate, hesitation));
                         }
                     }  
                 }
@@ -586,6 +583,39 @@ namespace TypingImprovementProgram.Database
             }
             return possibleWords;
         }
+
+        
+        public List<string> GetWordsFromChosenLetters(char letter)
+        {
+            List<string> possibleWords = new List<string>();
+            
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT Words.Word FROM Words, WordLetters
+                               WHERE Words.WordID = WordLetters.WordID AND
+                               WordLetters.Letter = @ChosenLetter AND
+                               WordLetters.Frequency >= 3";
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@ChosenLetter", letter);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string word = (string)reader["Word"];
+                            possibleWords.Add(word);
+                        }
+                    }
+                }
+            }
+            return possibleWords;
+        }
+
+
+
 
         public List<string> GetRemainingRandomWords(int numberofWords, int scoreMinimum, int scoreMaximum)
         {

@@ -22,6 +22,8 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
         private int maximumDifficulty;
         private int wordsPerLine;
 
+        List<string> possibleWordsFromLetters = new List<string>();
+        List<string> possibleWordsFromBigrams = new List<string>();
         private List<String> usingWords = new List<string>();
 
         public PracticeTestGenerator(string difficulty, int testTiming, int testWords)
@@ -65,14 +67,38 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             (problemLetters, problemBigrams) = databaseManager.GetLatestUserLetterBigramProblems(userID);
 
             ChooseBigrams(problemBigrams);
+            ChooseLetters(problemLetters);
+            MergeWordsForTest(possibleWordsFromBigrams, possibleWordsFromLetters);
         }
+
+        private void ChooseLetters(Dictionary<char, (double errorRate, bool hesitation)> problemLetters)
+        {
+            double usageWeight;
+            List<char> chosenLetters = new List<char>();
+
+            foreach (var letter in problemLetters)
+            {
+                usageWeight = letter.Value.errorRate;
+
+                if (usageWeight > 0.3 || letter.Value.hesitation)
+                {
+                    chosenLetters.Add(letter.Key);
+                }
+            }
+
+            foreach (char letter in chosenLetters)
+            {
+                possibleWordsFromLetters = databaseManager.GetWordsFromChosenLetters(letter);
+                possibleWordsFromLetters = possibleWordsFromLetters.OrderBy(x => random.Next()).ToList();
+            }
+        }
+
 
         private void ChooseBigrams(Dictionary<string, (double errorRate, bool hesitation)> problemBigrams)
         {
             double usageWeight;
             List<string> chosenBigrams = new List<string>();
-            List<string> possibleWords = new List<string>();
-            List<string> shuffledPossibleWords = new List<string>();
+            List<string> possibleWordsFromBigrams = new List<string>();
 
             foreach (var bigram in problemBigrams)
             {
@@ -86,38 +112,44 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             
             foreach (string bigram in chosenBigrams)
             {
-                possibleWords = databaseManager.GetWordsFromChosenBigrams(bigram);
-                shuffledPossibleWords = possibleWords.OrderBy(x => random.Next()).ToList();
+                possibleWordsFromBigrams = databaseManager.GetWordsFromChosenBigrams(bigram);
+                possibleWordsFromBigrams = possibleWordsFromBigrams.OrderBy(x => random.Next()).ToList();
+            }   
+        }
 
-                for (int i = 0; i < Math.Min(5, shuffledPossibleWords.Count); i++)
+        private void MergeWordsForTest(List<string> possibleWordsFromBigrams, List<string> possibleWordsFromLetters)
+        {
+            //if (testWords == -1)
+            //{
+            //    testWords = random.Next(20, 35);
+            //}
+
+            for (int i = 0; i < possibleWordsFromBigrams.Count; i++)
+            {
+                if (usingWords.Count >= testWords * 0.6)  // if number of words being used is over limit of 60%, stop
                 {
-                    if (testWords != -1)
-                    {
-                        if (usingWords.Count >= testWords * 0.6)
-                        {
-                            break;
-                        }
-                        break;
-                    }
-
-                    else if (usingWords.Count >= random.Next(20, 35))
-                    {
-                        break;
-                    }
-
-                    if (!usingWords.Contains(shuffledPossibleWords[i]))
-                    {
-                       usingWords.Add(shuffledPossibleWords[i]);
-                    }
+                    break;
                 }
 
-                if (testWords != -1)
+                if (!usingWords.Contains(possibleWordsFromBigrams[i]))
                 {
-                    if (usingWords.Count >= testWords * 0.6)
-                    {
-                        break;
-                    }
+                    usingWords.Add(possibleWordsFromBigrams[i]);
+                }
+            }
+
+            int addedLetterWords = 0;
+
+            for (int i = 0; i < possibleWordsFromLetters.Count; i++)
+            {
+                if (addedLetterWords >= testWords * 0.2)  // if number of words being used is over limit of 20%, stop
+                {
                     break;
+                }
+
+                if (!usingWords.Contains(possibleWordsFromLetters[i]))
+                {
+                    usingWords.Add(possibleWordsFromLetters[i]);
+                    addedLetterWords++;
                 }
             }
 
