@@ -35,15 +35,14 @@ namespace TypingImprovementProgram.Forms.MainPages
             // 99 meaning that it is a custom value
             if (testWords == 99)
             {
-                if (txtBoxCustomLength.Text.Any(c => !char.IsDigit(c)))
+                if (txtBoxCustomLength.Text.Any(c => !char.IsDigit(c)) || txtBoxCustomLength.Text == "")
                 {
                     MessageBox.Show("   Number of words must be an integer between 20-99", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     return;
                 }
+
                 testWords = Convert.ToInt32(txtBoxCustomLength.Text);
             }
-
-            // NEED CHECK FOR NO INPUT!!!!!
 
             this.FindForm().Hide();
 
