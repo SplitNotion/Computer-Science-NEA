@@ -46,11 +46,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
         private TimeSpan previousKeyTime = TimeSpan.Zero;
         public double totalTestSeconds = 0.0;
 
+        private bool timerInUse = false;
+        private int remainingTime;
+
+
+
 
 
         // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
-
-
         public PracticeTestPage()
         {
             InitializeComponent();
@@ -75,10 +78,24 @@ namespace TypingImprovementProgram.Forms.SetupPages
             this.userID = userID;
 
             generator = new PracticeTestGenerator(difficulty, testTiming, testWords);
+            this.remainingTime = testTiming;
+            CheckTimer();
             generator.GetLatestUserData(userID);
 
             LoadTest();
         }
+
+        private void CheckTimer()
+        {
+            if (remainingTime != -1)
+            {
+                lblTimerDisplay.Visible = true;
+                lblTimerDisplay.Text = Convert.ToString(remainingTime);
+                lbltypedWordProgressCounter.Visible = false;
+                timerInUse = true;
+            }
+        }
+
 
         private void LoadTest()
         {
@@ -177,6 +194,12 @@ namespace TypingImprovementProgram.Forms.SetupPages
             {
                 StartTiming();
                 totalTypingTimeStopwatch.Start();
+                typedWords = 0;
+
+                if (timerInUse)
+                {
+                    testTimer.Start();
+                }
             }
 
             char? incorrectCharacter = null;
@@ -323,7 +346,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             currentIndex = 0;
             btnContinuePracticeTest.Visible = false;
             display.CurrentLine = 0;
-            typedWords = 0;
 
             totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
             hesitationAnalyser.AnalyseHesitaton(timings);
@@ -331,8 +353,28 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             Controls.Remove(display);
             lbltypedWordProgressCounter.Visible = false;
+            lblTimerDisplay.Visible = false;
             keyboardPanel.Visible = false;
             testFinished = true;
+
+        }
+
+
+        private void testTimer_Tick(object sender, EventArgs e)
+        {
+            remainingTime--;
+
+            lblTimerDisplay.Text = TimeSpan.FromSeconds(remainingTime).ToString("ss");
+
+            if (remainingTime <= 0)
+            {
+                testTimer.Stop();
+                stopwatch.Stop();
+                totalTypingTimeStopwatch.Stop();
+                testFinished = true;
+                btnContinuePracticeTest.Visible = true;
+                typedWords++;
+            }
 
         }
     }

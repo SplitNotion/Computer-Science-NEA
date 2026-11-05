@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             lblPracticeTestPage = new Label();
             btnContinuePracticeTest = new Button();
             keyboardPanel = new Panel();
             keyboardVisualiserControl1 = new KeyboardVisualiserControl();
             lbltypedWordProgressCounter = new Label();
             lblCapsLockOnWarning = new Label();
+            testTimer = new System.Windows.Forms.Timer(components);
+            lblTimerDisplay = new Label();
             keyboardPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -100,11 +103,28 @@
             lblCapsLockOnWarning.TabIndex = 5;
             lblCapsLockOnWarning.Text = "CAPS LOCK IS ON!";
             // 
+            // testTimer
+            // 
+            testTimer.Interval = 1000;
+            testTimer.Tick += testTimer_Tick;
+            // 
+            // lblTimerDisplay
+            // 
+            lblTimerDisplay.AutoSize = true;
+            lblTimerDisplay.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTimerDisplay.Location = new Point(41, 235);
+            lblTimerDisplay.Name = "lblTimerDisplay";
+            lblTimerDisplay.Size = new Size(105, 81);
+            lblTimerDisplay.TabIndex = 6;
+            lblTimerDisplay.Text = "30";
+            lblTimerDisplay.Visible = false;
+            // 
             // PracticeTestPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
+            Controls.Add(lblTimerDisplay);
             Controls.Add(lblCapsLockOnWarning);
             Controls.Add(lbltypedWordProgressCounter);
             Controls.Add(keyboardPanel);
@@ -126,5 +146,7 @@
         private KeyboardVisualiserControl keyboardVisualiserControl1;
         private Label lbltypedWordProgressCounter;
         private Label lblCapsLockOnWarning;
+        private System.Windows.Forms.Timer testTimer;
+        private Label lblTimerDisplay;
     }
 }

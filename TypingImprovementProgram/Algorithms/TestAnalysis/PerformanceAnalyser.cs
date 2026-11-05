@@ -18,6 +18,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private int totalCharactersCount;
         private int totalCharacterAttempts;
         private int totalWords;
+        private int typedWords;
         private int userID = 0;
         private bool isBaselineCompleted = false;
         private string testNote = "";
@@ -68,6 +69,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             totalCharactersCount = practiceTestPage.totalCharacters;
             totalCharacterAttempts = practiceTestPage.totalCharacterAttempts;
             totalWords = practiceTestPage.totalWords;
+            typedWords = practiceTestPage.typedWords;
             letterOpportunities = practiceTestPage.letterOpportunities;
             bigramOpportunities = practiceTestPage.bigramOpportunities;
             userID = practiceTestPage.userID;
@@ -91,25 +93,22 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             double testAccuracy = ((totalCharacterAttempts - (double)incorrectCounter) / totalCharacterAttempts) * 100;
             testAccuracy = Math.Round(testAccuracy, 2);
-
-            double WPM = totalWords / (totalSeconds / 60);
-            WPM = Math.Round(WPM, 1);
-
+            
+            double WPM;
+            // changes WPM calculation depending on whether its part of a timed test or not
+            if (typedWords < totalWords)
+            {
+                WPM = typedWords / (totalSeconds / 60);
+                WPM = Math.Round(WPM, 1);
+            }
+            else
+            {
+                WPM = totalWords / (totalSeconds / 60);
+                WPM = Math.Round(WPM, 1);
+            }
 
             // Adds total weighting for letters in test
             Dictionary<char, int> letterWeighting = new Dictionary<char, int>(incorrectLetters);  
-
-            //foreach (char letter in hesitatedLetters)
-            //{
-            //    if (letterWeighting.ContainsKey(letter))
-            //    {
-            //        letterWeighting[letter]++;
-            //    }
-            //    else
-            //    {
-            //        letterWeighting.Add(letter, 1);
-            //    }
-            //}
 
             foreach (var item in letterOpportunities)
             {
@@ -142,17 +141,6 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             // Adds total weighting for bigrams in test
             Dictionary<string, int> bigramWeighting = new Dictionary<string, int>(incorrectBigrams);
 
-            //foreach (string bigram in hesitatedBigrams)
-            //{
-            //    if (bigramWeighting.ContainsKey(bigram))
-            //    {
-            //        bigramWeighting[bigram]++;
-            //    }
-            //    else
-            //    {
-            //        bigramWeighting.Add(bigram, 1);
-            //    }
-            //}
 
             foreach (var item in bigramOpportunities)
             {

@@ -65,11 +65,12 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
         public void GetLatestUserData(int userID)
         {
             (problemLetters, problemBigrams) = databaseManager.GetLatestUserLetterBigramProblems(userID);
-
             ChooseBigrams(problemBigrams);
             ChooseLetters(problemLetters);
             MergeWordsForTest(possibleWordsFromBigrams, possibleWordsFromLetters);
         }
+
+
 
         private void ChooseLetters(Dictionary<char, (double errorRate, bool hesitation)> problemLetters)
         {
@@ -119,11 +120,6 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
         private void MergeWordsForTest(List<string> possibleWordsFromBigrams, List<string> possibleWordsFromLetters)
         {
-            //if (testWords == -1)
-            //{
-            //    testWords = random.Next(20, 35);
-            //}
-
             for (int i = 0; i < possibleWordsFromBigrams.Count; i++)
             {
                 if (usingWords.Count >= testWords * 0.6)  // if number of words being used is over limit of 60%, stop
@@ -155,7 +151,11 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
             if (testWords == -1)
             {
-                testWords = random.Next(usingWords.Count, 99 - usingWords.Count);
+                testWords = random.Next(Math.Max(usingWords.Count, 25), 85 - usingWords.Count);  // min words = 25, max words = 85 on randomised number of words setting
+            }
+            if (testTiming != -1)
+            {
+                testWords = 99;  // sets number of words to max on a timed test
             }
 
             List<string> remainingWords = databaseManager.GetRemainingRandomWords((testWords - usingWords.Count), minimumDifficulty, maximumDifficulty);
@@ -190,8 +190,6 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
                 linesTest.Add(tempSentence);
             }
-
-            int tesdwadts = 4;
 
             return linesTest;
 
