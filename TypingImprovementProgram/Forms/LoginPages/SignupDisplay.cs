@@ -25,6 +25,8 @@ namespace TypingImprovementProgram.Forms.LoginPages
         public SignupDisplay()
         {
             InitializeComponent();
+            textboxSignUpPassword.PasswordChar = '*';
+            textBoxReenterPassword.PasswordChar = '*';
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
@@ -39,7 +41,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
             string confirmPassword = textBoxReenterPassword.Text.Trim();
 
             bool valid = false;
-            valid = AccountCreationValidator(username, password, confirmPassword); 
+            valid = AccountCreationValidator(username, password, confirmPassword);
 
             // if textbox inputs are valid, then a new user account is created, added to the database, and baseline test is initated
             if (valid)
@@ -123,7 +125,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
 
             List<string> errors = new List<string>();
 
-            
+
 
             if (username.Length < 5)
             {
@@ -175,6 +177,30 @@ namespace TypingImprovementProgram.Forms.LoginPages
             #endregion
 
             return true;
+        }
+
+        private void checkboxViewPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkboxViewPassword.Checked == true)
+            {
+                textboxSignUpPassword.PasswordChar = '\0';
+            }
+            else
+            {
+                textboxSignUpPassword.PasswordChar = '*';
+            }
+        }
+
+        private void checkboxViewReenterPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkboxViewReenterPassword.Checked == true)
+            {
+                textBoxReenterPassword.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxReenterPassword.PasswordChar = '*';
+            }
         }
     }
 }

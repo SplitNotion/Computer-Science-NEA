@@ -103,5 +103,17 @@ namespace TypingImprovementProgram.Forms.LoginPages
                     return false;
             }
         }
+
+        private void checkboxViewPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkboxViewPassword.Checked == true)
+            {
+                textBoxLoginPassword.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxLoginPassword.PasswordChar = '*';
+            }
+        } 
     }
 }
