@@ -497,26 +497,59 @@ namespace TypingImprovementProgram.Database
         }
 
         #region Practice Test Generation
-        public (Dictionary<char, (double, bool)> problemLetters, Dictionary<string, (double, bool)> problemBigrams) GetLatestUserLetterBigramProblems(int userID)
+        public (Dictionary<char, (double, bool)> currentProblemLetters, Dictionary<string, (double, bool)> currentProblemBigrams, Dictionary<char, (double, bool)> previousProblemLetters, Dictionary<string, (double, bool)> previousProblemBigrams) GetLatestUserLetterBigramProblems(int userID)
         {
-            Dictionary<char, (double errorRate, bool hesitation)> problemLetters = new Dictionary<char, (double, bool)>();
-            Dictionary<string, (double errorRate, bool hesitation)> problemBigrams = new Dictionary<string, (double, bool)>();
+            Dictionary<char, (double errorRate, bool hesitation)> currentProblemLetters = new Dictionary<char, (double, bool)>();
+            Dictionary<string, (double errorRate, bool hesitation)> currentProblemBigrams = new Dictionary<string, (double, bool)>();
+
+            Dictionary<char, (double errorRate, bool hesitation)> previousProblemLetters = new Dictionary<char, (double, bool)>();
+            Dictionary<string, (double errorRate, bool hesitation)> previousProblemBigrams = new Dictionary<string, (double, bool)>();
+
 
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string sql = @"SELECT TestID FROM Tests WHERE TestDate = (SELECT MAX(TestDate) FROM Tests WHERE UserID = @UserID)";
-                int testID;
+                string sql = @"SELECT TOP 2 TestID FROM Tests WHERE UserID = @UserID ORDER BY TestDate DESC, TestID DESC";
+
+                List<int> testIDs = new List<int>();
 
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@UserID", userID);
-                    testID = (int)command.ExecuteScalar();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            testIDs.Add((int)reader["TestID"]);
+
+                        }
+                    }
                 }
 
-                sql = @"SELECT Letter, ErrorRate, Hesitation FROM TestProblemLetters WHERE TestID = @TestID";
+                currentProblemLetters = GetProblemLetters(testIDs[0]);
+                currentProblemBigrams = GetProblemBigrams(testIDs[0]);
 
-                using (var command = new SqlCommand(sql,connection))
+
+                if (testIDs.Count > 1)
+                {
+                    previousProblemLetters = GetProblemLetters(testIDs[1]);
+                    previousProblemBigrams = GetProblemBigrams(testIDs[1]);
+                } 
+
+            }
+            return (currentProblemLetters, currentProblemBigrams, previousProblemLetters, previousProblemBigrams);
+        }
+
+        private Dictionary<char, (double, bool)> GetProblemLetters(int testID)
+        {
+            Dictionary<char, (double errorRate, bool hesitation)> problemLetters = new Dictionary<char, (double, bool)>();
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT Letter, ErrorRate, Hesitation FROM TestProblemLetters WHERE TestID = @TestID";
+
+                using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@TestID", testID);
 
@@ -530,10 +563,20 @@ namespace TypingImprovementProgram.Database
 
                             problemLetters.Add((char)letter, (errorRate, hesitation));
                         }
-                    }  
+                    }
                 }
+            }
+            return problemLetters;
+        }
 
-                sql = @"SELECT Bigram, ErrorRate, Hesitation FROM TestProblemBigrams WHERE TestID = @TestID";
+        private Dictionary<string, (double, bool)> GetProblemBigrams(int testID)
+        {
+            Dictionary<string, (double errorRate, bool hesitation)> problemBigrams = new Dictionary<string, (double, bool)>();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string sql = @"SELECT Bigram, ErrorRate, Hesitation FROM TestProblemBigrams WHERE TestID = @TestID";
 
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -552,8 +595,10 @@ namespace TypingImprovementProgram.Database
                     }
                 }
             }
-            return (problemLetters, problemBigrams);
+            return problemBigrams;
         }
+
+
 
         public List<string> GetWordsFromChosenBigrams(string bigram)
         {
@@ -613,8 +658,6 @@ namespace TypingImprovementProgram.Database
             }
             return possibleWords;
         }
-
-
 
 
         public List<string> GetRemainingRandomWords(int numberofWords, int scoreMinimum, int scoreMaximum)

@@ -13,6 +13,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
         private Dictionary<char, (double errorRate, bool hesitation)> problemLetters = new Dictionary<char, (double, bool)>();
         private Dictionary<string, (double errorRate, bool hesitation)> problemBigrams = new Dictionary<string, (double, bool)>();
         DatabaseManager databaseManager = new DatabaseManager();
+        PreviousTestDataOrganiser previousTestDataOrganiser = new PreviousTestDataOrganiser();
         Random random = new Random();
 
         private string difficulty;
@@ -64,10 +65,14 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
         public void GetLatestUserData(int userID)
         {
-            (problemLetters, problemBigrams) = databaseManager.GetLatestUserLetterBigramProblems(userID);
+            var fetchedTestData = databaseManager.GetLatestUserLetterBigramProblems(userID);
+
+            problemLetters = previousTestDataOrganiser.CombineLetterData(fetchedTestData.previousProblemLetters, fetchedTestData.currentProblemLetters);
+            problemBigrams = previousTestDataOrganiser.CombineBigramData(fetchedTestData.previousProblemBigrams, fetchedTestData.currentProblemBigrams);
+
             ChooseBigrams(problemBigrams);
             ChooseLetters(problemLetters);
-            MergeWordsForTest(possibleWordsFromBigrams, possibleWordsFromLetters);
+            MergeWordsForTest();
         }
 
 
@@ -119,7 +124,7 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             possibleWordsFromBigrams = possibleWordsFromBigrams.OrderBy(x => random.Next()).ToList();
         }
 
-        private void MergeWordsForTest(List<string> possibleWordsFromBigrams, List<string> possibleWordsFromLetters)
+        private void MergeWordsForTest()
         {
             if (testWords == -1)
             {
