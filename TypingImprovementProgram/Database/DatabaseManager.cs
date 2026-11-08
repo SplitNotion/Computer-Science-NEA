@@ -30,9 +30,9 @@ namespace TypingImprovementProgram.Database
 
         #region InitalTableGenerationInsertion
 
-        // creates all necessary SQL tables required for the program. Checks whether they already exist also.
         public void CreateTables()                                 
         {
+            // creates all necessary SQL tables required for the program. Checks whether they already exist also.
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -329,10 +329,9 @@ namespace TypingImprovementProgram.Database
 
         #endregion
 
-
-        // method which creates a new record/user account in the Users database, however if it already exists then it returns and error to
         public int InsertNewUserAccount(string username, string password)
         {
+            // method which creates a new record/user account in the Users database, however if it already exists then it returns and error to
             int testID = 0;
             using (var connection = GetConnection())
             {

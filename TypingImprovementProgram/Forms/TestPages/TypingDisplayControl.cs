@@ -155,6 +155,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     Characters.AddRange(wordBeingChecked);
                 }
                 TotalWords = GetTotalWordCount();
+                Characters.RemoveAt(Characters.Count - 1); // removes extra space at end of test
             }
             Invalidate();
         }

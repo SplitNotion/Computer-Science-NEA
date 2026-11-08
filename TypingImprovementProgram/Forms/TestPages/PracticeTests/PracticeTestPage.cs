@@ -356,7 +356,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             lblTimerDisplay.Visible = false;
             keyboardPanel.Visible = false;
             testFinished = true;
-
         }
 
 

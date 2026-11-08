@@ -24,7 +24,11 @@ namespace TypingImprovementProgram.Forms.LoginPages
         public LoginDisplay()
         {
             InitializeComponent();
+
             textBoxLoginPassword.PasswordChar = '*';
+            lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
+            textBoxLoginUsername.KeyDown += CapsLockChecker;
+            textBoxLoginPassword.KeyDown += CapsLockChecker;
         }
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
@@ -115,6 +119,13 @@ namespace TypingImprovementProgram.Forms.LoginPages
             {
                 textBoxLoginPassword.PasswordChar = '*';
             }
-        } 
+        }
+        public void CapsLockChecker(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.CapsLock)
+            {
+                lblCapsLockOnWarning.Visible = Control.IsKeyLocked(Keys.CapsLock);
+            }
+        }
     }
 }
