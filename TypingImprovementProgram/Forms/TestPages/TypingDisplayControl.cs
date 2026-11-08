@@ -103,6 +103,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             using (Graphics graphics = CreateGraphics())
             {
                 float maxWidth = 1420;
+
                 List<DisplayCharacter> removedCharacters = new List<DisplayCharacter>();
 
                 for (int i = 0; i < NumberOfLines; i++)
@@ -155,7 +156,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     Characters.AddRange(wordBeingChecked);
                 }
                 TotalWords = GetTotalWordCount();
-                Characters.RemoveAt(Characters.Count - 1); // removes extra space at end of test
+
+                if (Characters[Characters.Count - 1].Character == ' ')
+                {
+                    Characters.RemoveAt(Characters.Count - 1); // removes extra space at end of test
+                }
             }
             Invalidate();
         }
@@ -279,7 +284,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
             return totalWords + 1;
         }
-
 
 
 
