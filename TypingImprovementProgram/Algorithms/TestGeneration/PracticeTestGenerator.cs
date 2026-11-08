@@ -89,9 +89,10 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
 
             foreach (char letter in chosenLetters)
             {
-                possibleWordsFromLetters = databaseManager.GetWordsFromChosenLetters(letter);
-                possibleWordsFromLetters = possibleWordsFromLetters.OrderBy(x => random.Next()).ToList();
+                possibleWordsFromLetters.AddRange(databaseManager.GetWordsFromChosenLetters(letter));
             }
+            possibleWordsFromLetters.Distinct().ToList();
+            possibleWordsFromLetters = possibleWordsFromLetters.OrderBy(x => random.Next()).ToList();
         }
 
 
@@ -99,7 +100,6 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
         {
             double usageWeight;
             List<string> chosenBigrams = new List<string>();
-            List<string> possibleWordsFromBigrams = new List<string>();
 
             foreach (var bigram in problemBigrams)
             {
@@ -113,13 +113,23 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
             
             foreach (string bigram in chosenBigrams)
             {
-                possibleWordsFromBigrams = databaseManager.GetWordsFromChosenBigrams(bigram);
-                possibleWordsFromBigrams = possibleWordsFromBigrams.OrderBy(x => random.Next()).ToList();
-            }   
+                possibleWordsFromBigrams.AddRange(databaseManager.GetWordsFromChosenBigrams(bigram));
+            }
+            possibleWordsFromBigrams.Distinct().ToList();
+            possibleWordsFromBigrams = possibleWordsFromBigrams.OrderBy(x => random.Next()).ToList();
         }
 
         private void MergeWordsForTest(List<string> possibleWordsFromBigrams, List<string> possibleWordsFromLetters)
         {
+            if (testWords == -1)
+            {
+                testWords = random.Next(25, 86);  // min words = 25, max words = 85 on randomised number of words setting
+            }
+            if (testTiming != -1)
+            {
+                testWords = 99;  // sets number of words to max on a timed test
+            }
+
             for (int i = 0; i < possibleWordsFromBigrams.Count; i++)
             {
                 if (usingWords.Count >= testWords * 0.6)  // if number of words being used is over limit of 60%, stop
@@ -149,14 +159,6 @@ namespace TypingImprovementProgram.Algorithms.TestGeneration
                 }
             }
 
-            if (testWords == -1)
-            {
-                testWords = random.Next(Math.Max(usingWords.Count, 25), 85 - usingWords.Count);  // min words = 25, max words = 85 on randomised number of words setting
-            }
-            if (testTiming != -1)
-            {
-                testWords = 99;  // sets number of words to max on a timed test
-            }
 
             List<string> remainingWords = databaseManager.GetRemainingRandomWords((testWords - usingWords.Count), minimumDifficulty, maximumDifficulty);
             usingWords.AddRange(remainingWords);

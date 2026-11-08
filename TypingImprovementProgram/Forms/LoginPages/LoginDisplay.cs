@@ -24,6 +24,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
         public LoginDisplay()
         {
             InitializeComponent();
+            textBoxLoginPassword.PasswordChar = '*';
         }
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
