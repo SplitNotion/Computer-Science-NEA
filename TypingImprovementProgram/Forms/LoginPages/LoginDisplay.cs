@@ -91,7 +91,7 @@ namespace TypingImprovementProgram.Forms.LoginPages
                     return false;
 
                 case "Incorrect Password":
-                    MessageBox.Show("  Username not found!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show("  Incorrect Password!", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     return false;
 
                 case "Success":
