@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TypingImprovementProgram.Database;
 
 namespace TypingImprovementProgram.Forms
 {
     public partial class DashboardPage : UserControl
     {
-        public DashboardPage()
+        DatabaseManager databaseManager = new DatabaseManager();
+        public DashboardPage(int userID)
         {
             InitializeComponent();
+            databaseManager.GetAccountDetails(userID, out string username);
+            lblWelcomeUser.Text = $"Welcome, {username}!";
         }
     }
 }

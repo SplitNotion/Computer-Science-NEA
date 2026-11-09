@@ -29,8 +29,7 @@ namespace TypingImprovementProgram.Database
         }
 
         #region InitalTableGenerationInsertion
-
-        public void CreateTables()                                 
+        public void CreateTables()
         {
             // creates all necessary SQL tables required for the program. Checks whether they already exist also.
             using (var connection = GetConnection())
@@ -355,9 +354,9 @@ namespace TypingImprovementProgram.Database
                     }
                 }
 
-                sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) OUTPUT INSERTED.UserID VALUES (@Username, @PasswordHash, @BaselineCompleted)" ;
+                sql = @"INSERT INTO Users(Username, PasswordHash, BaselineCompleted) OUTPUT INSERTED.UserID VALUES (@Username, @PasswordHash, @BaselineCompleted)";
 
-                using (var command = new SqlCommand(sql,connection))
+                using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Username", username);
                     command.Parameters.AddWithValue("@PasswordHash", password);
@@ -409,6 +408,7 @@ namespace TypingImprovementProgram.Database
             }
         }
 
+        #region TestCompletion
         public int SaveTestResults(int userID, string testNote, int WPM, double accuracy, Dictionary<char, (double errorRate, bool hesitated)> problemLetters, Dictionary<string, (double errorRate, bool hesitated)> problemBigrams)
         {
             int testID = 0;
@@ -445,7 +445,7 @@ namespace TypingImprovementProgram.Database
                                 command.Parameters.AddWithValue("@Letter", item.Key);
                                 command.Parameters.AddWithValue("@ErrorRate", item.Value.errorRate);
                                 command.Parameters.AddWithValue("@Hesitation", item.Value.hesitated);
-                                
+
                                 command.ExecuteNonQuery();
                             }
                         }
@@ -468,10 +468,10 @@ namespace TypingImprovementProgram.Database
                         return testID;
                     }
 
-                    catch (Exception ex) 
+                    catch (Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Data saving failed. Please contact the program developer, or stop trying to break the program...","WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Data saving failed. Please contact the program developer, or stop trying to break the program...", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         throw;
                     }
                 }
@@ -480,7 +480,7 @@ namespace TypingImprovementProgram.Database
 
         public void CompletedBaselineTest(int userID)
         {
-            using (var connection  = GetConnection())
+            using (var connection = GetConnection())
             {
                 connection.Open();
                 string sql = @"UPDATE Users SET BaselineCompleted = @BaselineCompleted WHERE UserID = @UserID";
@@ -494,6 +494,7 @@ namespace TypingImprovementProgram.Database
                 }
             }
         }
+        #endregion
 
         #region Practice Test Generation
         public (Dictionary<char, (double, bool)> currentProblemLetters, Dictionary<string, (double, bool)> currentProblemBigrams, Dictionary<char, (double, bool)> previousProblemLetters, Dictionary<string, (double, bool)> previousProblemBigrams) GetLatestUserLetterBigramProblems(int userID)
@@ -534,7 +535,7 @@ namespace TypingImprovementProgram.Database
                 {
                     previousProblemLetters = GetProblemLetters(testIDs[1]);
                     previousProblemBigrams = GetProblemBigrams(testIDs[1]);
-                } 
+                }
 
             }
             return (currentProblemLetters, currentProblemBigrams, previousProblemLetters, previousProblemBigrams);
@@ -628,11 +629,11 @@ namespace TypingImprovementProgram.Database
             return possibleWords;
         }
 
-        
+
         public List<string> GetWordsFromChosenLetters(char letter)
         {
             List<string> possibleWords = new List<string>();
-            
+
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -671,7 +672,7 @@ namespace TypingImprovementProgram.Database
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Amount", numberofWords);
-                    command.Parameters.AddWithValue("@ScoreMinimum",  scoreMinimum);
+                    command.Parameters.AddWithValue("@ScoreMinimum", scoreMinimum);
                     command.Parameters.AddWithValue("@ScoreMaximum", scoreMaximum);
 
                     using (var reader = command.ExecuteReader())
@@ -690,6 +691,27 @@ namespace TypingImprovementProgram.Database
 
         #endregion
 
+        public void GetAccountDetails(int userID, out string username)
+        {
+            using (var connection = GetConnection())
+            {
+                username = "";
+                connection.Open();
+                string sql = @"SELECT Username FROM Users WHERE UserID = @UserID";
 
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", userID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            username = (string)reader["Username"];
+                        }
+                    }
+                }
+            }
+        }
     }
 }

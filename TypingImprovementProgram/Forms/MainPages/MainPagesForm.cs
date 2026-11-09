@@ -22,7 +22,6 @@ namespace TypingImprovementProgram.Forms
             InitializeComponent();
             this.userID = userID;
 
-
             foreach (Control control in flowLayoutPanel1.Controls)
             {
                 if (control is Button btn)
@@ -31,12 +30,16 @@ namespace TypingImprovementProgram.Forms
                     btn.Height = 75;
                 }
             }
+
+            panelContent.Controls.Clear();
+            DashboardPage dashboardPage = new DashboardPage(userID);
+            panelContent.Controls.Add(dashboardPage);
         }
 
         private void btnSidebarDashboard_Click(object sender, EventArgs e) // open dashboard page button click event
         {
             panelContent.Controls.Clear();
-            DashboardPage dashboardPage = new DashboardPage();
+            DashboardPage dashboardPage = new DashboardPage(userID);
             dashboardPage.Dock = DockStyle.Fill;
             panelContent.Controls.Add(dashboardPage);
             lblPageName.Text = "Dashboard";
@@ -81,7 +84,7 @@ namespace TypingImprovementProgram.Forms
         private void btnSidebarSettings_Click(object sender, EventArgs e) // open settings page button event
         {
             panelContent.Controls.Clear();
-            SettingsPage settingsPage = new SettingsPage();
+            SettingsPage settingsPage = new SettingsPage(userID);
             settingsPage.Dock = DockStyle.Fill;
             panelContent.Controls.Add(settingsPage);
             lblPageName.Text = "Settings";
@@ -101,8 +104,6 @@ namespace TypingImprovementProgram.Forms
                 return;
             }
         }
-
-
 
         private void dashboardPage1_Load_1(object sender, EventArgs e)
         {

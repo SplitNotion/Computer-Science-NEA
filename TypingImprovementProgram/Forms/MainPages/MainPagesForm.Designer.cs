@@ -39,7 +39,7 @@
             btnSidebarSignout = new Button();
             sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             panelContent = new Panel();
-            dashboardPage1 = new DashboardPage();
+            dashboardPage1 = new DashboardPage(userID);
             panelTop = new Panel();
             lblPageName = new Label();
             panelSidebar.SuspendLayout();
