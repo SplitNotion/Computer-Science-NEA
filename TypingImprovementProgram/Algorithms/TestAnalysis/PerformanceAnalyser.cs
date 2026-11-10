@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Forms.SetupPages;
+using TypingImprovementProgram.Forms.TestPages;
 using TypingImprovementProgram.Models;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -39,14 +40,14 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
        
         private Dictionary<string, double> testLetters = new Dictionary<string, double>(); // can delete once problem boundary multipliers are finalised
 
-        public PerformanceAnalyser(BaselineTestPage baselineTestPage, HesitationAnalyser hesitationAnalyser)
+        public PerformanceAnalyser(BaselineTestPage baselineTestPage, HesitationAnalyser hesitationAnalyser, TypingTestManager typingTestManager)
         {
             incorrectCounter = baselineTestPage.incorrectCounter;
             totalCharactersCount = baselineTestPage.totalCharacters;
             totalCharacterAttempts = baselineTestPage.totalCharacterAttempts;
             totalWords = baselineTestPage.totalBaselineWords;
-            letterOpportunities = baselineTestPage.letterOpportunities;
-            bigramOpportunities = baselineTestPage.bigramOpportunities;
+            letterOpportunities = typingTestManager.letterOpportunities;
+            bigramOpportunities = typingTestManager.bigramOpportunities;
             userID = baselineTestPage.userID;
             isBaselineCompleted = baselineTestPage.isBaselineCompleted;
 
@@ -63,15 +64,15 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             AnalyseTest();
         }
 
-        public PerformanceAnalyser(PracticeTestPage practiceTestPage, HesitationAnalyser hesitationAnalyser)
+        public PerformanceAnalyser(PracticeTestPage practiceTestPage, HesitationAnalyser hesitationAnalyser, TypingTestManager typingTestManager)
         {
             incorrectCounter = practiceTestPage.incorrectCounter;
             totalCharactersCount = practiceTestPage.totalCharacters;
             totalCharacterAttempts = practiceTestPage.totalCharacterAttempts;
             totalWords = practiceTestPage.totalWords;
             typedWords = practiceTestPage.typedWords;
-            letterOpportunities = practiceTestPage.letterOpportunities;
-            bigramOpportunities = practiceTestPage.bigramOpportunities;
+            letterOpportunities = typingTestManager.letterOpportunities;
+            bigramOpportunities = typingTestManager.bigramOpportunities;
             userID = practiceTestPage.userID;
             isBaselineCompleted = practiceTestPage.isBaselineCompleted;
 

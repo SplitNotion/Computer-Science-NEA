@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TypingImprovementProgram.Algorithms.TestAnalysis;
 using TypingImprovementProgram.Algorithms.TestGeneration;
+using TypingImprovementProgram.Forms.TestPages;
 using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.SetupPages
@@ -18,7 +19,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
     public partial class PracticeTestPage : UserControl
     {
         TypingDisplayControl display = new TypingDisplayControl();
-        PracticeTestGenerator generator;
+        TypingTestManager typingTestManager = new TypingTestManager();
+        PracticeTestGenerator generator;    
         HesitationAnalyser hesitationAnalyser = new HesitationAnalyser();
         PerformanceAnalyser performanceAnalyser;
 
@@ -34,16 +36,13 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
         public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
-        public Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
-        public Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
+
 
         int currentIndex = 0;
 
 
-        private Stopwatch stopwatch = new Stopwatch();
         private Stopwatch totalTypingTimeStopwatch = new Stopwatch();
-        public List<KeystrokeTiming> timings { get; set; } = new List<KeystrokeTiming>();
-        private TimeSpan previousKeyTime = TimeSpan.Zero;
+
         public double totalTestSeconds = 0.0;
 
         private bool timerInUse = false;
@@ -103,40 +102,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             List<string> lines = generator.GeneratePracticeText();
             display.NumberOfLines = lines.Count;
 
-            for (int i = 0; i < lines.Count; i++)
-            {
-                foreach (char c in lines[i])
-                {
-                    display.Characters.Add(new DisplayCharacter { Character = c, Line = i }); // adds a new char object to the list
-
-                    if (letterOpportunities.ContainsKey(c))
-                    {
-                        letterOpportunities[c]++;
-                    }
-                    else
-                    {
-                        letterOpportunities.Add(c, 1);
-                    }
-                }
-
-                // edit needed?
-                for (int j = 0; j < lines[i].Length - 1; j++)
-                {
-                    string bigram = "" + lines[i][j] + lines[i][j + 1];
-
-                    if (!bigram.Contains(" "))
-                    {
-                        if (bigramOpportunities.ContainsKey(bigram))
-                        {
-                            bigramOpportunities[bigram]++;
-                        }
-                        else
-                        {
-                            bigramOpportunities.Add(bigram, 1);
-                        }
-                    }
-                }
-            }
+            typingTestManager.LoadTest(lines, display);
 
             display.Characters[0].State = CharacterState.Current; // colours the first character blue
             keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
@@ -155,31 +121,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             lbltypedWordProgressCounter.Text = typedWords + "/" + totalWords;
         }
 
-        private void StartTiming()
-        {
-            previousKeyTime = TimeSpan.Zero;
-            stopwatch.Restart();
-        }
-
-        private void RecordKey(char character)
-        {
-            TimeSpan currentTime = stopwatch.Elapsed;
-            TimeSpan interval = TimeSpan.Zero;
-
-            if (timings.Count > 0)
-            {
-                interval = currentTime - previousKeyTime;
-            }
-
-            timings.Add(new KeystrokeTiming
-            {
-                CharacterTyped = character,
-                TimeSinceLastTypedKey = interval,
-            });
-
-            previousKeyTime = currentTime;
-        }
-
         private void CapsLockChecker(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.CapsLock)
@@ -192,7 +133,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             if (currentIndex == 0)
             {
-                StartTiming();
+                typingTestManager.StartTiming();
                 totalTypingTimeStopwatch.Start();
                 typedWords = 0;
 
@@ -241,68 +182,10 @@ namespace TypingImprovementProgram.Forms.SetupPages
 
             if (currentIndex < display.Characters.Count)
             {
-                RecordKey(display.Characters[currentIndex].Character);
+                typingTestManager.RecordKey(display.Characters[currentIndex].Character);
             }
 
-
-            #region Correct/Incorrect Character Attribute Assignment and Recording
-            if (e.KeyChar == display.Characters[currentIndex].Character)                  // if keypress is same as char on screen
-            {
-                display.Characters[currentIndex].State = CharacterState.Correct;          // make correct
-            }
-
-            else
-            {
-                display.Characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
-                incorrectCharacter = display.Characters[currentIndex].Character;
-                incorrectCounter += 1;
-
-
-                // adds incorrect character to a dictionary/increments occurences if it has been incorrectly typed
-                char character = display.Characters[currentIndex].Character;
-                if (!incorrectLetters.ContainsKey(character))
-                {
-                    incorrectLetters.Add(character, 1);
-                }
-                else if (incorrectLetters.ContainsKey(character))
-                {
-                    incorrectLetters[character]++;
-                }
-
-                // adds incorrect bigrams (e.g. word => 'wo' and 'or') to a dictionary/increments occurences if it has been incorrectly typed
-
-
-                if (currentIndex > 0 && display.Characters[currentIndex - 1].Character != ' ' && display.Characters[currentIndex].Character != ' ')
-                {
-                    string bigramBefore = "" + display.Characters[currentIndex - 1].Character + display.Characters[currentIndex].Character;
-
-                    if (!incorrectBigrams.ContainsKey(bigramBefore))
-                    {
-                        incorrectBigrams.Add(bigramBefore, 1);
-                    }
-                    else if (incorrectBigrams.ContainsKey(bigramBefore) && (incorrectBigrams[bigramBefore] < bigramOpportunities[bigramBefore]))
-                    {
-                        incorrectBigrams[bigramBefore]++;
-                    }
-                }
-
-                if (currentIndex < display.Characters.Count - 1 && display.Characters[currentIndex + 1].Character != ' ' && display.Characters[currentIndex].Character != ' ')
-                {
-                    string bigramAfter = "" + display.Characters[currentIndex].Character + display.Characters[currentIndex + 1].Character;
-
-                    if (!incorrectBigrams.ContainsKey(bigramAfter))
-                    {
-                        incorrectBigrams.Add(bigramAfter, 1);
-                    }
-                    else if (incorrectBigrams.ContainsKey(bigramAfter) && (incorrectBigrams[bigramAfter] < bigramOpportunities[bigramAfter]))
-                    {
-                        incorrectBigrams[bigramAfter]++;
-                    }
-                }
-            }
-
-            #endregion
-
+            incorrectCharacter = typingTestManager.CharacterBigramAttributeAssignment(e.KeyChar, currentIndex, display.Characters);
 
             currentIndex++; // move to next character
 
@@ -310,7 +193,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             // events at end of test
             if (currentIndex >= display.Characters.Count)
             {
-                stopwatch.Stop();
+                typingTestManager.StopTiming();
                 totalTypingTimeStopwatch.Stop();
                 testFinished = true;
                 btnContinuePracticeTest.Visible = true;
@@ -348,8 +231,8 @@ namespace TypingImprovementProgram.Forms.SetupPages
             display.CurrentLine = 0;
 
             totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
-            hesitationAnalyser.AnalyseHesitaton(timings);
-            performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser);
+            hesitationAnalyser.AnalyseHesitaton(typingTestManager.timings);
+            performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser, typingTestManager);
 
             Controls.Remove(display);
             lbltypedWordProgressCounter.Visible = false;
@@ -368,7 +251,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
             if (remainingTime <= 0)
             {
                 testTimer.Stop();
-                stopwatch.Stop();
+                typingTestManager.StopTiming();
                 totalTypingTimeStopwatch.Stop();
                 testFinished = true;
                 btnContinuePracticeTest.Visible = true;
