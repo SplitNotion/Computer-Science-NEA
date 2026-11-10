@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Forms.SetupPages;
@@ -14,9 +15,6 @@ namespace TypingImprovementProgram.Forms.TestPages
     {
         public Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
         public Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
-
-
-
 
         public void LoadTest(List<string> lines, TypingDisplayControl display)
         {
@@ -61,12 +59,6 @@ namespace TypingImprovementProgram.Forms.TestPages
         private Stopwatch stopwatch = new Stopwatch(); 
         private TimeSpan previousKeyTime = TimeSpan.Zero; 
 
-
-
-        public void KeystrokeManager()
-        {
-        }
-
         public void StartTiming()
         {
             previousKeyTime = TimeSpan.Zero;
@@ -97,6 +89,37 @@ namespace TypingImprovementProgram.Forms.TestPages
             stopwatch.Stop();
         }
 
+        public bool MoveToNextCharacter(ref int currentIndex, List<DisplayCharacter> characters)
+        {
+            currentIndex++;
+
+            if (currentIndex < characters.Count)
+            {
+                // updates the current character
+                characters[currentIndex].State = CharacterState.Current;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool BackspaceHandling(int currentIndex, List<DisplayCharacter> characters)
+        {
+            if (currentIndex < 0)
+            {
+                return false;
+            }
+
+            if (characters[currentIndex - 1].Character == ' ')
+            {
+                return false;
+            }
+
+            characters[currentIndex].State = CharacterState.Untyped;
+            characters[currentIndex - 1].State = CharacterState.Current;
+
+            return true;    
+        }
 
         public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
@@ -114,9 +137,6 @@ namespace TypingImprovementProgram.Forms.TestPages
             else
             {
                 characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
-                //incorrectCharacter = characters[currentIndex].Character;
-                //incorrectCounter += 1;
-
 
                 // adds incorrect character to a dictionary/increments occurences if it has been incorrectly typed
                 char character = characters[currentIndex].Character;
@@ -160,6 +180,11 @@ namespace TypingImprovementProgram.Forms.TestPages
 
                 return expectedCharacter;
             }
+        }
+
+        public void SharedContinueButtonFunctionality()
+        {
+
         }
     }
 }

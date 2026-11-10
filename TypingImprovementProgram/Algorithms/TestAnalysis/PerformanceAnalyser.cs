@@ -6,24 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Forms.SetupPages;
 using TypingImprovementProgram.Forms.TestPages;
+using TypingImprovementProgram.Interfaces;
 using TypingImprovementProgram.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TypingImprovementProgram.Algorithms.TestAnalysis
 {
-    // this class is the final 'stepping stone' for assigning the user with personalised problem letters and bigrams.
+    // This class is the final 'stepping stone' for assigning the user with personalised problem letters and bigrams.
     // After the data passes through this class, then we are left with two dictionaries containing all the problem letters and bigrams, to be sent to the user's database table.
-    internal class PerformanceAnalyser 
+    internal class PerformanceAnalyser
     {
         private int incorrectCounter;
-        private int totalCharactersCount;
         private int totalCharacterAttempts;
         private int totalWords;
         private int typedWords;
-        private int userID = 0;
-        private bool isBaselineCompleted = false;
-        private string testNote = "";
-        private double totalSeconds;
+        private int userID;
+        private string testNote;
+        private double totalTestSeconds;
 
         private Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
         private Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
@@ -31,63 +30,32 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
         private List<string> hesitatedBigrams = new List<string>();
         private Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         private Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
-
         public Dictionary<char, (double, bool)> problemLetters { get; private set; } = new Dictionary<char, (double, bool)>();
         public Dictionary<string, (double, bool)> problemBigrams { get; private set; } = new Dictionary<string, (double, bool)>();
-        public bool isBaselineTest { get; private set; }
-
 
        
         private Dictionary<string, double> testLetters = new Dictionary<string, double>(); // can delete once problem boundary multipliers are finalised
 
-        public PerformanceAnalyser(BaselineTestPage baselineTestPage, HesitationAnalyser hesitationAnalyser, TypingTestManager typingTestManager)
+        public PerformanceAnalyser(ITypingTest typingTest, HesitationAnalyser hesitationAnalyser, TypingTestManager typingTestManager)
         {
-            incorrectCounter = baselineTestPage.incorrectCounter;
-            totalCharactersCount = baselineTestPage.totalCharacters;
-            totalCharacterAttempts = baselineTestPage.totalCharacterAttempts;
-            totalWords = baselineTestPage.totalBaselineWords;
-            letterOpportunities = typingTestManager.letterOpportunities;
-            bigramOpportunities = typingTestManager.bigramOpportunities;
-            userID = baselineTestPage.userID;
-            isBaselineCompleted = baselineTestPage.isBaselineCompleted;
-
-            totalSeconds = baselineTestPage.totalTestSeconds;
+            incorrectCounter = typingTest.incorrectCounter;
+            totalCharacterAttempts = typingTest.totalCharacterAttempts;
+            totalWords = typingTest.TotalWords;
+            typedWords = typingTest.TypedWords;
+            userID = typingTest.userID;
+            testNote = typingTest.TestNote;
 
             hesitatedLetters = hesitationAnalyser.hesitatedLetters;
             hesitatedBigrams = hesitationAnalyser.hesitatedBigrams;
 
-            incorrectLetters = baselineTestPage.incorrectLetters;
-            incorrectBigrams = baselineTestPage.incorrectBigrams;
-
-            testNote = "Baseline Test";  // defines each test record as being part a baseline test
-
-            AnalyseTest();
-        }
-
-        public PerformanceAnalyser(PracticeTestPage practiceTestPage, HesitationAnalyser hesitationAnalyser, TypingTestManager typingTestManager)
-        {
-            incorrectCounter = practiceTestPage.incorrectCounter;
-            totalCharactersCount = practiceTestPage.totalCharacters;
-            totalCharacterAttempts = practiceTestPage.totalCharacterAttempts;
-            totalWords = practiceTestPage.totalWords;
-            typedWords = practiceTestPage.typedWords;
             letterOpportunities = typingTestManager.letterOpportunities;
             bigramOpportunities = typingTestManager.bigramOpportunities;
-            userID = practiceTestPage.userID;
-            isBaselineCompleted = practiceTestPage.isBaselineCompleted;
-
-            totalSeconds = practiceTestPage.totalTestSeconds;
-
-            hesitatedLetters = hesitationAnalyser.hesitatedLetters;
-            hesitatedBigrams = hesitationAnalyser.hesitatedBigrams;
-
-            incorrectLetters = practiceTestPage.incorrectLetters;
-            incorrectBigrams = practiceTestPage.incorrectBigrams;
-
-            testNote = "Practice Test";  // defines each test record as being part a practice test
+            incorrectLetters = typingTestManager.incorrectLetters;
+            incorrectBigrams = typingTestManager.incorrectBigrams;
 
             AnalyseTest();
         }
+
 
         public void AnalyseTest()
         {
@@ -99,12 +67,12 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
             // changes WPM calculation depending on whether its part of a timed test or not
             if (typedWords < totalWords)
             {
-                WPM = typedWords / (totalSeconds / 60);
+                WPM = typedWords / (totalTestSeconds / 60);
                 WPM = Math.Round(WPM, 1);
             }
             else
             {
-                WPM = totalWords / (totalSeconds / 60);
+                WPM = totalWords / (totalTestSeconds / 60);
                 WPM = Math.Round(WPM, 1);
             }
 

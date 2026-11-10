@@ -13,17 +13,18 @@ using TypingImprovementProgram.Algorithms.TestAnalysis;
 using TypingImprovementProgram.Algorithms.TestGeneration;
 using TypingImprovementProgram.Database;
 using TypingImprovementProgram.Forms.TestPages;
+using TypingImprovementProgram.Interfaces;
 using TypingImprovementProgram.Models;
 
 namespace TypingImprovementProgram.Forms.SetupPages
 {
-    public partial class BaselineTestPage : UserControl
+    public partial class BaselineTestPage : UserControl, ITypingTest
     {
         TypingDisplayControl display = new TypingDisplayControl();
         TypingTestManager typingTestManager = new TypingTestManager();
         BaselineTestGenerator generator = new BaselineTestGenerator();
         HesitationAnalyser hesitationAnalyser = new HesitationAnalyser();
-        PerformanceAnalyser performanceAnalyser;
+        DatabaseManager databaseManager = new DatabaseManager();
 
         bool testFinished = false;
         public int incorrectCounter { get; set; }
@@ -32,20 +33,14 @@ namespace TypingImprovementProgram.Forms.SetupPages
         public int totalWords { get; set; }
         public int totalBaselineWords { get; set; }
         public int typedWords { get; set; }
-
-        public int userID;
-        public bool isBaselineCompleted = false;
-
-        public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
-        public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
-
-
+        public int userID { get; set; }
+        public double totalTestSeconds { get; set; }
         int currentIndex = 0;
-
         private Stopwatch totalTypingTimeStopwatch = new Stopwatch();
-        public double totalTestSeconds = 0.0;
 
-
+        public int TotalWords => totalWords;
+        public int TypedWords => typedWords;
+        public string TestNote => "Baseline Test";
 
         // this initialises the typing display control, including its dimensions and position, plus some other fields and variables
         public BaselineTestPage(int userID)
@@ -117,28 +112,21 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
 
 
-
-
             #region Backspace Key Function
             // allows for backspace, however disallowing over space between words
             if (e.KeyChar == (char)Keys.Back)
             {
-                if (currentIndex > 0)
+                if (typingTestManager.BackspaceHandling(currentIndex, display.Characters) == true)
                 {
-                    if (display.Characters[currentIndex - 1].Character != ' ')
-                    {
-                        display.Characters[currentIndex].State = CharacterState.Untyped;
-                        display.Characters[currentIndex - 1].State = CharacterState.Current;
-                        currentIndex--;
+                    currentIndex--;
 
-                        if (currentIndex > 0 && display.Characters[currentIndex - 1].State == CharacterState.Incorrect)
-                        {
-                            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, display.Characters[currentIndex - 1].Character);
-                        }
-                        else
-                        {
-                            keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
-                        }
+                    if (currentIndex > 0 && display.Characters[currentIndex - 1].State == CharacterState.Incorrect)
+                    {
+                        keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, display.Characters[currentIndex - 1].Character);
+                    }
+                    else
+                    {
+                        keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, null);
                     }
                 }
                 display.Invalidate();
@@ -154,11 +142,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
             }
 
             incorrectCharacter = typingTestManager.CharacterBigramAttributeAssignment(e.KeyChar, currentIndex, display.Characters); // Character Assignment
-            currentIndex++; // move to next character
 
+            bool nextCharacterExists = typingTestManager.MoveToNextCharacter(ref currentIndex, display.Characters); // whether test can continue to next character, or test should end
 
-            // events at end of test
-            if (currentIndex >= display.Characters.Count)
+            // end of test event
+            if (!nextCharacterExists)
             {
                 typingTestManager.StopTiming();
                 totalTypingTimeStopwatch.Stop();
@@ -168,12 +156,11 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 UpdateProgressLabel();
             }
 
-            // updates the current character, word count and text position on the screen
-            if (currentIndex < display.Characters.Count)
+            else
             {
-                display.Characters[currentIndex].State = CharacterState.Current;
                 keyboardVisualiserControl1.SetKeyColour(display.Characters[currentIndex].Character, incorrectCharacter);
 
+                // updates number of typed words
                 if (display.Characters[currentIndex - 1].Character == ' ')
                 {
                     typedWords++;
@@ -186,7 +173,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
                     display.CurrentLine++;
                 }
             }
-
             display.Invalidate();
         }
 
@@ -207,19 +193,19 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 totalBaselineWords += totalWords;
                 UpdateProgressLabel();
             }
+
             else
             {
                 totalBaselineWords += totalWords;
                 totalTestSeconds = totalTypingTimeStopwatch.Elapsed.TotalSeconds;
                 hesitationAnalyser.AnalyseHesitaton(typingTestManager.timings);
-                performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser, typingTestManager);
+                PerformanceAnalyser performanceAnalyser = new PerformanceAnalyser(this, hesitationAnalyser, typingTestManager);
 
                 Controls.Remove(display);
                 lbltypedWordProgressCounter.Visible = false;
                 keyboardPanel.Visible = false;
                 testFinished = true;
 
-                DatabaseManager databaseManager = new DatabaseManager();
                 databaseManager.CompletedBaselineTest(userID);
 
                 this.FindForm().Hide();
