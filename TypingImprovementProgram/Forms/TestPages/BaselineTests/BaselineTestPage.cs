@@ -345,9 +345,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 this.FindForm().Hide();
                 MainPagesForm mainPagesForm = new MainPagesForm(userID);
                 mainPagesForm.Show();
-
-
-
             }
         }
 

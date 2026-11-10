@@ -27,5 +27,10 @@ namespace TypingImprovementProgram.Forms.MainPages
             databaseManager.GetAccountDetails(userID, out string username);
             lblUsername.Text = $"Your Username = {username}";
         }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
