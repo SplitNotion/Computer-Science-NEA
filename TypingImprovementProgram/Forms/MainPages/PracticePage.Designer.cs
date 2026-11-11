@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PracticePage));
             btnGeneratePracticeTest = new Button();
             btnDifficultyEasy = new Button();
             btnDifficultyMedium = new Button();
@@ -49,6 +50,9 @@
             btnLengthCustom = new Button();
             txtBoxCustomLength = new TextBox();
             lblCustomLength = new Label();
+            lblTestDifficultyNote = new Label();
+            lblTimedNote = new Label();
+            lblTestLength = new Label();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             flowLayoutPanel3.SuspendLayout();
@@ -292,10 +296,43 @@
             lblCustomLength.TabIndex = 13;
             lblCustomLength.Text = "Words";
             // 
+            // lblTestDifficultyNote
+            // 
+            lblTestDifficultyNote.AutoSize = true;
+            lblTestDifficultyNote.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTestDifficultyNote.Location = new Point(37, 754);
+            lblTestDifficultyNote.Name = "lblTestDifficultyNote";
+            lblTestDifficultyNote.Size = new Size(1340, 62);
+            lblTestDifficultyNote.TabIndex = 14;
+            lblTestDifficultyNote.Text = resources.GetString("lblTestDifficultyNote.Text");
+            // 
+            // lblTimedNote
+            // 
+            lblTimedNote.AutoSize = true;
+            lblTimedNote.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTimedNote.Location = new Point(40, 858);
+            lblTimedNote.Name = "lblTimedNote";
+            lblTimedNote.Size = new Size(1428, 93);
+            lblTimedNote.TabIndex = 15;
+            lblTimedNote.Text = resources.GetString("lblTimedNote.Text");
+            // 
+            // lblTestLength
+            // 
+            lblTestLength.AutoSize = true;
+            lblTestLength.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTestLength.Location = new Point(40, 989);
+            lblTestLength.Name = "lblTestLength";
+            lblTestLength.Size = new Size(1302, 62);
+            lblTestLength.TabIndex = 16;
+            lblTestLength.Text = resources.GetString("lblTestLength.Text");
+            // 
             // PracticePage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblTestLength);
+            Controls.Add(lblTimedNote);
+            Controls.Add(lblTestDifficultyNote);
             Controls.Add(lblCustomLength);
             Controls.Add(txtBoxCustomLength);
             Controls.Add(label3);
@@ -337,5 +374,8 @@
         private Button btnLengthCustom;
         private TextBox txtBoxCustomLength;
         private Label lblCustomLength;
+        private Label lblTestDifficultyNote;
+        private Label lblTimedNote;
+        private Label lblTestLength;
     }
 }

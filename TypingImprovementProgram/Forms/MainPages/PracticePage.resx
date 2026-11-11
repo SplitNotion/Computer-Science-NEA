@@ -117,4 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lblTestDifficultyNote.Text" xml:space="preserve">
+    <value>Test Difficulty: This gives you the option to choose between a selction of test difficulty modes, where the words in the test 
+will generally match your choice. Difficulty broadly corresponds to word length, however it includes other difficulty metrics too.
+</value>
+  </data>
+  <data name="lblTimedNote.Text" xml:space="preserve">
+    <value>Timed: This gives you the option to perform a timed test. This is one where you have an 'unlimited' (to a reasonable extent i.e. 99 words)
+number of words to type, however a fixed timelimit to type as many words as you can. The test will automatically end when the timer 
+reaches 0. NOTE: This option prevents you from choosing a custom test length.
+</value>
+  </data>
+  <data name="lblTestLength.Text" xml:space="preserve">
+    <value>Test Length: This gives you the option to manually set the number of words generated in the test. The maximum is 99 words.
+You can also enter a custom amount by clicking on the 'Custom' button and inserting your requested amount.
+</value>
+  </data>
 </root>
