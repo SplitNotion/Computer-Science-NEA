@@ -41,8 +41,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
         {
             keys.Clear();   // deletes keys to be redrawn if resized
 
-            //int keyWidth = 45;
-            //int keyHeight = 45;
             int gap = 5;
 
             int availableWidth = (Width - 30) - (9 * gap);
@@ -91,13 +89,6 @@ namespace TypingImprovementProgram.Forms.SetupPages
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
-
-            //using (Pen pen = new Pen(Color.Black, 3))
-            //{
-            //    e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
-            //}
-
-
 
             foreach (KeyboardKey key in keys)
             {
@@ -152,6 +143,18 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 }
             }
         }
+
+        public void ResetKeyColours()
+        {
+            foreach (KeyboardKey key in keys)
+            {
+                key.IsCurrent = false;
+                key.WasIncorrect = false;
+            }
+
+            Invalidate();
+        }
+
 
         protected override void OnMouseDown(MouseEventArgs e)
         {

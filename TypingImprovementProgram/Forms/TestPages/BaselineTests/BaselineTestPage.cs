@@ -153,6 +153,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 testFinished = true;
                 btnContinueBaselineTest.Visible = true;
                 typedWords++;
+                keyboardVisualiserControl1.ResetKeyColours();
                 UpdateProgressLabel();
             }
 

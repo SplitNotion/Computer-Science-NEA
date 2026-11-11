@@ -184,6 +184,7 @@ namespace TypingImprovementProgram.Forms.SetupPages
                 testFinished = true;
                 btnContinuePracticeTest.Visible = true;
                 typedWords++;
+                keyboardVisualiserControl1.ResetKeyColours();
                 UpdateProgressLabel();
             }
 
