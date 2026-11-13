@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using TypingImprovementProgram.Models;
 
-namespace TypingImprovementProgram.Forms.SetupPages
+namespace TypingImprovementProgram.Forms.TestPages.UniversalPages
 {
     public class TypingDisplayControl : Control
     {

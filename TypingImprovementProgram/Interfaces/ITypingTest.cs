@@ -8,13 +8,15 @@ namespace TypingImprovementProgram.Interfaces
 {
     internal interface ITypingTest
     {
-        int incorrectCounter { get; }
-        int totalCharacterAttempts { get; }
-        int totalWords { get; }
-        int userID { get; }
-        double totalTestSeconds { get; }
-        int TypedWords { get; }
+        int IncorrectCounter { get; }
+        int TotalCharacterAttempts { get; }
         int TotalWords { get; }
+        int UserID { get; }
+        double TotalTestSeconds { get; }
+        int TypedWords { get; }
+        int TotalCorrectWordCharacters { get; }
+
         string TestNote { get; }
+
     }
 }

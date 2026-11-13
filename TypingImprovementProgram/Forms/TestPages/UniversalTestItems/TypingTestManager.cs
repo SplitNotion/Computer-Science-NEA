@@ -5,11 +5,10 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using TypingImprovementProgram.Forms.SetupPages;
 using TypingImprovementProgram.Models;
 using static System.Windows.Forms.LinkLabel;
 
-namespace TypingImprovementProgram.Forms.TestPages
+namespace TypingImprovementProgram.Forms.TestPages.UniversalPages
 {
     internal class TypingTestManager
     {
@@ -123,19 +122,23 @@ namespace TypingImprovementProgram.Forms.TestPages
 
         public Dictionary<char, int> incorrectLetters = new Dictionary<char, int>();
         public Dictionary<string, int> incorrectBigrams = new Dictionary<string, int>();
+        public bool incorrectlyTyped = false;
 
-        public char? CharacterBigramAttributeAssignment(char typedCharacter, int currentIndex, List<DisplayCharacter> characters)
+        public char? CharacterBigramAttributeAssignment(char typedCharacter, int currentIndex, List<DisplayCharacter> characters, out int totalCorrectWordCharacters)
         {
             char expectedCharacter = characters[currentIndex].Character;
+            totalCorrectWordCharacters = 0;
+            bool charCorrect = false;
             
             if (typedCharacter == expectedCharacter)                  // if keypress is same as char on screen
             {
                 characters[currentIndex].State = CharacterState.Correct;          // make correct
-                return null;
+                charCorrect = true;
             }
 
             else
             {
+                incorrectlyTyped = true;
                 characters[currentIndex].State = CharacterState.Incorrect;        // make incorrect
 
                 // adds incorrect character to a dictionary/increments occurences if it has been incorrectly typed
@@ -177,9 +180,33 @@ namespace TypingImprovementProgram.Forms.TestPages
                         incorrectBigrams[bigramAfter]++;
                     }
                 }
-
-                return expectedCharacter;
             }
+
+            if (currentIndex == characters.Count - 1 || characters[currentIndex + 1].Character == ' ')
+            {
+                if (incorrectlyTyped == true)
+                {
+                    incorrectlyTyped = false;
+                }
+                else
+                {
+                    for (int i = currentIndex; i >= 0 && characters[i].Character != ' '; i--)
+                    {
+                        totalCorrectWordCharacters++;
+                    }
+
+                    if (currentIndex < characters.Count - 1)
+                    {
+                        totalCorrectWordCharacters++;
+                    }
+                }
+            }
+
+            if (charCorrect)
+            {
+                return null;
+            }
+            return expectedCharacter;
         }
 
         public void SharedContinueButtonFunctionality()

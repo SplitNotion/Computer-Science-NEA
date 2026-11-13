@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypingImprovementProgram.Forms.SetupPages;
-using TypingImprovementProgram.Forms.TestPages;
+using TypingImprovementProgram.Forms.TestPages.UniversalPages;
 using TypingImprovementProgram.Interfaces;
 using TypingImprovementProgram.Models;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,13 +16,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
     // After the data passes through this class, then we are left with two dictionaries containing all the problem letters and bigrams, to be sent to the user's database table.
     internal class PerformanceAnalyser
     {
-        private int incorrectCounter;
-        private int totalCharacterAttempts;
-        private int totalWords;
-        private int typedWords;
-        private int userID;
-        private string testNote;
-        private double totalTestSeconds;
+        private readonly ITypingTest typingTest;
 
         private Dictionary<char, int> letterOpportunities = new Dictionary<char, int>();
         private Dictionary<string, int> bigramOpportunities = new Dictionary<string, int>();
@@ -38,12 +32,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
         public PerformanceAnalyser(ITypingTest typingTest, HesitationAnalyser hesitationAnalyser, TypingTestManager typingTestManager)
         {
-            incorrectCounter = typingTest.incorrectCounter;
-            totalCharacterAttempts = typingTest.totalCharacterAttempts;
-            totalWords = typingTest.TotalWords;
-            typedWords = typingTest.TypedWords;
-            userID = typingTest.userID;
-            testNote = typingTest.TestNote;
+            this.typingTest = typingTest;
 
             hesitatedLetters = hesitationAnalyser.hesitatedLetters;
             hesitatedBigrams = hesitationAnalyser.hesitatedBigrams;
@@ -59,21 +48,22 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
         public void AnalyseTest()
         {
-
-            double testAccuracy = ((totalCharacterAttempts - (double)incorrectCounter) / totalCharacterAttempts) * 100;
+            double testAccuracy = ((typingTest.TotalCharacterAttempts - (double)typingTest.IncorrectCounter) / typingTest.TotalCharacterAttempts) * 100;
             testAccuracy = Math.Round(testAccuracy, 2);
             
-            double WPM;
+            double netWPM;
             // changes WPM calculation depending on whether its part of a timed test or not
-            if (typedWords < totalWords)
+            if (typingTest.TypedWords < typingTest.TotalWords)  // timed
             {
-                WPM = typedWords / (totalTestSeconds / 60);
-                WPM = Math.Round(WPM, 1);
+
+                netWPM = (typingTest.TotalCorrectWordCharacters / 5.0) * (60.0 / typingTest.TotalTestSeconds);  // Total number of characters in correctly typed words normalised to 5 words (+ space) in 60 seconds
+
+                netWPM = Math.Round(netWPM, 1);
             }
-            else
+            else // not timed
             {
-                WPM = totalWords / (totalTestSeconds / 60);
-                WPM = Math.Round(WPM, 1);
+                netWPM = (typingTest.TotalCorrectWordCharacters / 5.0) * (60.0 / typingTest.TotalTestSeconds);
+                netWPM = Math.Round(netWPM, 1);
             }
 
             // Adds total weighting for letters in test
@@ -109,8 +99,6 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             // Adds total weighting for bigrams in test
             Dictionary<string, int> bigramWeighting = new Dictionary<string, int>(incorrectBigrams);
-
-
             foreach (var item in bigramOpportunities)
             {
                 string bigram = item.Key;
@@ -140,7 +128,7 @@ namespace TypingImprovementProgram.Algorithms.TestAnalysis
 
             // initialises all test data to be saved after data is analysed and finalised
             TestSaver testSaver = new TestSaver(this);
-            testSaver.SaveTest(userID, testNote, (int)WPM, (int)testAccuracy);
+            testSaver.SaveTest(typingTest.UserID, typingTest.TestNote, (int)netWPM, (int)testAccuracy);
             
         }
     }

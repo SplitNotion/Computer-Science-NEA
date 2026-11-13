@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PracticeTestForm));
             panelScreen = new Panel();
             practiceTestPage1 = new PracticeTestPage();
             panelScreen.SuspendLayout();
@@ -55,8 +54,10 @@
             practiceTestPage1.TabIndex = 0;
             practiceTestPage1.totalCharacterAttempts = 0;
             practiceTestPage1.totalCharacters = 174;
+            practiceTestPage1.totalTestSeconds = 0D;
             practiceTestPage1.totalWords = 23;
             practiceTestPage1.typedWords = 0;
+            practiceTestPage1.userID = 0;
             // 
             // PracticeTestForm
             // 
@@ -68,7 +69,7 @@
             MinimumSize = new Size(1700, 1100);
             Name = "PracticeTestForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "BaselineTestForm";
+            Text = "PracticeTestForm";
             FormClosing += PracticeTestForm_FormClosing;
             panelScreen.ResumeLayout(false);
             ResumeLayout(false);
